@@ -13,8 +13,8 @@ int	initialise(char *file, t_vars *mlx_data)
 
 int	create_window(t_vars *mlx_data)
 {
-	const int	x = 1920;
-	const int	y = 1080;
+	const int	x = 1280;
+	const int	y = 720;
 
 	mlx_data->win = mlx_new_window(mlx_data->mlx, x, y, "Ray.");
 	return (0);
