@@ -9,7 +9,10 @@ int	main(int argc, char **argv)
 	// if (error_code != OK)
 	// 	error_exit(error_code);
 	if (argc != 2)
+	{
+		ft_putstr_fd("usage: ./miniRT <map.rt>\n", 2);
 		return (1);
+	}
 	mlx_data = ft_calloc(sizeof(t_vars), 1);
 	ft_memset(mlx_data, 0, sizeof(t_vars));
 	initialise(argv[1], mlx_data);
