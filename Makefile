@@ -10,7 +10,8 @@ OBJ_DIR = obj
 
 SRC =	main.c \
 		initialise.c \
-		ready_check.c \
+		parser/parse.c \
+		parser/file.c \
 		miniRT.c \
 		input_handler.c \
 		error.c \

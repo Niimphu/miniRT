@@ -2,20 +2,15 @@
 
 int	main(int argc, char **argv)
 {
-	// int		error_code;
 	t_vars	*mlx_data;
 
-	// error_code = arg_check(argc, argv);
-	// if (error_code != OK)
-	// 	error_exit(error_code);
 	if (argc != 2)
-	{
-		ft_putstr_fd("usage: ./miniRT <map.rt>\n", 2);
+		return (ft_putstr_fd("usage: ./miniRT <path/map.rt>\n", 2), 1);
+	(void)argv;
+	if (parse(argv[1]) == FAIL)
 		return (1);
-	}
 	mlx_data = ft_calloc(sizeof(t_vars), 1);
-	ft_memset(mlx_data, 0, sizeof(t_vars));
-	initialise(argv[1], mlx_data);
+	initialise(mlx_data);
 	raytrace(mlx_data);
 	return (0);
 }
