@@ -1,5 +1,7 @@
 miniRT
+*.o
 obj/*.o
+obj/parser/*.o
 lib/libft/*.o
 lib/libft/libft.a
 lib/mlx_linux/libmlx.a
