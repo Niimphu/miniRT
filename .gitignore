@@ -8,3 +8,7 @@ lib/mlx_linux/libmlx.a
 lib/mlx_linux/libmlx_Linux.a
 lib/mlx_linux/obj/
 .idea/
+*.dSYM/
+lib/mlx_linux/libmlx_darwin.a
+map
+
