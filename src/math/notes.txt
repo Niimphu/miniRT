@@ -1,0 +1,65 @@
+
+Vector
+
+arrow with a direction. Declared with 3 vars x, y, z.
+
+Addition
+
+Just add each coordinate individualy (x1 + x2, y1 + y2, z1 + z2)
+
+https://upload.wikimedia.org/wikipedia/commons/3/3d/Vector_Addition.svg
+
+Subtraction
+
+The vector subtraction of two vectors a and b is represented by a - b and it is nothing but adding the negative of vector b
+to the vector a. i.e., a - b = a + (-b).
+Thus, subtraction of vectors involves the addition of vectors and the negative of a vector.
+
+https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.cuemath.com%2Fgeometry%2Fsubtracting-two-vectors%2F&psig=AOvVaw2-vVGWCvbfKSVltxxQohu9&ust=1701967518306000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCID2tKSh-4IDFQAAAAAdAAAAABAI
+
+Multiplication
+
+like additon multiply each coordinate with the multiplikator
+
+Division
+
+like Multiplication
+
+How do i find a lenght of vector
+
+if v is a vector 
+
+Square root of x² + y² + z² = ||v||
+
+Normalization
+
+always has lenght 1. Usally used when only interested in direction
+
+if v is a vector
+v / ||v||
+
+Dot product
+
+u,v are vectors
+
+u . v = ||u|| * ||v|| * cos(angle between u & v)
+
+a sharp angle produces a big Dot product
+at right angle dot product is 0!
+if there oposite direction dot product is negative
+mostly used to find the angle 
+
+u.v =( x1 * x2) + (y1 * y2) + (z1 * z2)
+
+Cross product
+
+uxv= n * ||u|| * ||v|| * sin(angle between u & v)
+
+n is a vector thats perpendicular to u and v. 
+||n|| = 1 so its normal
+
+can be found using right hand rule
+
+u x v = 
+
+
