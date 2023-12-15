@@ -54,6 +54,10 @@ SRC =	ft_atoi.c \
 		ft_toupper.c
 
 
+SRC +=	get_next_line/get_next_line.c \
+		get_next_line/get_next_line_utils.c
+
+
 OBJ = $(SRC:.c=.o)
 
 BONUS_SRC = ft_lstadd_back.c \
