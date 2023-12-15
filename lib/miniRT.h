@@ -15,6 +15,7 @@
 
 # include "libft/libft.h"
 # include "mlx_linux/mlx.h"
+# include "element.h"
 
 # include <math.h>
 # include <stdbool.h>
@@ -25,13 +26,21 @@
 
 # define FAIL -1
 
-typedef struct s_vars {
+typedef struct s_vars
+{
 	void	*mlx;
 	void	*win;
 }				t_vars;
 
-typedef struct s_scene {
 
+typedef struct s_scene
+{
+	t_ambience	*a_light;
+	t_camera	*camera;
+	t_light		*light;
+	t_list		*spheres;
+	t_list		*planes;
+	t_list		*cylinders;
 }				t_scene;
 
 void	initialise(t_vars *mlx_data);
