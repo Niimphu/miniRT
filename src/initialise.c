@@ -14,10 +14,14 @@
 
 void	create_window(t_vars *mlx_data);
 
-void	initialise(t_vars *mlx_data)
+int	initialise(t_vars *mlx_data)
 {
+	mlx_data = ft_calloc(sizeof(t_vars), 1);
+	if (!mlx_data)
+		return (FAIL);
 	mlx_data->mlx = mlx_init();
 	create_window(mlx_data);
+	return (0);
 }
 
 void	create_window(t_vars *mlx_data)

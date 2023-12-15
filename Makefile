@@ -15,6 +15,7 @@ SRC =	main.c \
 		miniRT.c \
 		input_handler.c \
 		error.c \
+		free/free.c \
 		quit.c
 
 OBJ =	$(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))

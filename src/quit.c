@@ -11,18 +11,19 @@
 /* ************************************************************************** */
 
 #include "../lib/miniRT.h"
+#include "free/free.h"
 
-int	window_closed(t_vars *mlx_data)
+int	window_closed(t_rt *rt)
 {
-	mlx_clear_window(mlx_data->mlx, mlx_data->win);
-	quit(mlx_data);
+	mlx_clear_window(rt->mlx_data->mlx, rt->mlx_data->win);
+	quit(rt);
 	return (0);
 }
 
-void	quit(t_vars *mlx_data)
+void	quit(t_rt *rt)
 {
-	mlx_loop_end(mlx_data->mlx);
-	mlx_destroy_display(mlx_data->mlx);
-	free(mlx_data->mlx);
+	mlx_loop_end(rt->mlx_data->mlx);
+	mlx_destroy_display(rt->mlx_data->mlx);
+	free_rt(rt);
 	exit(0);
 }

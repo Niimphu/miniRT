@@ -15,7 +15,6 @@
 
 # include "libft/libft.h"
 # include "mlx_linux/mlx.h"
-# include "element.h"
 
 # include <math.h>
 # include <stdbool.h>
@@ -24,14 +23,23 @@
 # include <X11/keysym.h>
 # include <X11/keysymdef.h>
 
+# include "element.h"
+
 # define FAIL -1
+
+# define R 0
+# define G 1
+# define B 2
+
+# define X 0
+# define Y 1
+# define Z 2
 
 typedef struct s_vars
 {
 	void	*mlx;
 	void	*win;
 }				t_vars;
-
 
 typedef struct s_scene
 {
@@ -43,14 +51,21 @@ typedef struct s_scene
 	t_list		*cylinders;
 }				t_scene;
 
-void	initialise(t_vars *mlx_data);
-int		raytrace(t_vars *mlx_data);
+typedef struct s_rt
+{
+	t_vars	*mlx_data;
+	t_scene	*scene;
+}				t_rt;
 
-int		parse(char *filename);
+int		parse(char *filename, t_scene *scene);
 int		open_file(char *filename);
 
-int		key_pressed(int keycode, t_vars *mlx_data);
-int		window_closed(t_vars *mlx_data);
-void	quit(t_vars *mlx_data);
+int		initialise(t_vars *mlx_data);
+
+int		raytrace(t_rt *rt);
+
+int		key_pressed(int keycode, t_rt *rt);
+int		window_closed(t_rt *rt);
+void	quit(t_rt *rt);
 
 #endif

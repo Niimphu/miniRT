@@ -12,17 +12,32 @@
 
 #include "../lib/miniRT.h"
 
+static t_rt	*new_rt(void);
+
 int	main(int argc, char **argv)
 {
-	t_vars	*mlx_data;
+	t_rt	*rt;
 
 	if (argc != 2)
 		return (ft_putstr_fd("usage: ./miniRT <path/map.rt>\n", 2), 1);
-	(void)argv;
-	if (parse(argv[1]) == FAIL)
-		return (1);
-	mlx_data = ft_calloc(sizeof(t_vars), 1);
-	initialise(mlx_data);
-	raytrace(mlx_data);
+	rt = new_rt();
+	if (!rt)
+		return (FAIL);
+	if (parse(argv[1], rt->scene) == FAIL)
+		return (free(rt), FAIL);
+	initialise(rt->mlx_data);
+	raytrace(rt);
 	return (0);
+}
+
+static t_rt	*new_rt(void)
+{
+	t_rt	*rt;
+
+	rt = ft_calloc(sizeof(t_rt), 1);
+	if (!rt)
+		return (NULL);
+	rt->scene = NULL;
+	rt->mlx_data = NULL;
+	return (rt);
 }
