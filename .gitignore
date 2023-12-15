@@ -10,5 +10,4 @@ lib/mlx_linux/obj/
 .idea/
 *.dSYM/
 lib/mlx_linux/libmlx_darwin.a
-map.rt
 
