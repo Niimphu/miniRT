@@ -31,7 +31,7 @@ all: $(NAME)
 
 $(NAME): $(DEP) $(OBJ)
 	@make -sC $(MLX_DIR)
-	@make -sC $(LIBFT_DIR)
+	@make bonus -sC $(LIBFT_DIR)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $(NAME) $(LDFLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
