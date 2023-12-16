@@ -68,4 +68,6 @@ int		key_pressed(int keycode, t_rt *rt);
 int		window_closed(t_rt *rt);
 void	quit(t_rt *rt);
 
+void	ft_perror(char *message);
+
 #endif

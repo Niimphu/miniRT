@@ -25,7 +25,7 @@ int	open_file(char *filename)
 		return (FAIL);
 	fd = open(filename, O_RDONLY);
 	if (fd == FAIL)
-		ft_putstr_fd("error: file could not be opened\n", 2);
+		ft_perror("error: file could not be opened");
 	return (fd);
 }
 
@@ -36,7 +36,7 @@ static bool	is_filename_valid(char *filename)
 	i = ft_strlen(filename - 4);
 	if (ft_strncmp(filename + i, ".rt", 4))
 	{
-		ft_putstr_fd("error: map must be of .rt format\n", 2);
+		ft_perror("error: map must be of .rt format");
 		return (false);
 	}
 	return (true);
@@ -46,7 +46,7 @@ static bool	file_exists(char *filename)
 {
 	if (access(filename, F_OK) != 0)
 	{
-		ft_putstr_fd("error: file not found\n", 2);
+		ft_perror("error: file not found");
 		return (false);
 	}
 	return (true);

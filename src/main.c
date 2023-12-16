@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	t_rt	*rt;
 
 	if (argc != 2)
-		return (ft_putstr_fd("usage: ./miniRT <path/map.rt>\n", 2), 1);
+		return (ft_perror("usage: ./miniRT <path/map.rt>"), 1);
 	rt = new_rt();
 	if (!rt)
 		return (FAIL);

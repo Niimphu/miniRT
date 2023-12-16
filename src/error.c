@@ -28,3 +28,11 @@
 // 	write(2, RESET, 7);
 // 	exit(error_code);
 // }
+
+void	ft_perror(char *message)
+{
+	ft_putstr_fd(RED, 2);
+	ft_putstr_fd(message, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd(RESET, 2);
+}
