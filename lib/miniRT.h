@@ -57,10 +57,10 @@ typedef struct s_rt
 	t_scene	*scene;
 }				t_rt;
 
-int		parse(char *filename, t_scene *scene);
+int		parse(char *filename, t_rt *rt);
 int		open_file(char *filename);
 
-int		initialise(t_vars *mlx_data);
+int	initialise(t_rt *rt);
 
 int		raytrace(t_rt *rt);
 

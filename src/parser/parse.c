@@ -12,14 +12,14 @@
 
 #include "../../lib/miniRT.h"
 
-int	parse(char *filename, t_scene *scene)
+int	parse(char *filename, t_rt *rt)
 {
 	int	fd;
 
 	fd = open_file(filename);
 	if (fd == FAIL)
 		return (FAIL);
-	(void)scene;
+	(void)rt;
 	close(fd);
 	return (0);
 }

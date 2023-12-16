@@ -23,9 +23,9 @@ int	main(int argc, char **argv)
 	rt = new_rt();
 	if (!rt)
 		return (FAIL);
-	if (parse(argv[1], rt->scene) == FAIL)
+	if (parse(argv[1], rt) == FAIL)
 		return (free(rt), FAIL);
-	initialise(rt->mlx_data);
+	initialise(rt);
 	raytrace(rt);
 	return (0);
 }

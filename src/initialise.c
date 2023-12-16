@@ -14,13 +14,13 @@
 
 void	create_window(t_vars *mlx_data);
 
-int	initialise(t_vars *mlx_data)
+int	initialise(t_rt *rt)
 {
-	mlx_data = ft_calloc(sizeof(t_vars), 1);
-	if (!mlx_data)
+	rt->mlx_data = ft_calloc(sizeof(t_vars), 1);
+	if (!rt->mlx_data)
 		return (FAIL);
-	mlx_data->mlx = mlx_init();
-	create_window(mlx_data);
+	rt->mlx_data->mlx = mlx_init();
+	create_window(rt->mlx_data);
 	return (0);
 }
 
