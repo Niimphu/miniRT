@@ -11,6 +11,8 @@ OBJ_DIR = obj
 SRC =	main.c \
 		initialise.c \
 		parser/parse.c \
+		parser/parse_utils.c \
+		parser/new_element.c \
 		parser/file.c \
 		miniRT.c \
 		input_handler.c \

@@ -25,6 +25,7 @@
 
 # include "element.h"
 
+# define OK 0
 # define FAIL -1
 
 # define R 0
@@ -60,7 +61,7 @@ typedef struct s_rt
 int		parse(char *filename, t_rt *rt);
 int		open_file(char *filename);
 
-int	initialise(t_rt *rt);
+int		initialise(t_rt *rt);
 
 int		raytrace(t_rt *rt);
 
