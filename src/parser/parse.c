@@ -10,16 +10,39 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../lib/miniRT.h"
+#include "parser.h"
+
+#define END 1
+
+static int	read_file(int fd, t_rt *rt);
 
 int	parse(char *filename, t_rt *rt)
 {
 	int	fd;
 
 	fd = open_file(filename);
-	if (fd == FAIL)
-		return (FAIL);
-	(void)rt;
+	if (fd == FAIL || read_file(fd, rt) == FAIL)
+		return (close(fd), FAIL);
 	close(fd);
+	return (0);
+}
+
+static int	read_file(int fd, t_rt *rt)
+{
+	char	*line;
+	int		status;
+
+	status = OK;
+	while (status == OK)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			status = END;
+		else if (!is_empty(line) && new_element(line, rt) == FAIL)
+			status = FAIL;
+		free(line);
+	}
+	if (status == FAIL)
+		return (FAIL);
 	return (0);
 }
