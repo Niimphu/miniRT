@@ -33,7 +33,7 @@ static bool	is_filename_valid(char *filename)
 {
 	size_t	i;
 
-	i = ft_strlen(filename - 4);
+	i = ft_strlen(filename) - 3;
 	if (ft_strncmp(filename + i, ".rt", 4))
 	{
 		ft_perror("error: map must be of .rt format");
