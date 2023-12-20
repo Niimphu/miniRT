@@ -12,4 +12,4 @@
 
 #include "../../lib/miniRT.h"
 
-void	free_rt(t_rt *rt);
+void	free_rt(t_rt **rt);

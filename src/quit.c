@@ -24,6 +24,6 @@ void	quit(t_rt *rt)
 {
 	mlx_loop_end(rt->mlx_data->mlx);
 	mlx_destroy_display(rt->mlx_data->mlx);
-	free_rt(rt);
+	free_rt(&rt);
 	exit(0);
 }

@@ -12,38 +12,38 @@
 
 #include "free.h"
 
-static void	free_mlx(t_vars *mlx_data);
-static void	free_scene(t_scene *scene);
+static void	free_mlx(t_vars **mlx_data);
+static void	free_scene(t_scene **scene);
 
-void	free_rt(t_rt *rt)
+void	free_rt(t_rt **rt)
 {
-	if (rt)
+	if (*rt)
 	{
-		free_mlx(rt->mlx_data);
-		free_scene(rt->scene);
+		free_mlx(&((*rt)->mlx_data));
+		free_scene(&((*rt)->scene));
 		free(rt);
 		rt = NULL;
 	}
 }
 
-static void	free_mlx(t_vars *mlx_data)
+static void	free_mlx(t_vars **mlx_data)
 {
-	if (mlx_data && mlx_data->mlx)
-		free(mlx_data->mlx);
-	mlx_data->mlx = NULL;
-	if (mlx_data != NULL)
+	if ((*mlx_data) && (*mlx_data)->mlx)
+		free((*mlx_data)->mlx);
+	(*mlx_data)->mlx = NULL;
+	if (*mlx_data != NULL)
 		free(mlx_data);
 	mlx_data = NULL;
 }
 
-static void	free_scene(t_scene *scene)
+static void	free_scene(t_scene **scene)
 {
-	if (scene)
+	if (*scene)
 		free(scene);
 	scene = NULL;
 }
 
-void	free_string(char *string)
+void	free_string(char **string)
 {
 	if (string)
 	{
