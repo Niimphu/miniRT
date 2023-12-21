@@ -22,9 +22,16 @@
 # define PLANE 5
 # define CYLINDER 6
 
-int		new_element(char *line, t_rt *rt);
+int		new_element(char *line, t_scene *scene);
 
 bool	is_empty(char *string);
 int		skip_spaces(char *string);
+
+int	new_ambience(char *line, t_scene *scene);
+int	new_camera(char *line, t_scene *scene);
+int	new_light(char *line, t_scene *scene);
+int	new_sphere(char *line, t_scene *scene);
+int	new_plane(char *line, t_scene *scene);
+int	new_cylinder(char *line, t_scene *scene);
 
 #endif

@@ -38,7 +38,7 @@ static int	read_file(int fd, t_rt *rt)
 		line = get_next_line(fd);
 		if (!line)
 			status = END;
-		else if (!is_empty(line) && new_element(line, rt) == FAIL)
+		else if (!is_empty(line) && new_element(line, rt->scene) == FAIL)
 			status = FAIL;
 		free(line);
 	}
