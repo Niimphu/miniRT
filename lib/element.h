@@ -15,7 +15,8 @@
 
 typedef struct s_ambience
 {
-
+	float		lighting;
+	unsigned	colour[3];
 }				t_ambience;
 
 typedef struct s_camera

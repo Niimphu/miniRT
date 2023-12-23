@@ -12,17 +12,17 @@
 
 #include "parser.h"
 
-int	new_sphere(char *line, t_scene *scene)
+int	new_sphere(char **raw_input, t_scene *scene)
 {
 
 }
 
-int	new_plane(char *line, t_scene *scene)
+int	new_plane(char **raw_input, t_scene *scene)
 {
 
 }
 
-int	new_cylinder(char *line, t_scene *scene)
+int	new_cylinder(char **raw_input, t_scene *scene)
 {
 
 }

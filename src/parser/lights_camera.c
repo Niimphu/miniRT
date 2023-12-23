@@ -12,17 +12,24 @@
 
 #include "parser.h"
 
-int	new_ambience(char *line, t_scene *scene)
+//lighting range [0.0, 1.0]
+//RGB range      [0-255]
+int	new_ambience(char **raw_input, t_scene *scene)
+{
+	t_ambience	*ambience;
+
+
+
+}
+
+int	new_camera(char **raw_input, t_scene *scene)
 {
 
 }
 
-int	new_camera(char *line, t_scene *scene)
+int	new_light(char **raw_input, t_scene *scene)
 {
 
 }
 
-int	new_light(char *line, t_scene *scene)
-{
-
-}
+int	save_float(char *string, )

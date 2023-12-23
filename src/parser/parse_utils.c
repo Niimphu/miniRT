@@ -35,3 +35,13 @@ int	skip_spaces(char *string)
 		i++;
 	return (i);
 }
+
+int	next_info(char *string)
+{
+	int	i;
+
+	i = 0;
+	while (string[i] != ' ')
+		i++;
+	return (i + skip_spaces(string + i));
+}
