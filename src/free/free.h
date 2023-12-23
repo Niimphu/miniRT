@@ -13,3 +13,5 @@
 #include "../../lib/miniRT.h"
 
 void	free_rt(t_rt **rt);
+void	free_string(char **string);
+void	free_string_array(char ***array);
