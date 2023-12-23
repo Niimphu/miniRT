@@ -13,6 +13,8 @@ SRC =	main.c \
 		parser/parse.c \
 		parser/parse_utils.c \
 		parser/new_element.c \
+		parser/lights_camera.c \
+		parser/shapes.c \
 		parser/file.c \
 		miniRT.c \
 		input_handler.c \
