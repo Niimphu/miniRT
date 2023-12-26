@@ -27,8 +27,9 @@ int		new_element(char *line, t_scene *scene);
 bool	is_empty(char *string);
 int		skip_spaces(char *string);
 int		next_info(char *string);
+bool	ft_isint(char *str);
 
-float	atof(char *str);
+float	ft_atof(char *str);
 bool	is_valid_float(const char *str);
 
 int		new_ambience(char **raw_input, t_scene *scene);

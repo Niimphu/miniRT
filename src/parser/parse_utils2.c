@@ -37,7 +37,7 @@ bool	is_valid_float(const char *str)
 	return (digits > 0 && !str[i]);
 }
 
-float	atof(char *str)
+float	ft_atof(char *str)
 {
 	float	result;
 	float	factor;

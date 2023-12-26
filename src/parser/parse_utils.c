@@ -45,3 +45,16 @@ int	next_info(char *string)
 		i++;
 	return (i + skip_spaces(string + i));
 }
+
+bool	ft_isint(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (false);
+	}
+	return (true);
+}

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../lib/miniRT.h"
+#include "free/free.h"
 
 static t_rt	*new_rt(void);
 
@@ -27,6 +28,7 @@ int	main(int argc, char **argv)
 		return (free(rt), FAIL);
 	initialise(rt);
 	raytrace(rt);
+	free_rt(&rt);
 	return (0);
 }
 
@@ -37,7 +39,15 @@ static t_rt	*new_rt(void)
 	rt = ft_calloc(sizeof(t_rt), 1);
 	if (!rt)
 		return (NULL);
-	rt->scene = NULL;
+	rt->scene = ft_calloc(sizeof(t_scene), 1);
+	if (!rt->scene)
+		return (NULL);
+	rt->scene->a_light = NULL;
+	rt->scene->camera = NULL;
+	rt->scene->light = NULL;
+	rt->scene->spheres = NULL;
+	rt->scene->planes = NULL;
+	rt->scene->cylinders = NULL;
 	rt->mlx_data = NULL;
 	return (rt);
 }
