@@ -20,7 +20,8 @@ SRC =	main.c \
 		input_handler.c \
 		error.c \
 		free/free.c \
-		quit.c
+		quit.c \
+		utils.c
 
 OBJ =	$(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
