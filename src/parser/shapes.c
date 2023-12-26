@@ -14,15 +14,21 @@
 
 int	new_sphere(char **raw_input, t_scene *scene)
 {
-
+	(void)raw_input;
+	(void)scene;
+	return (OK);
 }
 
 int	new_plane(char **raw_input, t_scene *scene)
 {
-
+	(void)raw_input;
+	(void)scene;
+	return (OK);
 }
 
 int	new_cylinder(char **raw_input, t_scene *scene)
 {
-
+	(void)raw_input;
+	(void)scene;
+	return (OK);
 }

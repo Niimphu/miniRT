@@ -18,18 +18,22 @@ int	new_ambience(char **raw_input, t_scene *scene)
 {
 	t_ambience	*ambience;
 
+	if (strarray_size(raw_input) != 2)
+		return (FAIL);
 
-
+	return (OK);
 }
 
 int	new_camera(char **raw_input, t_scene *scene)
 {
-
+	(void)raw_input;
+	(void)scene;
+	return (OK);
 }
 
 int	new_light(char **raw_input, t_scene *scene)
 {
-
+	(void)raw_input;
+	(void)scene;
+	return (OK);
 }
-
-int	save_float(char *string, )
