@@ -28,6 +28,9 @@ bool	is_empty(char *string);
 int		skip_spaces(char *string);
 int		next_info(char *string);
 
+float	atof(char *str);
+bool	is_valid_float(const char *str);
+
 int		new_ambience(char **raw_input, t_scene *scene);
 int		new_camera(char **raw_input, t_scene *scene);
 int		new_light(char **raw_input, t_scene *scene);
