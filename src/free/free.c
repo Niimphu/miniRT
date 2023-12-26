@@ -21,8 +21,8 @@ void	free_rt(t_rt **rt)
 	{
 		free_mlx(&((*rt)->mlx_data));
 		free_scene(&((*rt)->scene));
-		free(rt);
-		rt = NULL;
+		free(*rt);
+		*rt = NULL;
 	}
 }
 
@@ -32,22 +32,26 @@ static void	free_mlx(t_vars **mlx_data)
 		free((*mlx_data)->mlx);
 	(*mlx_data)->mlx = NULL;
 	if (*mlx_data != NULL)
-		free(mlx_data);
+		free(*mlx_data);
 	mlx_data = NULL;
 }
 
 static void	free_scene(t_scene **scene)
 {
 	if (*scene)
-		free(scene);
+	{
+		if ((*scene)->a_light)
+			free((*scene)->a_light);
+		free(*scene);
+	}
 	scene = NULL;
 }
 
 void	free_string(char **string)
 {
-	if (string)
+	if (*string)
 	{
-		free(string);
+		free(*string);
 		string = NULL;
 	}
 }
