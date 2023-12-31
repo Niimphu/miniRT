@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FREE_H
+# define FREE_H
+
 #include "../../lib/miniRT.h"
 
 void	free_rt(t_rt **rt);
@@ -17,3 +20,7 @@ void	free_string(char **string);
 void	free_string_array(char ***array);
 
 void	free_ambience(t_ambience **ambience);
+void	free_camera(t_camera **camera);
+void	free_light(t_light **light);
+
+#endif

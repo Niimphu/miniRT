@@ -42,6 +42,10 @@ static void	free_scene(t_scene **scene)
 	{
 		if ((*scene)->ambience)
 			free_ambience(&((*scene)->ambience));
+		if ((*scene)->camera)
+			free_camera(&((*scene)->camera));
+		if ((*scene)->light)
+			free_light(&((*scene)->light));
 		free(*scene);
 	}
 	scene = NULL;

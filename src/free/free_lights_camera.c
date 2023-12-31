@@ -22,3 +22,29 @@ void	free_ambience(t_ambience **ambience)
 		ambience = NULL;
 	}
 }
+
+void	free_camera(t_camera **camera)
+{
+	if (*camera)
+	{
+		if ((*camera)->view_point)
+			free((*camera)->view_point);
+		if ((*camera)->orientation)
+			free((*camera)->orientation);
+		free(*camera);
+		camera = NULL;
+	}
+}
+
+void	free_light(t_light **light)
+{
+	if (*light)
+	{
+		if ((*light)->point)
+			free((*light)->point);
+		if ((*light)->colour)
+			free((*light)->colour);
+		free(*light);
+		light = NULL;
+	}
+}
