@@ -13,8 +13,6 @@
 #include "parser.h"
 #include "../free/free.h"
 
-//lighting range [0.0, 1.0]
-//RGB range      [0-255]
 int	new_ambience(char **raw_input, t_scene *scene)
 {
 	t_ambience	*ambience;
@@ -27,7 +25,8 @@ int	new_ambience(char **raw_input, t_scene *scene)
 	if (!ambience)
 		return (FAIL);
 	if (!ft_isfloat(raw_input[0]))
-		return (ft_perror("error: ambient light: invalid float"), FAIL);
+		return (ft_perror("error: ambient light: invalid lighting ratio"),
+			FAIL);
 	ambience->lighting = ft_atof(raw_input[0]);
 	if (ambience->lighting < 0.0 || ambience->lighting > 1.0)
 		return (ft_perror("error: ambient light: invalid lighting ratio"),
@@ -64,7 +63,24 @@ int	new_camera(char **raw_input, t_scene *scene)
 
 int	new_light(char **raw_input, t_scene *scene)
 {
-	(void)raw_input;
-	(void)scene;
+	t_light	*light;
+
+	if (strarray_size(raw_input) != 3)
+		return (ft_perror("error: light: three sets of info required"), FAIL);
+	scene->light = ft_calloc(1, sizeof(t_light));
+	light = scene->light;
+	if (!light)
+		return (FAIL);
+	light->point = atoxyz(raw_input[0]);
+	if (!light->point)
+		return (ft_perror("error: light: invalid light point"), FAIL);
+	if (!ft_isfloat(raw_input[1]))
+		return (ft_perror("error: light: invalid brightness"), FAIL);
+	light->brightness = ft_atof(raw_input[2]);
+	if (light->brightness < 0.0 || light->brightness > 1.0)
+		return (ft_perror("error: light: invalid brightness"), FAIL);
+	light->colour = atorgb(raw_input[2]);
+	if (!light->colour)
+		return (ft_perror("error: light: invalid RGB format"), FAIL);
 	return (OK);
 }
