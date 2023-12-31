@@ -15,3 +15,5 @@
 void	free_rt(t_rt **rt);
 void	free_string(char **string);
 void	free_string_array(char ***array);
+
+void	free_ambience(t_ambience **ambience);

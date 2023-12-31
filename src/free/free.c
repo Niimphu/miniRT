@@ -41,7 +41,7 @@ static void	free_scene(t_scene **scene)
 	if (*scene)
 	{
 		if ((*scene)->a_light)
-			free((*scene)->a_light);
+			free_ambience(&((*scene)->a_light));
 		free(*scene);
 	}
 	scene = NULL;

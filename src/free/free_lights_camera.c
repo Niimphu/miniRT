@@ -12,7 +12,13 @@
 
 #include "free.h"
 
-void	free_ambience()
+void	free_ambience(t_ambience **ambience)
 {
-
+	if (*ambience)
+	{
+		if ((*ambience)->colour)
+			free((*ambience)->colour);
+		free(*ambience);
+		ambience = NULL;
+	}
 }
