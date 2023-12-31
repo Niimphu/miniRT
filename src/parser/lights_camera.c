@@ -57,7 +57,7 @@ int	new_ambience(char **raw_input, t_scene *scene)
 	if (ambience->lighting < 0.0 || ambience->lighting > 1.0)
 		return (ft_perror("error: ambient light: invalid lighting ratio"),
 			FAIL);
-	ambience->colour = atorgb(raw_input[2]);
+	ambience->colour = atorgb(raw_input[1]);
 	if (!ambience->colour)
 		return (ft_perror("error: ambient light: invalid RGB format"), FAIL);
 	return (OK);

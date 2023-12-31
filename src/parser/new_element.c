@@ -24,9 +24,10 @@ int	new_element(char *line, t_scene *scene)
 
 	if (!*line || is_empty(line))
 		return (FAIL);
+	line = trim_nl(line);
 	raw_input = ft_split(line, ' ');
 	if (!raw_input)
-		return (FAIL);
+		return (free_string(&line), FAIL);
 	id = get_element_id(raw_input[0]);
 	status = OK;
 	if (id == FAIL || create_element(id, raw_input + 1, scene) == FAIL)
