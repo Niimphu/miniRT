@@ -37,16 +37,16 @@ bool	is_valid_float(const char *str)
 	return (digits > 0 && !str[i]);
 }
 
-float	ft_atof(char *str)
+float	ft_atof(const char *str)
 {
 	float	result;
 	float	factor;
-	int		sign;
+	float	sign;
 	int		i;
 
 	i = 0;
-	result = 0.0;
-	factor = 0.1;
+	result = 0.0f;
+	factor = 0.1f;
 	sign = 1;
 	if (str[i] == '-' || str[i] == '+')
 	{
@@ -54,13 +54,13 @@ float	ft_atof(char *str)
 			sign = -1;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
-		result = result * 10.0 + (str[i++] - '0');
+		result = result * 10.0f + ((float)(str[i++]) - '0');
 	if (str[i++] != '.')
 		return (sign * result);
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result += (str[i++] - '0') * factor;
-		factor *= 0.1;
+		result += ((float)(str[i++]) - '0') * factor;
+		factor *= 0.1f;
 	}
 	return (sign * result);
 }

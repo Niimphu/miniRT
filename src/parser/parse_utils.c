@@ -12,7 +12,7 @@
 
 #include "parser.h"
 
-bool	is_empty(char *string)
+bool	is_empty(const char *string)
 {
 	int	i;
 
@@ -26,27 +26,7 @@ bool	is_empty(char *string)
 	return (true);
 }
 
-int	skip_spaces(char *string)
-{
-	int	i;
-
-	i = 0;
-	while (string[i] == ' ')
-		i++;
-	return (i);
-}
-
-int	next_info(char *string)
-{
-	int	i;
-
-	i = 0;
-	while (string[i] != ' ')
-		i++;
-	return (i + skip_spaces(string + i));
-}
-
-bool	ft_isint(char *str)
+bool	ft_isint(const char *str)
 {
 	int	i;
 
