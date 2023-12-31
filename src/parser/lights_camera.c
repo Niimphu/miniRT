@@ -22,8 +22,8 @@ int	new_ambience(char **raw_input, t_scene *scene)
 	if (strarray_size(raw_input) != 2)
 		return (ft_perror("error: ambient light: two sets of info required"),
 			FAIL);
-	scene->a_light = ft_calloc(1, sizeof(t_ambience));
-	ambience = scene->a_light;
+	scene->ambience = ft_calloc(1, sizeof(t_ambience));
+	ambience = scene->ambience;
 	if (!ambience)
 		return (FAIL);
 	if (!ft_isfloat(raw_input[0]))

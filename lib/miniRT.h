@@ -44,7 +44,7 @@ typedef struct s_vars
 
 typedef struct s_scene
 {
-	t_ambience	*a_light;
+	t_ambience	*ambience;
 	t_camera	*camera;
 	t_light		*light;
 	t_list		*spheres;

@@ -42,7 +42,7 @@ static t_rt	*new_rt(void)
 	rt->scene = ft_calloc(1, sizeof(t_scene));
 	if (!rt->scene)
 		return (NULL);
-	rt->scene->a_light = NULL;
+	rt->scene->ambience = NULL;
 	rt->scene->camera = NULL;
 	rt->scene->light = NULL;
 	rt->scene->spheres = NULL;
