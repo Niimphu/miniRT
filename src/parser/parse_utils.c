@@ -40,6 +40,31 @@ bool	ft_isint(const char *str)
 	return (true);
 }
 
+bool	ft_isfloat(const char *str)
+{
+	int	i;
+	int	digits;
+
+	i = 0;
+	digits = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (ft_isdigit(str[i]))
+	{
+		digits++;
+		i++;
+	}
+	if (str[i] == '.')
+	{
+		i++;
+		if (!ft_isdigit(str[i]))
+			return (false);
+		while (ft_isdigit(str[i]))
+			i++;
+	}
+	return (digits > 0 && !str[i]);
+}
+
 char	*trim_nl(char *str)
 {
 	int	i;

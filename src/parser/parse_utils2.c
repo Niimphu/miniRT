@@ -13,31 +13,6 @@
 #include "parser.h"
 #include "../free/free.h"
 
-bool	is_valid_float(const char *str)
-{
-	int	i;
-	int	digits;
-
-	i = 0;
-	digits = 0;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (ft_isdigit(str[i]))
-	{
-		digits++;
-		i++;
-	}
-	if (str[i] == '.')
-	{
-		i++;
-		if (!ft_isdigit(str[i]))
-			return (false);
-		while (ft_isdigit(str[i]))
-			i++;
-	}
-	return (digits > 0 && !str[i]);
-}
-
 float	ft_atof(const char *str)
 {
 	float	result;
@@ -78,7 +53,7 @@ unsigned int	*atorgb(char *string)
 		|| !ft_isint(str_rgb[G]) || !ft_isint(str_rgb[B]))
 		return (free_string_array(&str_rgb),
 				ft_perror("error: ambient light: invalid RGB format"), NULL);
-	rgb = ft_calloc(sizeof(float), 3);
+	rgb = ft_calloc(3, sizeof(unsigned int));
 	if (!rgb)
 		return (free_string_array(&str_rgb), NULL);
 	rgb[R] = ft_atoi(str_rgb[R]);
@@ -90,4 +65,26 @@ unsigned int	*atorgb(char *string)
 		return (ft_perror("error: ambient light: invalid RGB values"),
 				free(rgb), NULL);
 	return (rgb);
+}
+
+float	*atoxyz(char *string)
+{
+	float	*xyz;
+	char	**str_xyz;
+
+	str_xyz = ft_split(string, ',');
+	if (!str_xyz)
+		return (NULL);
+	if (strarray_size(str_xyz) != 3 || !ft_isfloat(str_xyz[R])
+		|| !ft_isfloat(str_xyz[G]) || !ft_isfloat(str_xyz[B]))
+		return (free_string_array(&str_xyz),
+				ft_perror("error: ambient light: invalid vector format"), NULL);
+	xyz = ft_calloc(3, sizeof(float));
+	if (!xyz)
+		return (free_string_array(&str_xyz), NULL);
+	xyz[R] = ft_atof(str_xyz[R]);
+	xyz[G] = ft_atof(str_xyz[G]);
+	xyz[B] = ft_atof(str_xyz[B]);
+	free_string_array(&str_xyz);
+	return (xyz);
 }

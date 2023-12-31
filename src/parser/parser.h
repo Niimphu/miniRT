@@ -29,8 +29,9 @@ bool			ft_isint(const char *str);
 char			*trim_nl(char *str);
 
 float			ft_atof(const char *str);
-bool			is_valid_float(const char *str);
+bool			ft_isfloat(const char *str);
 unsigned int	*atorgb(char *string);
+float			*atoxyz(char *string);
 
 int				new_ambience(char **raw_input, t_scene *scene);
 int				new_camera(char **raw_input, t_scene *scene);
