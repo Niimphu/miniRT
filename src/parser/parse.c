@@ -14,20 +14,20 @@
 
 #define END 1
 
-static int	read_file(int fd, t_rt *rt);
+static int	parse_by_line(int fd, t_rt *rt);
 
 int	parse(char *filename, t_rt *rt)
 {
 	int	fd;
 
 	fd = open_file(filename);
-	if (fd == FAIL || read_file(fd, rt) == FAIL)
+	if (fd == FAIL || parse_by_line(fd, rt) == FAIL)
 		return (close(fd), FAIL);
 	close(fd);
 	return (0);
 }
 
-static int	read_file(int fd, t_rt *rt)
+static int	parse_by_line(int fd, t_rt *rt)
 {
 	char	*line;
 	int		status;
