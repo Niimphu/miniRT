@@ -55,6 +55,7 @@ bool	ft_isint(char *str)
 	{
 		if (!ft_isdigit(str[i]))
 			return (false);
+		i++;
 	}
 	return (true);
 }
