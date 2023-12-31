@@ -21,11 +21,11 @@ int	new_ambience(char **raw_input, t_scene *scene)
 
 	if (strarray_size(raw_input) != 2)
 		return (FAIL);
-	scene->a_light = ft_calloc(sizeof(t_ambience), 1);
+	scene->a_light = ft_calloc(1, sizeof(t_ambience));
 	ambience = scene->a_light;
 	if (!ambience)
 		return (FAIL);
-	if (!is_valid_float(raw_input[0]))
+	if (!ft_isfloat(raw_input[0]))
 		return (ft_perror("error: ambient light: invalid float"), FAIL);
 	ambience->lighting = ft_atof(raw_input[0]);
 	if (ambience->lighting < 0.0 || ambience->lighting > 1.0)

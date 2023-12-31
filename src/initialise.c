@@ -16,7 +16,7 @@ void	create_window(t_vars *mlx_data);
 
 int	initialise(t_rt *rt)
 {
-	rt->mlx_data = ft_calloc(sizeof(t_vars), 1);
+	rt->mlx_data = ft_calloc(1, sizeof(t_vars));
 	if (!rt->mlx_data)
 		return (FAIL);
 	rt->mlx_data->mlx = mlx_init();

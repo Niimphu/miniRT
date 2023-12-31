@@ -36,10 +36,10 @@ static t_rt	*new_rt(void)
 {
 	t_rt	*rt;
 
-	rt = ft_calloc(sizeof(t_rt), 1);
+	rt = ft_calloc(1, sizeof(t_rt));
 	if (!rt)
 		return (NULL);
-	rt->scene = ft_calloc(sizeof(t_scene), 1);
+	rt->scene = ft_calloc(1, sizeof(t_scene));
 	if (!rt->scene)
 		return (NULL);
 	rt->scene->a_light = NULL;
