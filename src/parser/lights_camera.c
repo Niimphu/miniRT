@@ -24,6 +24,7 @@ int	new_ambience(char **raw_input, t_scene *scene)
 	ambience = scene->ambience;
 	if (!ambience)
 		return (FAIL);
+	ambience->colour = NULL;
 	if (!ft_isfloat(raw_input[0]))
 		return (ft_perror("error: ambient light: invalid lighting ratio"),
 			FAIL);
@@ -47,6 +48,7 @@ int	new_camera(char **raw_input, t_scene *scene)
 	camera = scene->camera;
 	if (!camera)
 		return (FAIL);
+	camera->orientation = NULL;
 	camera->view_point = atoxyz(raw_input[0]);
 	if (!camera->view_point)
 		return (ft_perror("error: camera: invalid viewpoint"), FAIL);
@@ -71,6 +73,7 @@ int	new_light(char **raw_input, t_scene *scene)
 	light = scene->light;
 	if (!light)
 		return (FAIL);
+	light->colour = NULL;
 	light->point = atoxyz(raw_input[0]);
 	if (!light->point)
 		return (ft_perror("error: light: invalid light point"), FAIL);
