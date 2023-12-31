@@ -20,7 +20,8 @@ int	new_ambience(char **raw_input, t_scene *scene)
 	t_ambience	*ambience;
 
 	if (strarray_size(raw_input) != 2)
-		return (FAIL);
+		return (ft_perror("error: ambient light: two sets of info required"),
+			FAIL);
 	scene->a_light = ft_calloc(1, sizeof(t_ambience));
 	ambience = scene->a_light;
 	if (!ambience)
@@ -39,8 +40,25 @@ int	new_ambience(char **raw_input, t_scene *scene)
 
 int	new_camera(char **raw_input, t_scene *scene)
 {
-	(void)raw_input;
-	(void)scene;
+	t_camera	*camera;
+
+	if (strarray_size(raw_input) != 3)
+		return (ft_perror("error: camera: three sets of info required"), FAIL);
+	scene->camera = ft_calloc(1, sizeof(t_camera));
+	camera = scene->camera;
+	if (!camera)
+		return (FAIL);
+	camera->view_point = atoxyz(raw_input[0]);
+	if (!camera->view_point)
+		return (ft_perror("error: camera: invalid viewpoint"), FAIL);
+	camera->orientation = atoxyz(raw_input[1]);
+	if (!camera->orientation || !is_normalised(camera->orientation))
+		return (ft_perror("error: camera: invalid orientation"), FAIL);
+	if (!ft_isint(raw_input[2]))
+		return (ft_perror("error: camera: invalid field of view"), FAIL);
+	camera->fov = ft_atoi(raw_input[2]);
+	if (camera->fov < 0 || camera->fov > 180)
+		return (ft_perror("error: camera: invalid field of view angle"), FAIL);
 	return (OK);
 }
 

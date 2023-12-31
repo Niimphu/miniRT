@@ -65,6 +65,14 @@ bool	ft_isfloat(const char *str)
 	return (digits > 0 && !str[i]);
 }
 
+bool	is_normalised(t_vector *vector)
+{
+	if (vector->x < 0.0f || vector->x > 1.0f || vector->y < 0.0f
+		|| vector->y > 1.0f || vector->z < 0.0f || vector->z > 1.0f)
+		return (false);
+	return (true);
+}
+
 char	*trim_nl(char *str)
 {
 	int	i;

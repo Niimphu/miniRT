@@ -14,17 +14,19 @@
 # define ELEMENT_H
 
 # include "../src/colour/colour.h"
+# include "../src/math/math_utils.h"
 
-typedef struct s_ambience
+typedef struct	s_ambience
 {
-	float	lighting;
-	t_rgb	*colour;
+	float		lighting;
+	t_rgb		*colour;
 }				t_ambience;
 
-typedef struct s_camera
+typedef struct	s_camera
 {
-
-
+	t_vector	*view_point;
+	t_vector	*orientation;
+	int			fov;
 }				t_camera;
 
 typedef struct s_light

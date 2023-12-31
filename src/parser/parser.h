@@ -29,10 +29,11 @@ int		new_element(char *line, t_scene *scene);
 
 bool		is_empty(const char *string);
 bool		ft_isint(const char *str);
+bool		ft_isfloat(const char *str);
+bool		is_normalised(t_vector *vector);
 char		*trim_nl(char *str);
 
 float		ft_atof(const char *str);
-bool		ft_isfloat(const char *str);
 t_rgb		*atorgb(char *string);
 t_vector	*atoxyz(char *string);
 
