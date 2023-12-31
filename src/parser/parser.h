@@ -24,18 +24,19 @@
 
 int		new_element(char *line, t_scene *scene);
 
-bool	is_empty(const char *string);
-bool	ft_isint(const char *str);
-char	*trim_nl(char *str);
+bool			is_empty(const char *string);
+bool			ft_isint(const char *str);
+char			*trim_nl(char *str);
 
-float	ft_atof(const char *str);
-bool	is_valid_float(const char *str);
+float			ft_atof(const char *str);
+bool			is_valid_float(const char *str);
+unsigned int	*atorgb(char *string);
 
-int		new_ambience(char **raw_input, t_scene *scene);
-int		new_camera(char **raw_input, t_scene *scene);
-int		new_light(char **raw_input, t_scene *scene);
-int		new_sphere(char **raw_input, t_scene *scene);
-int		new_plane(char **raw_input, t_scene *scene);
-int		new_cylinder(char **raw_input, t_scene *scene);
+int				new_ambience(char **raw_input, t_scene *scene);
+int				new_camera(char **raw_input, t_scene *scene);
+int				new_light(char **raw_input, t_scene *scene);
+int				new_sphere(char **raw_input, t_scene *scene);
+int				new_plane(char **raw_input, t_scene *scene);
+int				new_cylinder(char **raw_input, t_scene *scene);
 
 #endif

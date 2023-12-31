@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "../free/free.h"
 
 bool	is_valid_float(const char *str)
 {
@@ -63,4 +64,30 @@ float	ft_atof(const char *str)
 		factor *= 0.1f;
 	}
 	return (sign * result);
+}
+
+unsigned int	*atorgb(char *string)
+{
+	unsigned int	*rgb;
+	char			**str_rgb;
+
+	str_rgb = ft_split(string, ',');
+	if (!str_rgb)
+		return (NULL);
+	if (strarray_size(str_rgb) != 3 || !ft_isint(str_rgb[R])
+		|| !ft_isint(str_rgb[G]) || !ft_isint(str_rgb[B]))
+		return (free_string_array(&str_rgb),
+				ft_perror("error: ambient light: invalid RGB format"), NULL);
+	rgb = ft_calloc(sizeof(float), 3);
+	if (!rgb)
+		return (free_string_array(&str_rgb), NULL);
+	rgb[R] = ft_atoi(str_rgb[R]);
+	rgb[G] = ft_atoi(str_rgb[G]);
+	rgb[B] = ft_atoi(str_rgb[B]);
+	free_string_array(&str_rgb);
+	if (rgb[R] < 0 || rgb[R] > 255 || rgb[G] < 0 || rgb[G] > 255
+		|| rgb[B] < 0 || rgb[B] > 255)
+		return (ft_perror("error: ambient light: invalid RGB values"),
+				free(rgb), NULL);
+	return (rgb);
 }
