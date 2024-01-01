@@ -45,3 +45,21 @@ void	free_plane(void *node)
 		plane = NULL;
 	}
 }
+
+void	free_cylinder(void *node)
+{
+	t_cylinder	*cylinder;
+
+	cylinder = (t_cylinder *)node;
+	if (cylinder)
+	{
+		if (cylinder->centre)
+			free(cylinder->centre);
+		if (cylinder->axis)
+			free(cylinder->axis);
+		if (cylinder->colour)
+			free(cylinder->colour);
+		free(cylinder);
+		cylinder = NULL;
+	}
+}

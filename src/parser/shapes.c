@@ -12,25 +12,24 @@
 
 #include "parser.h"
 
+static void	new_cylinder2(t_cylinder *cylinder, t_scene *scene);
+
 int	new_sphere(char **raw_input, t_scene *scene)
 {
 	t_sphere	*sphere;
 
 	if (strarray_size(raw_input) != 3)
-		return (ft_perror("error: sphere: three sets of info required"),
-			FAIL);
+		return (ft_perror("error: sphere: three sets of info required"), FAIL);
 	sphere = ft_calloc(1, sizeof(t_sphere));
 	if (!sphere)
 		return (FAIL);
 	sphere->colour = NULL;
 	sphere->centre = atoxyz(raw_input[0]);
 	if (!sphere->centre)
-		return (ft_perror("error: sphere: invalid light point"), FAIL);
-	if (!ft_isfloat(raw_input[1]))
+		return (ft_perror("error: sphere: invalid centre"), FAIL);
+	if (!ft_isfloat(raw_input[1]) || ft_atof(raw_input[1]) < 0.0)
 		return (ft_perror("error: sphere: invalid diameter"), FAIL);
 	sphere->diameter = ft_atof(raw_input[1]);
-	if (sphere->diameter < 0.0)
-		return (ft_perror("error: sphere: invalid diameter"), FAIL);
 	sphere->colour = atorgb(raw_input[2]);
 	if (!sphere->colour)
 		return (ft_perror("error: sphere: invalid RGB format"), FAIL);
@@ -46,8 +45,7 @@ int	new_plane(char **raw_input, t_scene *scene)
 	t_plane	*plane;
 
 	if (strarray_size(raw_input) != 3)
-		return (ft_perror("error: plane: three sets of info required"),
-			FAIL);
+		return (ft_perror("error: plane: three sets of info required"), FAIL);
 	plane = ft_calloc(1, sizeof(t_plane));
 	if (!plane)
 		return (FAIL);
@@ -70,7 +68,38 @@ int	new_plane(char **raw_input, t_scene *scene)
 
 int	new_cylinder(char **raw_input, t_scene *scene)
 {
-	(void)raw_input;
-	(void)scene;
-	return (OK);
+	t_cylinder	*cylinder;
+
+	if (strarray_size(raw_input) != 5)
+		return (ft_perror("error: cylinder: five sets of info required"),
+			FAIL);
+	cylinder = ft_calloc(1, sizeof(t_cylinder));
+	if (!cylinder)
+		return (FAIL);
+	cylinder->colour = NULL;
+	cylinder->axis = NULL;
+	cylinder->centre = atoxyz(raw_input[0]);
+	if (!cylinder->centre)
+		return (ft_perror("error: cylinder: invalid centre"), FAIL);
+	cylinder->axis = atoxyz(raw_input[1]);
+	if (!cylinder->axis || !is_normalised(cylinder->axis))
+		return (ft_perror("error: cylinder: invalid axis"), FAIL);
+	if (!ft_isfloat(raw_input[2]) || ft_atof(raw_input[2]) < 0.0f)
+		return (ft_perror("error: cylinder: invalid diameter"), FAIL);
+	cylinder->diameter = ft_atof(raw_input[2]);
+	if (!ft_isfloat(raw_input[3]) || ft_atof(raw_input[3]) < 0.0f)
+		return (ft_perror("error: cylinder: invalid height"), FAIL);
+	cylinder->height = ft_atof(raw_input[3]);
+	cylinder->colour = atorgb(raw_input[4]);
+	if (!cylinder->colour)
+		return (ft_perror("error: cylinder: invalid RGB format"), FAIL);
+	return (new_cylinder2(cylinder, scene), OK);
+}
+
+static void	new_cylinder2(t_cylinder *cylinder, t_scene *scene)
+{
+	if (!(scene->cylinders))
+		scene->cylinders = ft_lstnew(cylinder);
+	else
+		ft_lstadd_back(&(scene->cylinders), ft_lstnew(cylinder));
 }

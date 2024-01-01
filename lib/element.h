@@ -52,7 +52,11 @@ typedef struct s_plane
 
 typedef struct s_cylinder
 {
-
+	t_vector	*centre;
+	t_vector	*axis;
+	float		diameter;
+	float		height;
+	t_rgb		*colour;
 }				t_cylinder;
 
 #endif

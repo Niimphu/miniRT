@@ -50,6 +50,8 @@ static void	free_scene(t_scene **scene)
 			ft_lstclear(&(*scene)->spheres, free_sphere);
 		if ((*scene)->planes)
 			ft_lstclear(&(*scene)->planes, free_plane);
+		if ((*scene)->cylinders)
+			ft_lstclear(&(*scene)->cylinders, free_cylinder);
 		free(*scene);
 	}
 	scene = NULL;

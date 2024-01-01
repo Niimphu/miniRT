@@ -13,7 +13,7 @@
 #ifndef FREE_H
 # define FREE_H
 
-#include "../../lib/miniRT.h"
+# include "../../lib/miniRT.h"
 
 void	free_rt(t_rt **rt);
 void	free_string(char **string);
@@ -25,5 +25,6 @@ void	free_light(t_light **light);
 
 void	free_sphere(void *node);
 void	free_plane(void *node);
+void	free_cylinder(void *node);
 
 #endif
