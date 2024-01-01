@@ -25,7 +25,7 @@
 # define PLANE 5
 # define CYLINDER 6
 
-int		new_element(char *line, t_scene *scene);
+int			new_element(char *line, t_scene *scene);
 
 bool		is_empty(const char *string);
 bool		ft_isint(const char *str);

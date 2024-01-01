@@ -16,13 +16,13 @@
 # include "../src/colour/colour.h"
 # include "../src/math/math_utils.h"
 
-typedef struct	s_ambience
+typedef struct s_ambience
 {
 	float		lighting;
 	t_rgb		*colour;
 }				t_ambience;
 
-typedef struct	s_camera
+typedef struct s_camera
 {
 	t_vector	*view_point;
 	t_vector	*orientation;
@@ -38,7 +38,9 @@ typedef struct s_light
 
 typedef struct s_sphere
 {
-
+	t_vector	*centre;
+	float		diameter;
+	t_rgb		*colour;
 }				t_sphere;
 
 typedef struct s_plane

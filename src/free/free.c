@@ -46,6 +46,8 @@ static void	free_scene(t_scene **scene)
 			free_camera(&((*scene)->camera));
 		if ((*scene)->light)
 			free_light(&((*scene)->light));
+		if ((*scene)->spheres)
+			ft_lstclear(&(*scene)->spheres, free_sphere);
 		free(*scene);
 	}
 	scene = NULL;

@@ -10,3 +10,20 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "free.h"
+
+void	free_sphere(void *node)
+{
+	t_sphere	*sphere;
+
+	sphere = (t_sphere *)node;
+	if (sphere)
+	{
+		if (sphere->centre)
+			free(sphere->centre);
+		if (sphere->colour)
+			free(sphere->colour);
+		free(sphere);
+		sphere = NULL;
+	}
+}

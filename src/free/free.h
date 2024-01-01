@@ -23,4 +23,6 @@ void	free_ambience(t_ambience **ambience);
 void	free_camera(t_camera **camera);
 void	free_light(t_light **light);
 
+void	free_sphere(void *node);
+
 #endif

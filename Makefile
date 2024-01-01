@@ -22,6 +22,7 @@ SRC =	main.c \
 		error.c \
 		free/free.c \
 		free/free_lights_camera.c \
+		free/free_shapes.c \
 		quit.c \
 		utils.c
 
