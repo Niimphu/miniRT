@@ -22,8 +22,7 @@ t_rgb	*atorgb(char *string)
 		return (NULL);
 	if (strarray_size(str_rgb) != 3 || !ft_isint(str_rgb[R])
 		|| !ft_isint(str_rgb[G]) || !ft_isint(str_rgb[B]))
-		return (free_string_array(&str_rgb),
-				ft_perror("error: ambient light: invalid RGB format"), NULL);
+		return (free_string_array(&str_rgb), NULL);
 	rgb = ft_calloc(3, sizeof(unsigned int));
 	if (!rgb)
 		return (free_string_array(&str_rgb), NULL);
@@ -33,8 +32,7 @@ t_rgb	*atorgb(char *string)
 	free_string_array(&str_rgb);
 	if (rgb->r < 0 || rgb->r > 255 || rgb->g < 0 || rgb->g > 255
 		|| rgb->b < 0 || rgb->b > 255)
-		return (ft_perror("error: ambient light: invalid RGB values"),
-				free(rgb), NULL);
+		return (free(rgb), NULL);
 	return (rgb);
 }
 
@@ -48,8 +46,7 @@ t_vector	*atoxyz(char *string)
 		return (NULL);
 	if (strarray_size(str_xyz) != 3 || !ft_isfloat(str_xyz[R])
 		|| !ft_isfloat(str_xyz[G]) || !ft_isfloat(str_xyz[B]))
-		return (free_string_array(&str_xyz),
-				ft_perror("error: ambient light: invalid vector format"), NULL);
+		return (free_string_array(&str_xyz), NULL);
 	xyz = ft_calloc(3, sizeof(float));
 	if (!xyz)
 		return (free_string_array(&str_xyz), NULL);
