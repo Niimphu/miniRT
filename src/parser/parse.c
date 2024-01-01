@@ -26,6 +26,10 @@ int	parse(char *filename, t_rt *rt)
 	close(fd);
 	if (!rt->scene->camera)
 		return (ft_perror("error: scene: missing camera"), FAIL);
+	if (!rt->scene->light && !rt->scene->ambience)
+		return (ft_perror("error: scene: missing lighting"), FAIL);
+	if (!rt->scene->spheres && !rt->scene->planes && !rt->scene->cylinders)
+		return (ft_perror("error: scene: missing objects"), FAIL);
 	return (OK);
 }
 
