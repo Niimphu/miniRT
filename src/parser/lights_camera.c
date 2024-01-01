@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "../free/free.h"
 
 int	new_ambience(char **raw_input, t_scene *scene)
 {
@@ -79,7 +78,7 @@ int	new_light(char **raw_input, t_scene *scene)
 		return (ft_perror("error: light: invalid light point"), FAIL);
 	if (!ft_isfloat(raw_input[1]))
 		return (ft_perror("error: light: invalid brightness"), FAIL);
-	light->brightness = ft_atof(raw_input[2]);
+	light->brightness = ft_atof(raw_input[1]);
 	if (light->brightness < 0.0 || light->brightness > 1.0)
 		return (ft_perror("error: light: invalid brightness"), FAIL);
 	light->colour = atorgb(raw_input[2]);
