@@ -17,7 +17,7 @@ int	new_ambience(char **raw_input, t_scene *scene)
 	t_ambience	*ambience;
 
 	if (strarray_size(raw_input) != 2)
-		return (ft_perror("error: ambient light: two sets of info required"),
+		return (ft_perror("error: ambient light: two sets of info needed"),
 			FAIL);
 	scene->ambience = ft_calloc(1, sizeof(t_ambience));
 	ambience = scene->ambience;
@@ -42,7 +42,7 @@ int	new_camera(char **raw_input, t_scene *scene)
 	t_camera	*camera;
 
 	if (strarray_size(raw_input) != 3)
-		return (ft_perror("error: camera: three sets of info required"), FAIL);
+		return (ft_perror("error: camera: three sets of info needed"), FAIL);
 	scene->camera = ft_calloc(1, sizeof(t_camera));
 	camera = scene->camera;
 	if (!camera)
@@ -67,7 +67,7 @@ int	new_light(char **raw_input, t_scene *scene)
 	t_light	*light;
 
 	if (strarray_size(raw_input) != 3)
-		return (ft_perror("error: light: three sets of info required"), FAIL);
+		return (ft_perror("error: light: three sets of info needed"), FAIL);
 	scene->light = ft_calloc(1, sizeof(t_light));
 	light = scene->light;
 	if (!light)

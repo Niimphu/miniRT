@@ -19,7 +19,7 @@ int	new_sphere(char **raw_input, t_scene *scene)
 	t_sphere	*sphere;
 
 	if (strarray_size(raw_input) != 3)
-		return (ft_perror("error: sphere: three sets of info required"), FAIL);
+		return (ft_perror("error: sphere: three sets of info needed"), FAIL);
 	sphere = ft_calloc(1, sizeof(t_sphere));
 	if (!sphere)
 		return (FAIL);
@@ -45,7 +45,7 @@ int	new_plane(char **raw_input, t_scene *scene)
 	t_plane	*plane;
 
 	if (strarray_size(raw_input) != 3)
-		return (ft_perror("error: plane: three sets of info required"), FAIL);
+		return (ft_perror("error: plane: three sets of info needed"), FAIL);
 	plane = ft_calloc(1, sizeof(t_plane));
 	if (!plane)
 		return (FAIL);
@@ -71,8 +71,7 @@ int	new_cylinder(char **raw_input, t_scene *scene)
 	t_cylinder	*cylinder;
 
 	if (strarray_size(raw_input) != 5)
-		return (ft_perror("error: cylinder: five sets of info required"),
-			FAIL);
+		return (ft_perror("error: cylinder: five sets info needed"), FAIL);
 	cylinder = ft_calloc(1, sizeof(t_cylinder));
 	if (!cylinder)
 		return (FAIL);

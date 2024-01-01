@@ -15,11 +15,11 @@
 
 # include "../../lib/miniRT.h"
 
-typedef struct	s_rgb
+typedef struct s_rgb
 {
-	unsigned	r;
-	unsigned	g;
-	unsigned	b;
+	unsigned int	r;
+	unsigned int	g;
+	unsigned int	b;
 }				t_rgb;
 
 #endif
