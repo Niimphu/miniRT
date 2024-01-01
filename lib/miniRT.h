@@ -71,6 +71,6 @@ void	quit(t_rt *rt);
 
 void	ft_perror(char *message);
 
-int	strarray_size(char **array);
+int		strarray_size(char **array);
 
 #endif
