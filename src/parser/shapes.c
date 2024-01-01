@@ -43,8 +43,28 @@ int	new_sphere(char **raw_input, t_scene *scene)
 
 int	new_plane(char **raw_input, t_scene *scene)
 {
-	(void)raw_input;
-	(void)scene;
+	t_plane	*plane;
+
+	if (strarray_size(raw_input) != 3)
+		return (ft_perror("error: plane: three sets of info required"),
+			FAIL);
+	plane = ft_calloc(1, sizeof(t_plane));
+	if (!plane)
+		return (FAIL);
+	plane->colour = NULL;
+	plane->point = atoxyz(raw_input[0]);
+	if (!plane->point)
+		return (ft_perror("error: plane: invalid point"), FAIL);
+	plane->norm = atoxyz(raw_input[1]);
+	if (!plane->norm || !is_normalised(plane->norm))
+		return (ft_perror("error: plane: invalid norm vector"), FAIL);
+	plane->colour = atorgb(raw_input[2]);
+	if (!plane->colour)
+		return (ft_perror("error: plane: invalid RGB format"), FAIL);
+	if (!(scene->planes))
+		scene->planes = ft_lstnew(plane);
+	else
+		ft_lstadd_back(&(scene->planes), ft_lstnew(plane));
 	return (OK);
 }
 

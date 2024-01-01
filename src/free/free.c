@@ -48,6 +48,8 @@ static void	free_scene(t_scene **scene)
 			free_light(&((*scene)->light));
 		if ((*scene)->spheres)
 			ft_lstclear(&(*scene)->spheres, free_sphere);
+		if ((*scene)->planes)
+			ft_lstclear(&(*scene)->planes, free_plane);
 		free(*scene);
 	}
 	scene = NULL;

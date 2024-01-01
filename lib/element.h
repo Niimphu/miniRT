@@ -45,7 +45,9 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-
+	t_vector	*point;
+	t_vector	*norm;
+	t_rgb		*colour;
 }				t_plane;
 
 typedef struct s_cylinder

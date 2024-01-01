@@ -27,3 +27,21 @@ void	free_sphere(void *node)
 		sphere = NULL;
 	}
 }
+
+void	free_plane(void *node)
+{
+	t_plane	*plane;
+
+	plane = (t_plane *)node;
+	if (plane)
+	{
+		if (plane->point)
+			free(plane->point);
+		if (plane->norm)
+			free(plane->norm);
+		if (plane->colour)
+			free(plane->colour);
+		free(plane);
+		plane = NULL;
+	}
+}

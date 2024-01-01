@@ -24,5 +24,6 @@ void	free_camera(t_camera **camera);
 void	free_light(t_light **light);
 
 void	free_sphere(void *node);
+void	free_plane(void *node);
 
 #endif
