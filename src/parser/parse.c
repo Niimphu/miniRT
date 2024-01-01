@@ -24,7 +24,9 @@ int	parse(char *filename, t_rt *rt)
 	if (fd == FAIL || parse_by_line(fd, rt) == FAIL)
 		return (close(fd), FAIL);
 	close(fd);
-	return (0);
+	if (!rt->scene->camera)
+		return (ft_perror("error: scene: missing camera"), FAIL);
+	return (OK);
 }
 
 static int	parse_by_line(int fd, t_rt *rt)
@@ -44,5 +46,5 @@ static int	parse_by_line(int fd, t_rt *rt)
 	}
 	if (status == FAIL)
 		return (FAIL);
-	return (0);
+	return (OK);
 }
