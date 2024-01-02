@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "parser.h"
+#include "../printer/printer.h" //debug
 
 #define END 1
 
@@ -30,6 +31,7 @@ int	parse(char *filename, t_rt *rt)
 		return (ft_perror("error: scene: missing lighting"), FAIL);
 	if (!rt->scene->spheres && !rt->scene->planes && !rt->scene->cylinders)
 		return (ft_perror("error: scene: missing objects"), FAIL);
+	print_scene_info(rt->scene);
 	return (OK);
 }
 

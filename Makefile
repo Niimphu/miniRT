@@ -24,7 +24,8 @@ SRC =	main.c \
 		free/free_lights_camera.c \
 		free/free_shapes.c \
 		quit.c \
-		utils.c
+		utils.c \
+		printer/printer.c
 
 OBJ =	$(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
