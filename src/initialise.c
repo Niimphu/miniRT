@@ -12,7 +12,7 @@
 
 #include "../lib/miniRT.h"
 
-void	create_window(t_vars *mlx_data);
+static void	create_window(t_vars *mlx_data);
 
 int	initialise(t_rt *rt)
 {
@@ -24,7 +24,7 @@ int	initialise(t_rt *rt)
 	return (0);
 }
 
-void	create_window(t_vars *mlx_data)
+static void	create_window(t_vars *mlx_data)
 {
 	const int	x = 1280;
 	const int	y = 720;
