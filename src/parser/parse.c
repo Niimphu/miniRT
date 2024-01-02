@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/15 17:51:10 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/02 18:11:50 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	parse(char *filename, t_rt *rt)
 		return (close(fd), FAIL);
 	close(fd);
 	if (!rt->scene->camera)
-		return (ft_perror("error: scene: missing camera"), FAIL);
+		return (ft_perror("Error\nScene: missing camera"), FAIL);
 	if (!rt->scene->light && !rt->scene->ambience)
-		return (ft_perror("error: scene: missing lighting"), FAIL);
+		return (ft_perror("Error\nScene: missing lighting"), FAIL);
 	if (!rt->scene->spheres && !rt->scene->planes && !rt->scene->cylinders)
-		return (ft_perror("error: scene: missing objects"), FAIL);
+		return (ft_perror("Error\nScene: missing objects"), FAIL);
 	print_scene_info(rt->scene);
 	return (OK);
 }
