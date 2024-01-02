@@ -38,21 +38,31 @@ int	new_element(char *line, t_scene *scene)
 
 static int	create_element(int id, char **raw_input, t_scene *scene)
 {
-	int	status;
-
 	if (id == AMBIENCE)
-		status = new_ambience(raw_input, scene);
+	{
+		if (scene->ambience)
+			return (ft_perror("error: multiple ambient lighting elements"),
+				FAIL);
+		return (new_ambience(raw_input, scene));
+	}
 	else if (id == CAMERA)
-		status = new_camera(raw_input, scene);
+	{
+		if (scene->ambience)
+			return (ft_perror("error: multiple camera elements"), FAIL);
+		return (new_camera(raw_input, scene));
+	}
 	else if (id == LIGHT)
-		status = new_light(raw_input, scene);
+	{
+		if (scene->ambience)
+			return (ft_perror("error: multiple light elements"), FAIL);
+		return (new_light(raw_input, scene));
+	}
 	else if (id == SPHERE)
-		status = new_sphere(raw_input, scene);
+		return (new_sphere(raw_input, scene));
 	else if (id == PLANE)
-		status = new_plane(raw_input, scene);
+		return (new_plane(raw_input, scene));
 	else
-		status = new_cylinder(raw_input, scene);
-	return (status);
+		return (new_cylinder(raw_input, scene));
 }
 
 static int	get_element_id(char *string)
