@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialise.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/12 18:03:25 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/03 13:17:18 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	initialise(t_rt *rt)
 
 static void	create_window(t_vars *mlx_data)
 {
-	const int	x = 1280;
-	const int	y = 720;
+	mlx_data->win_x = 1280;
+	mlx_data->win_y = 720;
 
-	mlx_data->win = mlx_new_window(mlx_data->mlx, x, y, "Ray.");
+	mlx_data->win = mlx_new_window(mlx_data->mlx, mlx_data->win_x, mlx_data->win_y, "Ray.");
 }

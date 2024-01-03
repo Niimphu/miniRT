@@ -47,13 +47,13 @@ static int	create_element(int id, char **raw_input, t_scene *scene)
 	}
 	else if (id == CAMERA)
 	{
-		if (scene->ambience)
+		if (scene->camera)
 			return (ft_perror("Error\nMultiple camera elements"), FAIL);
 		return (new_camera(raw_input, scene));
 	}
 	else if (id == LIGHT)
 	{
-		if (scene->ambience)
+		if (scene->light)
 			return (ft_perror("Error\nMultiple light elements"), FAIL);
 		return (new_light(raw_input, scene));
 	}
