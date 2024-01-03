@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   free.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/03 16:38:22 by yiwong           ###   ########.fr       */
+/*   Created: 2023/12/15 19:22:07 by yiwong            #+#    #+#             */
+/*   Updated: 2023/12/15 19:22:07 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/miniRT.h"
-#include "free/free.h"
+#ifndef FREE_H
+# define FREE_H
 
-int	window_closed(t_rt *rt)
-{
-	mlx_clear_window(rt->mlx_data->mlx, rt->mlx_data->win);
-	quit(rt);
-	return (0);
-}
+# include "../../lib/miniRT.h"
 
-void	quit(t_rt *rt)
-{
-	mlx_loop_end(rt->mlx_data->mlx);
-	mlx_destroy_display(rt->mlx_data->mlx);
-	free_rt(&rt);
-	exit(0);
-}
+void	free_rt(t_rt **rt);
+void	free_string(char **string);
+void	free_string_array(char ***array);
+
+void	free_ambience(t_ambience **ambience);
+void	free_camera(t_camera **camera);
+void	free_light(t_light **light);
+
+void	free_sphere(void *node);
+void	free_plane(void *node);
+void	free_cylinder(void *node);
+
+#endif

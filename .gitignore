@@ -1,14 +1,6 @@
 miniRT
-*.o
-obj/*.o
-obj/parser/*.o
-lib/libft/*.o
-lib/libft/libft.a
-lib/mlx_linux/libmlx.a
-lib/mlx_linux/libmlx_Linux.a
+**/*.o
+**/*.a
 lib/mlx_linux/obj/
 .idea/
 *.dSYM/
-lib/mlx_linux/libmlx_darwin.a
-map
-

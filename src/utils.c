@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/03 16:38:22 by yiwong           ###   ########.fr       */
+/*   Created: 2023/12/26 13:54:34 by yiwong            #+#    #+#             */
+/*   Updated: 2023/12/26 13:54:34 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../lib/miniRT.h"
-#include "free/free.h"
 
-int	window_closed(t_rt *rt)
+int	strarray_size(char **array)
 {
-	mlx_clear_window(rt->mlx_data->mlx, rt->mlx_data->win);
-	quit(rt);
-	return (0);
-}
+	int	i;
 
-void	quit(t_rt *rt)
-{
-	mlx_loop_end(rt->mlx_data->mlx);
-	mlx_destroy_display(rt->mlx_data->mlx);
-	free_rt(&rt);
-	exit(0);
+	i = 0;
+	if (!array[0])
+		return (0);
+	while (array[i])
+		i++;
+	return (i);
 }

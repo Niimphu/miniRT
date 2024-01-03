@@ -11,11 +11,21 @@ OBJ_DIR = obj
 SRC =	main.c \
 		initialise.c \
 		parser/parse.c \
+		parser/parse_utils.c \
+		parser/parse_strconversions.c \
+		parser/new_element.c \
+		parser/lights_camera.c \
+		parser/shapes.c \
 		parser/file.c \
 		miniRT.c \
 		input_handler.c \
 		error.c \
-		quit.c
+		free/free.c \
+		free/free_lights_camera.c \
+		free/free_shapes.c \
+		quit.c \
+		utils.c \
+		printer/printer.c
 
 OBJ =	$(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
@@ -31,7 +41,7 @@ all: $(NAME)
 
 $(NAME): $(DEP) $(OBJ)
 	@make -sC $(MLX_DIR)
-	@make -sC $(LIBFT_DIR)
+	@make bonus -sC $(LIBFT_DIR)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $(NAME) $(LDFLAGS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c

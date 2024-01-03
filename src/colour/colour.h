@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   colour.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/03 16:38:22 by yiwong           ###   ########.fr       */
+/*   Created: 2023/12/31 19:34:43 by yiwong            #+#    #+#             */
+/*   Updated: 2023/12/31 19:34:43 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/miniRT.h"
-#include "free/free.h"
+#ifndef COLOUR_H
+# define COLOUR_H
 
-int	window_closed(t_rt *rt)
-{
-	mlx_clear_window(rt->mlx_data->mlx, rt->mlx_data->win);
-	quit(rt);
-	return (0);
-}
+# include "../../lib/miniRT.h"
 
-void	quit(t_rt *rt)
+typedef struct s_rgb
 {
-	mlx_loop_end(rt->mlx_data->mlx);
-	mlx_destroy_display(rt->mlx_data->mlx);
-	free_rt(&rt);
-	exit(0);
-}
+	unsigned int	r;
+	unsigned int	g;
+	unsigned int	b;
+}				t_rgb;
+
+#endif

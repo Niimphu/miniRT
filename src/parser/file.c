@@ -1,36 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
+/*   Updated: 2024/01/02 18:07:16 by yiwong           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../lib/miniRT.h"
 
 static bool	is_filename_valid(char *filename);
-static bool	ends_with_rt(char *filename);
+static bool	file_exists(char *filename);
 
 int	open_file(char *filename)
 {
 	int		fd;
 
+	if (!file_exists(filename))
+		return (FAIL);
 	if (!is_filename_valid(filename))
 		return (FAIL);
 	fd = open(filename, O_RDONLY);
 	if (fd == FAIL)
-		ft_putstr_fd("error: file could not be opened\n", 2);
+		ft_perror("Error\nFile could not be opened");
 	return (fd);
 }
 
 static bool	is_filename_valid(char *filename)
 {
-	if (ft_strchr(filename, '.') && !ends_with_rt(filename))
+	size_t	i;
+
+	i = ft_strlen(filename) - 3;
+	if (ft_strncmp(filename + i, ".rt", 4))
 	{
-		ft_putstr_fd("error: map must be of .rt format\n", 2);
+		ft_perror("Error\nMap must be of .rt format");
 		return (false);
 	}
 	return (true);
 }
 
-static bool	ends_with_rt(char *filename)
+static bool	file_exists(char *filename)
 {
-	int	i;
-
-	i = ft_strlen(filename - 3);
-	if (!ft_strncmp(filename + i, ".rt", 4))
-		return (true);
-	return (false);
+	if (access(filename, F_OK) != 0)
+	{
+		ft_perror("Error\nFile not found");
+		return (false);
+	}
+	return (true);
 }
