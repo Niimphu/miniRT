@@ -60,9 +60,10 @@ void	set_vector_to_single(t_vector *set, float n)
 	set->z = n;
 }
 
-void	free_vector(t_vector *del)
+void	free_vector(t_vector **del)
 {
-	free(del);
+	free(*del);
+	del = NULL;
 }
 
 float	vector_lenght(t_vector *vec)
