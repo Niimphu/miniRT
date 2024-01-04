@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/miniRT.h"
+#include "miniRT.h"
 
 int	key_pressed(int keycode, t_rt *rt)
 {

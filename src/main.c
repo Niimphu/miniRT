@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/miniRT.h"
-#include "free/free.h"
+#include "miniRT.h"
+#include "free.h"
 
 static t_rt	*new_rt(void);
 

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/miniRT.h"
+#include "miniRT.h"
 
 int	strarray_size(char **array)
 {

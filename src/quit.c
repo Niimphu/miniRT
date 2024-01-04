@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/miniRT.h"
-#include "free/free.h"
+#include "miniRT.h"
+#include "free.h"
 
 int	window_closed(t_rt *rt)
 {

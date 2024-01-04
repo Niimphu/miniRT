@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "../free/free.h"
 
 static int	get_element_id(char *string);
 static int	create_element(int id, char **raw_input, t_scene *scene);

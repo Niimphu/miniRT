@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/miniRT.h"
+#include "miniRT.h"
 
 static void	create_window(t_vars *mlx_data);
 

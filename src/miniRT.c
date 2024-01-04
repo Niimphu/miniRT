@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/miniRT.h"
-#include "math/math_utils.h"
+#include "miniRT.h"
+#include "math_utils.h"
 
 void draw_sphere(t_vars *mlx, t_sphere *sphere)
 {

@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "../printer/printer.h" //debug
+#include "printer.h" //debug
 
 #define END 1
 

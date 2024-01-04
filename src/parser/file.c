@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../lib/miniRT.h"
+#include "miniRT.h"
 
 static bool	is_filename_valid(char *filename);
 static bool	file_exists(char *filename);

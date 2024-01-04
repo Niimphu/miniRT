@@ -36,6 +36,13 @@ LIBFT_DIR = lib/libft
 
 LIB = $(LIBFT_DIR)/libft.a $(MLX_DIR)/libmlx.a
 
+CFLAGS +=	-I./lib \
+			-I./src/colour \
+			-I./src/free \
+			-I./src/math \
+			-I./src/parser \
+			-I./src/printer
+
 NAME = miniRT
 
 all: $(NAME)
