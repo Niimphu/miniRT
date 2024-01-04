@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:36:55 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/15 18:36:55 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/04 17:30:26 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ typedef struct s_camera
 {
 	t_vector	*view_point;
 	t_vector	*orientation;
-	int			fov;
+	int			fov_x;
+	int			fov_y;
 }				t_camera;
 
 typedef struct s_light

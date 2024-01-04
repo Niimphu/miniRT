@@ -29,5 +29,6 @@ static void	create_window(t_vars *mlx_data)
 	mlx_data->win_x = 1280;
 	mlx_data->win_y = 720;
 
-	mlx_data->win = mlx_new_window(mlx_data->mlx, mlx_data->win_x, mlx_data->win_y, "Ray.");
+	mlx_data->win = mlx_new_window(mlx_data->mlx, mlx_data->win_x,
+			mlx_data->win_y, "Ray.");
 }

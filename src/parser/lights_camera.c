@@ -56,8 +56,8 @@ int	new_camera(char **raw_input, t_scene *scene)
 		return (ft_perror("Error\nCamera: invalid orientation"), FAIL);
 	if (!ft_isint(raw_input[2]))
 		return (ft_perror("Error\nCamera: invalid field of view"), FAIL);
-	camera->fov = ft_atoi(raw_input[2]);
-	if (camera->fov < 0 || camera->fov > 180)
+	camera->fov_x = ft_atoi(raw_input[2]);
+	if (camera->fov_x < 0 || camera->fov_x > 180)
 		return (ft_perror("Error\nCamera: invalid field of view angle"), FAIL);
 	return (OK);
 }
