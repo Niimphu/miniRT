@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/03 21:36:03 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/01/04 17:30:26 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,43 @@ int raySphereIntersection(t_vector *ray_origin, t_vector *ray, t_sphere *sphere)
 	return discriminant >= 0;
 }
 
-void drawScene(t_vars *mlx, t_camera *camera, t_rt *rt) {
-	int x;
-	int	y;
-	t_vector ray;
+t_vector	rotate_ray_x(t_vars *data, t_camera *camera, int x)
+{
+	t_vector	result;
+	float		angle;
+
+	angle = (x - (data->win_x - 1 / 2)) * (camera->fov_x / (data->win_x - 1));
+	result.x = camera->view_point->x * cos(angle) + camera->view_point->z
+		* sin(angle);
+	result.z = -camera->view_point->x * sin(angle) + camera->view_point->z
+		* cos(angle);
+	result.x += camera->view_point->x;
+	result.y = camera->view_point->y;
+	result.z += camera->view_point->z;
+	return (result);
+}
+
+t_vector	rotate_ray_y(t_vars *data, t_camera *camera, int y, t_vector *vec)
+{
+	t_vector	result;
+	float		angle;
+
+	angle = (y - (data->win_y - 1 / 2)) * (camera->fov_y / (data->win_y - 1));
+	result.x = camera->view_point->x * cos(angle) + camera->view_point->z
+		* sin(angle);
+	result.z = -camera->view_point->x * sin(angle) + camera->view_point->z
+		* cos(angle);
+	result.x += camera->view_point->x;
+	result.y = camera->view_point->y;
+	result.z += camera->view_point->z;
+	return (result);
+}
+
+void	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
+{
+	int			x;
+	int			y;
+	t_vector	ray;
 
 	x = 0;
 	set_vector_to_single(&ray, 0);
@@ -72,12 +105,15 @@ void drawScene(t_vars *mlx, t_camera *camera, t_rt *rt) {
 		while (y < mlx->win_y)
 		{
 			// Calculate the direction vector for the current ray
-			set_vector_to(&ray, x - mlx->win_x - camera->view_point->x, y - mlx->win_y - camera->view_point->y, camera->fov - camera->view_point->z);
+			set_vector_to(&ray, x - camera->view_point->x,
+				y - camera->view_point->y,
+				camera->fov_x - camera->view_point->z);
 			// Normalize the ray vector
 			vector_normalize(&ray);
 			// Calculate the dot product between the camera orientation and the ray and
-			// draw the pixel if it is within the field of view of the camera
-			if (raySphereIntersection(camera->view_point, &ray, (t_sphere *)rt->scene->spheres->content))
+			// draw the pixel if it is within the field of view of the came
+			if (raySphereIntersection(camera->view_point, &ray,
+					(t_sphere *)rt->scene->spheres->content))
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFFFFFF);
 			y++;
 		}
@@ -109,7 +145,7 @@ int	raytrace(t_rt *rt)
 {
 	mlx_hook(rt->mlx_data->win, KeyPress, 1L << 0, key_pressed, rt);
 	mlx_hook(rt->mlx_data->win, DestroyNotify, 0L, window_closed, rt);
-	drawScene(rt->mlx_data, (t_camera *)rt->scene->camera, rt);
+	draw_scene(rt->mlx_data, (t_camera *)rt->scene->camera, rt);
 	/* draw_sphere(rt->mlx_data, (t_sphere *)rt->scene->spheres->content); */
 	// mlx_expose_hook(rt->mlx_data->win, draw, mlx_data);
 	mlx_loop(rt->mlx_data->mlx);
