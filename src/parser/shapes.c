@@ -25,7 +25,6 @@ int	new_sphere(char **raw_input, t_scene *scene)
 		return (FAIL);
 	sphere->colour = NULL;
 	sphere->centre = atoxyz(raw_input[0]);
-	printf("%.1f\n", sphere->centre->z);
 	if (!sphere->centre)
 		return (ft_perror("Error\nSphere: invalid centre"), FAIL);
 	if (!ft_isdouble(raw_input[1]) || ft_atod(raw_input[1]) < 0.0)
