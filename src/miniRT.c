@@ -12,6 +12,7 @@
 
 #include "miniRT.h"
 #include "math_utils.h"
+#include "printer.h"
 
 void draw_sphere(t_vars *mlx, t_sphere *sphere)
 {
@@ -41,54 +42,64 @@ void draw_sphere(t_vars *mlx, t_sphere *sphere)
 	}
 }
 
-int raySphereIntersection(t_vector *ray_origin, t_vector *ray, t_sphere *sphere)
+double	ray_interects_sphere(t_vector *viewpoint, t_vector ray, t_sphere *sphere)
 {
-	// Calculate the vector from the ray origin to the sphere center
-	t_vector sphereToRay;
-	set_vector_to(&sphereToRay, ray_origin->x - sphere->centre->x, ray_origin->y - sphere->centre->y, ray_origin->z - sphere->centre->z);
+	t_vector	to_sphere;
 
-	// Calculate coefficients of the quadratic equation for ray-sphere intersection
-	double a = ray->x * ray->x + ray->y * ray->y + ray->z * ray->z;
-	double b = 2 * (ray->x * sphereToRay.x + ray->y * sphereToRay.y + ray->z * sphereToRay.z);
-	double c = sphereToRay.x * sphereToRay.x + sphereToRay.y * sphereToRay.y + sphereToRay.z * sphereToRay.z - (sphere->diameter / 2) * (sphere->diameter / 2);
+	to_sphere = v_diff(*sphere->centre, *viewpoint);
 
-	// Calculate the discriminant
-	double discriminant = b * b - 4 * a * c;
 
-	// If the discriminant is non-negative, there is an intersection
-	return discriminant >= 0;
+	double	projection;
+
+	projection = dot(to_sphere, ray);
+
+
+	if (projection < 0) //Intersection is behind viewpoint
+		return (0);
+
+
+	t_vector	closest_point;
+
+	closest_point.x = viewpoint->x + projection * ray.x;
+	closest_point.y = viewpoint->y + projection * ray.y;
+	closest_point.z = viewpoint->z + projection * ray.z;
+
+
+	double distance_to_sphere = sqrt(pow(closest_point.x - sphere->centre->x, 2)
+			+ pow(closest_point.y - sphere->centre->y, 2)
+			+ pow(closest_point.z - sphere->centre->z, 2));
+
+
+	if (distance_to_sphere <= sphere->diameter / 2) //makes sure we are not inside the sphere
+		return (distance_to_sphere);
+	else
+		return (0);
 }
 
-t_vector	rotate_ray_x(t_vars *data, t_camera *camera, int x)
+t_vector	get_ray(t_vars *data, t_camera *camera, int x, int y)
 {
 	t_vector	result;
-	double		angle;
+	t_vector	right;
+	t_vector	up;
+	double		normalised_x;
+	double		normalised_y;
 
-	angle = ((double)x - (double)(data->win_x - 1.0 / 2))
-		* ((double)camera->fov_x / (double)(data->win_x - 1));
-	result.x = camera->view_point->x * cos(angle) + camera->view_point->z
-		* sin(angle);
-	result.z = -camera->view_point->x * sin(angle) + camera->view_point->z
-		* cos(angle);
-	result.x += camera->view_point->x;
-	result.y = camera->view_point->y;
-	result.z += camera->view_point->z;
-	return (result);
-}
+	right = vector_normalize(cross(*camera->orientation, (t_vector){0, 1, 0}));
+	up = vector_normalize(cross(right, *camera->orientation));
 
-t_vector	rotate_ray_y(t_vars *data, t_camera *camera, int y, t_vector *vec)
-{
-	t_vector	result;
-	double		angle;
 
-	angle = (y - (data->win_y - 1 / 2)) * (camera->fov_y / (data->win_y - 1));
-	result.x = camera->view_point->x * cos(angle) + camera->view_point->z
-		* sin(angle);
-	result.z = -camera->view_point->x * sin(angle) + camera->view_point->z
-		* cos(angle);
-	result.x += camera->view_point->x;
-	result.y = camera->view_point->y;
-	result.z += camera->view_point->z;
+	normalised_x = (2.0 * ((double)x + 0.5) / (double)data->win_x - 1.0)
+		* ((double)data->win_x / (double)data->win_y)
+		* tan(camera->fov_x * M_PI / 360.0);
+	normalised_y = (1.0 - 2.0 * ((double)y + 0.5) / (double)data->win_y)
+		* tan(camera->fov_y * M_PI / 360.0);
+
+	result.x = camera->view_point->x + normalised_x * right.x
+		+ normalised_y * up.x;
+	result.y = camera->view_point->y + normalised_x * right.y
+		+ normalised_y * up.y;
+	result.z = camera->view_point->z + normalised_x * right.z
+		+ normalised_y * up.z;
 	return (result);
 }
 
@@ -106,14 +117,10 @@ void	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
 		while (y < mlx->win_y)
 		{
 			// Calculate the direction vector for the current ray
-			set_vector_to(&ray, x - camera->view_point->x,
-				y - camera->view_point->y,
-				camera->fov_x - camera->view_point->z);
-			// Normalize the ray vector
-			vector_normalize(&ray);
+			ray = get_ray(mlx, camera, x, y);
 			// Calculate the dot product between the camera orientation and the ray and
 			// draw the pixel if it is within the field of view of the came
-			if (raySphereIntersection(camera->view_point, &ray,
+			if (ray_interects_sphere(camera->view_point, ray,
 					(t_sphere *)rt->scene->spheres->content))
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFFFFFF);
 			y++;
