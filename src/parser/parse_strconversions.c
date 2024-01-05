@@ -65,8 +65,8 @@ double	ft_atod(const char *str)
 	int		i;
 
 	i = 0;
-	result = 0.0f;
-	factor = 0.1f;
+	result = 0.0;
+	factor = 0.1;
 	sign = 1;
 	if (str[i] == '-' || str[i] == '+')
 	{
@@ -74,13 +74,13 @@ double	ft_atod(const char *str)
 			sign = -1;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
-		result = result * 10.0f + ((double)(str[i++]) - '0');
+		result = result * 10.0 + ((double)(str[i++]) - '0');
 	if (str[i++] != '.')
 		return (sign * result);
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result += ((double)(str[i++]) - '0') * factor;
-		factor *= 0.1f;
+		factor *= 0.1;
 	}
 	return (sign * result);
 }
