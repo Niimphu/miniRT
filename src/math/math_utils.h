@@ -13,16 +13,20 @@
 #ifndef MATH_UTILS_H
 # define MATH_UTILS_H
 
-typedef struct s_vector 
+typedef struct s_vector
 {
-	double x;
-	double y;
-	double z;
-} t_vector;
+	double	x;
+	double	y;
+	double	z;
+}			t_vector;
 
-double	ft_sqr(double n);
-void	set_vector_to(t_vector *set, double x, double y, double z);
-void	set_vector_to_single(t_vector *set, double n);
-double	vector_lenght(t_vector *vec);
-double	vector_normalize(t_vector *vec);
+void		set_vector_to(t_vector *set, double x, double y, double z);
+void		set_vector_to_single(t_vector *set, double n);
+
+t_vector	cross(t_vector v1, t_vector v2);
+double		dot(t_vector v1, t_vector v2);
+t_vector	vector_normalize(t_vector vector);
+
+t_vector	v_diff(t_vector v1, t_vector v2);
+
 #endif

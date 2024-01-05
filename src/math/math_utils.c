@@ -20,30 +20,14 @@ double	ft_sqr(double n)
 	return (n * n);
 }
 
-t_vector	*new_vector(void)
+t_vector	cpy_vector(t_vector *original)
 {
-	t_vector	*new;
+	t_vector	copy;
 
-	new = malloc(sizeof(t_vector));
-	if (!new)
-		return (NULL);
-	new->x = 0.0;
-	new->y = 1.0;
-	new->z = 0.0;
-	return (new);
-}
-
-t_vector	*cpy_vector(t_vector *cpy)
-{
-	t_vector	*new;
-
-	new = malloc(sizeof(t_vector));
-	if (!new)
-		return (NULL);
-	new->x = cpy->x;
-	new->y = cpy->y;
-	new->z = cpy->z;
-	return (new);
+	copy.x = original->x;
+	copy.y = original->y;
+	copy.z = original->z;
+	return (copy);
 }
 
 void	set_vector_to(t_vector *set, double x, double y, double z)
@@ -60,132 +44,102 @@ void	set_vector_to_single(t_vector *set, double n)
 	set->z = n;
 }
 
-void	free_vector(t_vector **del)
+double	vector_length(t_vector vector)
 {
-	free(*del);
-	del = NULL;
+	return (ft_sqr(vector.x) + ft_sqr(vector.y) + ft_sqr(vector.z));
 }
 
-double	vector_lenght(t_vector *vec)
+double	vector_length_sqr(t_vector vec)
 {
-	return (ft_sqr(vec->x) + ft_sqr(vec->y) + ft_sqr(vec->z));
+	return (sqrt(vector_length(vec)));
 }
 
-double	vector_lenght_sqr(t_vector *vec)
+t_vector	vector_normalize(t_vector vector)
 {
-	return ((double)sqrt(vector_lenght(vec)));
+	double		l;
+	t_vector	result;
+
+	l = vector_length_sqr(vector);
+	if (l == 0)
+		return (vector);
+	result.x = vector.x / l;
+	result.y = vector.y / l;
+	result.z = vector.z / l;
+	return (result);
 }
 
-double	vector_normalize(t_vector *vec)
+double	dot(t_vector v1, t_vector v2)
 {
-	double	l;
-
-	l = vector_lenght(vec);
-	if (l != 0)
-	{
-		vec->x /= l;
-		vec->y /= l;
-		vec->z /= l;
-	}
-	return (l);
+	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-t_vector	*cpy_vector_normalize(t_vector *vec)
+t_vector	cross(t_vector v1, t_vector v2)
 {
-	t_vector	*new;
+	t_vector	new;
 
-	new = cpy_vector(vec);
-	if (!new)
-		return (NULL);
-	vector_normalize(new);
+	new.x = v1.y * v2.z - v1.z * v2.y;
+	new.y = v1.z * v2.x - v1.x * v2.z;
+	new.z = v1.x * v2.y - v1.y * v2.x;
 	return (new);
 }
 
-double	dot(t_vector *v1, t_vector *v2)
+t_vector	v_add(t_vector v1, t_vector v2)
 {
-	return (v1->x * v2->x + v1->y * v2->y + v1->z * v2->z);
+	t_vector	result;
+
+	result.x = v1.x + v2.x;
+	result.y = v1.y + v2.y;
+	result.z = v1.z + v2.z;
+	return (result);
 }
 
-t_vector	*cross(t_vector *v1, t_vector *v2)
+t_vector	v_subtract(t_vector v1, t_vector v2)
 {
-	t_vector	*new;
+	t_vector	result;
 
-	new = new_vector();
-	if (!new)
-		return (NULL);
-	set_vector_to(new,
-		v1->y * v2->z - v1->z * v2->y,
-		v1->z * v2->x - v1->x * v2->z,
-		v1->x * v2->y - v1->y * v2->x);
-	return (new);
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
+	result.z = v1.z - v2.z;
+	return (result);
 }
 
-t_vector	*vector_add(t_vector *v1, t_vector *v2)
+t_vector	v_multiply(t_vector v, double f)
 {
-	t_vector	*new;
+	t_vector	result;
 
-	new = new_vector();
-	if (!new)
-		return (NULL);
-	set_vector_to(new,
-		v1->x + v2->x,
-		v1->y + v2->y,
-		v1->z + v2->z);
-	return (NULL);
+	result.x = v.x * f;
+	result.y = v.y * f;
+	result.z = v.z * f;
+	return (result);
 }
 
-t_vector	*vector_sub(t_vector *v1, t_vector *v2)
+t_vector	v_divide(t_vector v, double f)
 {
-	t_vector	*new;
+	t_vector	result;
 
-	new = new_vector();
-	if (!new)
-		return (NULL);
-	set_vector_to(new,
-		v1->x - v2->x,
-		v1->y - v2->y,
-		v1->z - v2->z);
-	return (NULL);
+	result.x = v.x * f;
+	result.y = v.y * f;
+	result.z = v.z * f;
+	return (result);
 }
 
-t_vector	*vector_mul(t_vector *v, double f)
+t_vector	v_diff(t_vector v1, t_vector v2)
 {
-	t_vector	*new;
+	t_vector	result;
 
-	new = new_vector();
-	if (!new)
-		return (NULL);
-	set_vector_to(new,
-		v->x *= f,
-		v->y *= f,
-		v->z *= f);
-	return (new);
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
+	result.z = v1.z - v2.z;
+	return (result);
 }
 
-t_vector	*vector_div(t_vector *v, double f)
-{
-	t_vector	*new;
-
-	new = new_vector();
-	if (!new)
-		return (NULL);
-	set_vector_to(new,
-		v->x /= f,
-		v->y /= f,
-		v->z /= f);
-	return (new);
-}
-
-t_vector	*vector_negativ(t_vector *v)
-{
-	t_vector	*new;
-
-	new = new_vector();
-	if (!new)
-		return (NULL);
-	set_vector_to(new,
-		v->x *= -1,
-		v->y *= -1,
-		v->z *= -1);
-	return (new);
-}
+//t_vector	vector_negativ(t_vector *v)
+//{
+//	t_vector	new;
+//
+//	set_vector_to(&new,
+//		v->x *= -1,
+//		v->y *= -1,
+//		v->z *= -1);
+//	return (new);
+//}
