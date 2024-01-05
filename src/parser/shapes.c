@@ -28,9 +28,9 @@ int	new_sphere(char **raw_input, t_scene *scene)
 	printf("%.1f\n", sphere->centre->z);
 	if (!sphere->centre)
 		return (ft_perror("Error\nSphere: invalid centre"), FAIL);
-	if (!ft_isfloat(raw_input[1]) || ft_atof(raw_input[1]) < 0.0)
+	if (!ft_isdouble(raw_input[1]) || ft_atod(raw_input[1]) < 0.0)
 		return (ft_perror("Error\nSphere: invalid diameter"), FAIL);
-	sphere->diameter = ft_atof(raw_input[1]);
+	sphere->diameter = ft_atod(raw_input[1]);
 	sphere->colour = atorgb(raw_input[2]);
 	if (!sphere->colour)
 		return (ft_perror("Error\nSphere: invalid RGB format"), FAIL);
@@ -84,12 +84,12 @@ int	new_cylinder(char **raw_input, t_scene *scene)
 	cylinder->axis = atoxyz(raw_input[1]);
 	if (!cylinder->axis || !is_normalised(cylinder->axis))
 		return (ft_perror("Error\nCylinder: invalid axis"), FAIL);
-	if (!ft_isfloat(raw_input[2]) || ft_atof(raw_input[2]) < 0.0f)
+	if (!ft_isdouble(raw_input[2]) || ft_atod(raw_input[2]) < 0.0f)
 		return (ft_perror("Error\nCylinder: invalid diameter"), FAIL);
-	cylinder->diameter = ft_atof(raw_input[2]);
-	if (!ft_isfloat(raw_input[3]) || ft_atof(raw_input[3]) < 0.0f)
+	cylinder->diameter = ft_atod(raw_input[2]);
+	if (!ft_isdouble(raw_input[3]) || ft_atod(raw_input[3]) < 0.0f)
 		return (ft_perror("Error\nCylinder: invalid height"), FAIL);
-	cylinder->height = ft_atof(raw_input[3]);
+	cylinder->height = ft_atod(raw_input[3]);
 	cylinder->colour = atorgb(raw_input[4]);
 	if (!cylinder->colour)
 		return (ft_perror("Error\nCylinder: invalid RGB format"), FAIL);

@@ -24,10 +24,10 @@ int	new_ambience(char **raw_input, t_scene *scene)
 	if (!ambience)
 		return (FAIL);
 	ambience->colour = NULL;
-	if (!ft_isfloat(raw_input[0]))
+	if (!ft_isdouble(raw_input[0]))
 		return (ft_perror("Error\nAmbient light: invalid lighting ratio"),
 			FAIL);
-	ambience->lighting = ft_atof(raw_input[0]);
+	ambience->lighting = ft_atod(raw_input[0]);
 	if (ambience->lighting < 0.0 || ambience->lighting > 1.0)
 		return (ft_perror("Error\nAmbient light: invalid lighting ratio"),
 			FAIL);
@@ -76,9 +76,9 @@ int	new_light(char **raw_input, t_scene *scene)
 	light->point = atoxyz(raw_input[0]);
 	if (!light->point)
 		return (ft_perror("Error\nLight: invalid light point"), FAIL);
-	if (!ft_isfloat(raw_input[1]))
+	if (!ft_isdouble(raw_input[1]))
 		return (ft_perror("Error\nLight: invalid brightness"), FAIL);
-	light->brightness = ft_atof(raw_input[1]);
+	light->brightness = ft_atod(raw_input[1]);
 	if (light->brightness < 0.0 || light->brightness > 1.0)
 		return (ft_perror("Error\nLight: invalid brightness"), FAIL);
 	light->colour = atorgb(raw_input[2]);

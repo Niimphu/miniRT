@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/04 17:30:26 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/05 15:27:04 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void draw_sphere(t_vars *mlx, t_sphere *sphere)
 		while (y < mlx->win_y)
 		{
 			// Calculate distance from the center of the sphere
-			float dx = x - sphere->centre->x;
-			float dy = y - sphere->centre->x;
-			float distance = sqrt(dx * dx + dy * dy);
+			double dx = x - sphere->centre->x;
+			double dy = y - sphere->centre->x;
+			double distance = sqrt(dx * dx + dy * dy);
 			// If the pixel is within the radius of the sphere, draw it
 			if (distance < sphere->diameter / 2)
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFF0000);
@@ -48,12 +48,12 @@ int raySphereIntersection(t_vector *ray_origin, t_vector *ray, t_sphere *sphere)
 	set_vector_to(&sphereToRay, ray_origin->x - sphere->centre->x, ray_origin->y - sphere->centre->y, ray_origin->z - sphere->centre->z);
 
 	// Calculate coefficients of the quadratic equation for ray-sphere intersection
-	float a = ray->x * ray->x + ray->y * ray->y + ray->z * ray->z;
-	float b = 2 * (ray->x * sphereToRay.x + ray->y * sphereToRay.y + ray->z * sphereToRay.z);
-	float c = sphereToRay.x * sphereToRay.x + sphereToRay.y * sphereToRay.y + sphereToRay.z * sphereToRay.z - (sphere->diameter / 2) * (sphere->diameter / 2);
+	double a = ray->x * ray->x + ray->y * ray->y + ray->z * ray->z;
+	double b = 2 * (ray->x * sphereToRay.x + ray->y * sphereToRay.y + ray->z * sphereToRay.z);
+	double c = sphereToRay.x * sphereToRay.x + sphereToRay.y * sphereToRay.y + sphereToRay.z * sphereToRay.z - (sphere->diameter / 2) * (sphere->diameter / 2);
 
 	// Calculate the discriminant
-	float discriminant = b * b - 4 * a * c;
+	double discriminant = b * b - 4 * a * c;
 
 	// If the discriminant is non-negative, there is an intersection
 	return discriminant >= 0;
@@ -62,9 +62,10 @@ int raySphereIntersection(t_vector *ray_origin, t_vector *ray, t_sphere *sphere)
 t_vector	rotate_ray_x(t_vars *data, t_camera *camera, int x)
 {
 	t_vector	result;
-	float		angle;
+	double		angle;
 
-	angle = (x - (data->win_x - 1 / 2)) * (camera->fov_x / (data->win_x - 1));
+	angle = ((double)x - (double)(data->win_x - 1.0 / 2))
+		* ((double)camera->fov_x / (double)(data->win_x - 1));
 	result.x = camera->view_point->x * cos(angle) + camera->view_point->z
 		* sin(angle);
 	result.z = -camera->view_point->x * sin(angle) + camera->view_point->z
@@ -78,7 +79,7 @@ t_vector	rotate_ray_x(t_vars *data, t_camera *camera, int x)
 t_vector	rotate_ray_y(t_vars *data, t_camera *camera, int y, t_vector *vec)
 {
 	t_vector	result;
-	float		angle;
+	double		angle;
 
 	angle = (y - (data->win_y - 1 / 2)) * (camera->fov_y / (data->win_y - 1));
 	result.x = camera->view_point->x * cos(angle) + camera->view_point->z
@@ -131,7 +132,7 @@ void	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
 
             // Calculate the distance from the point to the plane
             t_vector pointToPixel = {pixel->x - plane.point.x, pixel.y - plane.point.y, pixel.z - plane.point.z};
-            float distance = pointToPixel.x * plane.normal.x + pointToPixel.y * plane.normal.y + pointToPixel.z * plane.normal.z;
+            double distance = pointToPixel.x * plane.normal.x + pointToPixel.y * plane.normal.y + pointToPixel.z * plane.normal.z;
 
             // Draw the pixel if it is close to the plane
             if (fabs(distance) < 2.0) {

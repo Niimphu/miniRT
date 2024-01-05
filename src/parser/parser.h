@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:00:45 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/15 18:00:45 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/05 15:27:24 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ int			new_element(char *line, t_scene *scene);
 
 bool		is_empty(const char *string);
 bool		ft_isint(const char *str);
-bool		ft_isfloat(const char *str);
+bool		ft_isdouble(const char *str);
 bool		is_normalised(t_vector *vector);
 char		*trim_nl(char *str);
 
-float		ft_atof(const char *str);
+double		ft_atod(const char *str);
 t_rgb		*atorgb(char *string);
 t_vector	*atoxyz(char *string);
 

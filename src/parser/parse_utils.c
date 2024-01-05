@@ -40,7 +40,7 @@ bool	ft_isint(const char *str)
 	return (true);
 }
 
-bool	ft_isfloat(const char *str)
+bool	ft_isdouble(const char *str)
 {
 	int	i;
 	int	digits;

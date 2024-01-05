@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:34:14 by Kekuhne           #+#    #+#             */
-/*   Updated: 2023/12/06 19:25:52 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/01/05 15:27:04 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <math.h>
 //probably should add a bool to keep or free the passed the t_vector
 
-float	ft_sqr(float n)
+double	ft_sqr(double n)
 {
 	return (n * n);
 }
@@ -46,14 +46,14 @@ t_vector	*cpy_vector(t_vector *cpy)
 	return (new);
 }
 
-void	set_vector_to(t_vector *set, float x, float y, float z)
+void	set_vector_to(t_vector *set, double x, double y, double z)
 {
 	set->x = x;
 	set->y = y;
 	set->z = z;
 }
 
-void	set_vector_to_single(t_vector *set, float n)
+void	set_vector_to_single(t_vector *set, double n)
 {
 	set->x = n;
 	set->y = n;
@@ -66,19 +66,19 @@ void	free_vector(t_vector **del)
 	del = NULL;
 }
 
-float	vector_lenght(t_vector *vec)
+double	vector_lenght(t_vector *vec)
 {
 	return (ft_sqr(vec->x) + ft_sqr(vec->y) + ft_sqr(vec->z));
 }
 
-float	vector_lenght_sqr(t_vector *vec)
+double	vector_lenght_sqr(t_vector *vec)
 {
-	return ((float)sqrt(vector_lenght(vec)));
+	return ((double)sqrt(vector_lenght(vec)));
 }
 
-float	vector_normalize(t_vector *vec)
+double	vector_normalize(t_vector *vec)
 {
-	float	l;
+	double	l;
 
 	l = vector_lenght(vec);
 	if (l != 0)
@@ -101,7 +101,7 @@ t_vector	*cpy_vector_normalize(t_vector *vec)
 	return (new);
 }
 
-float	dot(t_vector *v1, t_vector *v2)
+double	dot(t_vector *v1, t_vector *v2)
 {
 	return (v1->x * v2->x + v1->y * v2->y + v1->z * v2->z);
 }
@@ -148,7 +148,7 @@ t_vector	*vector_sub(t_vector *v1, t_vector *v2)
 	return (NULL);
 }
 
-t_vector	*vector_mul(t_vector *v, float f)
+t_vector	*vector_mul(t_vector *v, double f)
 {
 	t_vector	*new;
 
@@ -162,7 +162,7 @@ t_vector	*vector_mul(t_vector *v, float f)
 	return (new);
 }
 
-t_vector	*vector_div(t_vector *v, float f)
+t_vector	*vector_div(t_vector *v, double f)
 {
 	t_vector	*new;
 
