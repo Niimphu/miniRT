@@ -2,7 +2,7 @@ CC = gcc
 
 CFLAGS = -Wall -Wextra -Werror -g -Isources -I/usr/X11/include -Ilib/mlx_linux
 
-LDFLAGS = -L/usr/X11/lib -lX11 -lXext -Llib/mlx_linux -lmlx -Llib/libft -lft
+LDFLAGS = -L/usr/X11/lib -lX11 -lXext -Llib/mlx_linux -lmlx -Llib/libft -lft -lm
 
 SRC_DIR = src
 
