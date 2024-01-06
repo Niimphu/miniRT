@@ -26,13 +26,14 @@ t_rgb	*atorgb(char *string)
 	rgb = ft_calloc(3, sizeof(unsigned int));
 	if (!rgb)
 		return (free_string_array(&str_rgb), NULL);
+	if (ft_atoi(str_rgb[R]) < 0 || ft_atoi(str_rgb[R]) > 255
+			|| ft_atoi(str_rgb[G]) < 0 || ft_atoi(str_rgb[G]) > 255
+			|| ft_atoi(str_rgb[B]) < 0 || ft_atoi(str_rgb[B]) > 255)
+		return (free(rgb), NULL);
 	rgb->r = ft_atoi(str_rgb[R]);
 	rgb->g = ft_atoi(str_rgb[G]);
 	rgb->b = ft_atoi(str_rgb[B]);
 	free_string_array(&str_rgb);
-	if (rgb->r < 0 || rgb->r > 255 || rgb->g < 0 || rgb->g > 255
-		|| rgb->b < 0 || rgb->b > 255)
-		return (free(rgb), NULL);
 	return (rgb);
 }
 
