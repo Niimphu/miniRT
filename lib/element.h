@@ -27,7 +27,7 @@ typedef struct s_camera
 	t_vector	*view_point;
 	t_vector	*orientation;
 	int			fov_x;
-	int			fov_y;
+	double		fov_y;
 }				t_camera;
 
 typedef struct s_light

@@ -28,5 +28,6 @@ double		dot(t_vector v1, t_vector v2);
 t_vector	vector_normalize(t_vector vector);
 
 t_vector	v_diff(t_vector v1, t_vector v2);
+t_vector	v_multiply(t_vector v, double f);
 
 #endif

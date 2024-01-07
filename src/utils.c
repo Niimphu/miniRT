@@ -26,5 +26,6 @@ int	strarray_size(char **array)
 
 void	set_fov_y(t_vars *mlx_data, t_camera *camera)
 {
-	camera->fov_y = camera->fov_x * (mlx_data->win_y / mlx_data->win_x);
+	camera->fov_y = (double)camera->fov_x * ((double)mlx_data->win_y / (double)mlx_data->win_x);
+	printf("%f\n", camera->fov_y);
 }

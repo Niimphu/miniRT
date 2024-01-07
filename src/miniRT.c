@@ -87,11 +87,12 @@ t_vector	get_ray(t_vars *data, t_camera *camera, int x, int y)
 	right = vector_normalize(cross(*camera->orientation, (t_vector){0, 1, 0}));
 	up = vector_normalize(cross(right, *camera->orientation));
 
+	up.y *= -1.0;
 
 	normalised_x = (2.0 * ((double)x + 0.5) / (double)data->win_x - 1.0)
 		* ((double)data->win_x / (double)data->win_y)
 		* tan(camera->fov_x * M_PI / 360.0);
-	normalised_y = (1.0 - 2.0 * ((double)y + 0.5) / (double)data->win_y)
+	normalised_y = (2.0 * ((double)y + 0.5) / (double)data->win_y)
 		* tan(camera->fov_y * M_PI / 360.0);
 
 	result.x = camera->view_point->x + normalised_x * right.x
@@ -99,7 +100,7 @@ t_vector	get_ray(t_vars *data, t_camera *camera, int x, int y)
 	result.y = camera->view_point->y + normalised_x * right.y
 		+ normalised_y * up.y;
 	result.z = camera->view_point->z + normalised_x * right.z
-		+ normalised_y * up.z;
+		- normalised_y * up.z;
 	return (result);
 }
 
@@ -109,23 +110,33 @@ void	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
 	int			y;
 	t_vector	ray;
 
-	x = 0;
-	set_vector_to_single(&ray, 0);
-	while (x < mlx->win_x)
+	y = 0;
+	printf("fov: %i, %f\n", camera->fov_x, camera->fov_y);
+	while (y < mlx->win_y)
 	{
-		y = 0;
-		while (y < mlx->win_y)
+		x = 0;
+		while (x < mlx->win_x)
 		{
 			// Calculate the direction vector for the current ray
 			ray = get_ray(mlx, camera, x, y);
+
+			t_vector point_along_ray;
+			point_along_ray.x = camera->view_point->x + 1000.0 * ray.x;
+			point_along_ray.y = camera->view_point->y + 1000.0 * ray.y;
+			point_along_ray.z = camera->view_point->z + 1000.0 * ray.z;
+
+			print_vector_info(&point_along_ray);
+
+
+
 			// Calculate the dot product between the camera orientation and the ray and
 			// draw the pixel if it is within the field of view of the came
 			if (ray_interects_sphere(camera->view_point, ray,
 					(t_sphere *)rt->scene->spheres->content))
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFFFFFF);
-			y++;
+			x++;
 		}
-		x++;
+		y++;
 	}
 }
 
