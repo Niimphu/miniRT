@@ -22,4 +22,6 @@ typedef struct s_rgb
 	unsigned int	b;
 }				t_rgb;
 
+int	rgb_to_hex(t_rgb *colour);
+
 #endif
