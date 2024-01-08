@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:34:14 by Kekuhne           #+#    #+#             */
-/*   Updated: 2023/12/06 19:25:52 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/01/08 14:46:18 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,18 @@ t_vector	*vector_add(t_vector *v1, t_vector *v2)
 		v1->x + v2->x,
 		v1->y + v2->y,
 		v1->z + v2->z);
-	return (NULL);
+	return (new);
+}
+
+t_vector	vector_add2(t_vector *v1, t_vector *v2)
+{
+	t_vector	new;
+	
+	set_vector_to(&new,
+		v1->x + v2->x,
+		v1->y + v2->y,
+		v1->z + v2->z);
+	return (new);
 }
 
 t_vector	*vector_sub(t_vector *v1, t_vector *v2)
@@ -144,7 +155,18 @@ t_vector	*vector_sub(t_vector *v1, t_vector *v2)
 		v1->x - v2->x,
 		v1->y - v2->y,
 		v1->z - v2->z);
-	return (NULL);
+	return (new);
+}
+
+t_vector	vector_sub2(t_vector *v1, t_vector *v2)
+{
+	t_vector	new;
+
+	set_vector_to(&new,
+		v1->x - v2->x,
+		v1->y - v2->y,
+		v1->z - v2->z);
+	return (new);
 }
 
 t_vector	*vector_mul(t_vector *v, float f)
@@ -161,6 +183,17 @@ t_vector	*vector_mul(t_vector *v, float f)
 	return (new);
 }
 
+t_vector	vector_mul2(t_vector *v, float f)
+{
+	t_vector	new;
+
+	set_vector_to(&new,
+		v->x *= f,
+		v->y *= f,
+		v->z *= f);
+	return (new);
+}
+
 t_vector	*vector_div(t_vector *v, float f)
 {
 	t_vector	*new;
@@ -169,6 +202,17 @@ t_vector	*vector_div(t_vector *v, float f)
 	if (!new)
 		return (NULL);
 	set_vector_to(new,
+		v->x /= f,
+		v->y /= f,
+		v->z /= f);
+	return (new);
+}
+
+t_vector	vector_div2(t_vector *v, float f)
+{
+	t_vector	new;
+
+	set_vector_to(&new,
 		v->x /= f,
 		v->y /= f,
 		v->z /= f);

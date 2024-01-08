@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   element.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:36:55 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/15 18:36:55 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/08 14:08:39 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,16 @@ typedef struct s_camera
 {
 	t_vector	*view_point;
 	t_vector	*orientation;
+	float		focal_lenght;
+	float		viewport_height;
+	float		viewport_width;
+	t_vector	viewport_u;
+	t_vector	viewport_v;
+	t_vector	viewport_upper_left;
+	t_vector	center;
+	t_vector	pixel00_loc;
+	t_vector	pixel_delta_u;
+	t_vector	pixel_delta_v;
 	int			fov;
 }				t_camera;
 

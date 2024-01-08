@@ -6,12 +6,20 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/03 21:36:03 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/01/08 19:10:15 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "math_utils.h"
+
+void printRayInfo(float x, float y, float dx, float dy, t_vector *ray) {
+    printf("Pixel (%.2f, %.2f):\n", x, y);
+    printf("  dx: %.2f, dy: %.2f\n", dx, dy);
+    printf("  Ray vector: (%.2f, %.2f, %.2f)\n", ray->x, ray->y, ray->z);
+    printf("\n");
+}
+
 
 void draw_sphere(t_vars *mlx, t_sphere *sphere)
 {
@@ -41,47 +49,77 @@ void draw_sphere(t_vars *mlx, t_sphere *sphere)
 	}
 }
 
-int raySphereIntersection(t_vector *ray_origin, t_vector *ray, t_sphere *sphere)
+float raySphereIntersection(t_vector *ray_origin, t_vector *ray, t_sphere *sphere)
 {
 	// Calculate the vector from the ray origin to the sphere center
-	t_vector sphereToRay;
-	set_vector_to(&sphereToRay, ray_origin->x - sphere->centre->x, ray_origin->y - sphere->centre->y, ray_origin->z - sphere->centre->z);
-
+	t_vector *sphereToRay;
+	
+	sphereToRay = vector_sub(ray_origin, sphere->centre); 
+	
 	// Calculate coefficients of the quadratic equation for ray-sphere intersection
-	float a = ray->x * ray->x + ray->y * ray->y + ray->z * ray->z;
-	float b = 2 * (ray->x * sphereToRay.x + ray->y * sphereToRay.y + ray->z * sphereToRay.z);
-	float c = sphereToRay.x * sphereToRay.x + sphereToRay.y * sphereToRay.y + sphereToRay.z * sphereToRay.z - (sphere->diameter / 2) * (sphere->diameter / 2);
+	float a = vector_lenght_sqr(ray);
+	float b = 2 * dot(ray, sphereToRay);
+	float c = vector_lenght_sqr(sphereToRay) - (ft_sqr(sphere->diameter) / 4.0f);
 
 	// Calculate the discriminant
 	float discriminant = b * b - 4 * a * c;
-
 	// If the discriminant is non-negative, there is an intersection
-	return discriminant >= 0;
+	free_vector(sphereToRay);
+	return (discriminant >= 0);
 }
 
-void drawScene(t_vars *mlx, t_camera *camera, t_rt *rt) {
-	int x;
-	int	y;
-	t_vector ray;
+/* void	viewport_setup(t_vars *mlx, t_rt *rt)
+{
+	t_vector *focal_vector;
 
-	x = 0;
-	set_vector_to_single(&ray, 0);
-	while (x < mlx->win_x)
+	rt->scene->camera->focal_lenght = 1.0f;
+	set_vector_to(&focal_vector, 0, rt->scene->camera->focal_lenght);
+	rt->scene->camera->viewport_height = 2.0f;
+	rt->scene->camera->viewport_width = mlx->win_y / mlx->aspect_ratio;
+	rt->scene->camera->center = new_vector();
+	rt->scene->camera->center = set_vector_to_single(rt->scene->camera, 0);
+	rt->scene->camera->viewport_u = new_vector();
+	rt->scene->camera->viewport_u = set_vector_to(rt->scene->camera->viewport_u, rt->scene->camera->viewport_width,0,0);
+	rt->scene->camera->viewport_v = new_vector();
+	rt->scene->camera->viewport_v = set_vector_to(rt->scene->camera->viewport_v, 0,-rt->scene->camera->viewport_height,0);
+	rt->scene->camera->pixel_delta_u = vector_div(rt->scene->camera->pixel_delta_u, rt->scene->camera->viewport_width);
+	rt->scene->camera->pixel_delta_v = vector_div(rt->scene->camera->pixel_delta_v, rt->scene->camera->viewport_heigt);
+	rt->scene->camera->viewport_upper_left = cpy_vector((vector_sub2(vector_sub2(rt->scene->camera->center, &focal_vector), vector_sub2(vector_div2(rt->scene->camera->viewport_u, 2.0f), vector_div2(rt->scene->camera->viewport_v, 2.0f)))));
+	rt->scene->camera->pixel00_loc = cpy_vector(vector_add2(rt->scene->camera->viewport_upper_left, vector_mul2(vector_add2(rt->scene->camera->pixel_delta_u, rt->scene->camera->pixel_delta_v), 0.5f)));
+}
+ */
+void drawScene(t_vars *mlx, t_camera *camera, t_rt *rt)
+{
+	float x;
+	float y;
+	float dx;
+	float dy;
+	t_vector rayTarget;
+
+	y = 0;
+	/* viewport_setup(mlx, rt); */
+	set_vector_to_single(&rayTarget, 0);
+	while (y < mlx->win_y)
 	{
-		y = 0;
-		while (y < mlx->win_y)
+		x = 0;
+		while (x < mlx->win_x)
 		{
+			/* rayTarget = cpy_vector(vector_sub2(vector_add2(camera->pixel00_loc, vector_add2(vector_mul2(camera->pixel_delta_u, x), vector_mul2(camera->pixel_delta_v, y))),camera->center)); */
+			// pixels to grid rangeing from -1 to 1;
+			dx = ((2.0f * x) / (float)mlx->win_x) - 1.0f;
+			dy = ((2.0f * y) / (float)mlx->win_y) - 1.0f;
 			// Calculate the direction vector for the current ray
-			set_vector_to(&ray, x - mlx->win_x - camera->view_point->x, y - mlx->win_y - camera->view_point->y, camera->fov - camera->view_point->z);
-			// Normalize the ray vector
-			vector_normalize(&ray);
-			// Calculate the dot product between the camera orientation and the ray and
-			// draw the pixel if it is within the field of view of the camera
-			if (raySphereIntersection(camera->view_point, &ray, (t_sphere *)rt->scene->spheres->content))
-				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFFFFFF);
-			y++;
+			set_vector_to(&rayTarget,dx,
+			dy ,
+			camera->orientation->z);
+			/* vector_normalize(&rayTarget); */
+			printRayInfo(x,y,dx,dy,&rayTarget);
+			if (raySphereIntersection(camera->view_point, &rayTarget, (t_sphere *)rt->scene->spheres->content) > 0)
+				mlx_pixel_put(mlx->mlx, mlx->win, (int)x, (int)y, 0xFFFFFF);
+			x++;
 		}
-		x++;
+		/* printf("converted x = %.2f to dx = %.2f \t converted y = %.2f to dy = %.2f\n", x, dx, y, dy); */
+		y++;
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/03 13:14:27 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/01/08 13:41:47 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ typedef struct s_vars
 {
 	void	*mlx;
 	void	*win;
-	int		win_x;
-	int		win_y;
+	float	win_x;
+	float	win_y;
+	float	aspect_ratio;
 }				t_vars;
 
 typedef struct s_scene
