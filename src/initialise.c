@@ -28,7 +28,7 @@ static void	create_window(t_vars *mlx_data)
 {
 	mlx_data->win_x = 1280;
 	mlx_data->win_y = 720;
-
+	mlx_data->aspect_ratio = (double)mlx_data->win_x / (double)mlx_data->win_y;
 	mlx_data->win = mlx_new_window(mlx_data->mlx, mlx_data->win_x,
 			mlx_data->win_y, "Ray.");
 }
