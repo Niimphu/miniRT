@@ -13,15 +13,14 @@
 #ifndef COLOUR_H
 # define COLOUR_H
 
-# include "../../lib/miniRT.h"
-
 typedef struct s_rgb
 {
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
+	int	r;
+	int	g;
+	int	b;
 }				t_rgb;
 
-int	rgb_to_hex(t_rgb *colour);
+bool	is_valid_rgb(t_rgb colour);
+int		rgb_to_hex(t_rgb *colour);
 
 #endif

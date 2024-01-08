@@ -16,7 +16,7 @@
 # include "../../lib/miniRT.h"
 
 void	print_scene_info(t_scene *scene);
-void	print_colour_info(t_rgb *colour);
+void	print_colour_info(t_rgb colour);
 void	print_coord_info(t_vector *vector);
 void	print_vector_info(t_vector *vector);
 

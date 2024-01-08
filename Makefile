@@ -9,7 +9,6 @@ SRC_DIR = src
 OBJ_DIR = obj
 
 SRC =	main.c \
-		math/math_utils.c \
 		initialise.c \
 		parser/parse.c \
 		parser/parse_utils.c \
@@ -19,6 +18,8 @@ SRC =	main.c \
 		parser/shapes.c \
 		parser/file.c \
 		miniRT.c \
+		math/math_utils.c \
+		colour/colour.c \
 		input_handler.c \
 		error.c \
 		free/free.c \

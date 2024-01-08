@@ -23,7 +23,6 @@ int	new_ambience(char **raw_input, t_scene *scene)
 	ambience = scene->ambience;
 	if (!ambience)
 		return (FAIL);
-	ambience->colour = NULL;
 	if (!ft_isdouble(raw_input[0]))
 		return (ft_perror("Error\nAmbient light: invalid lighting ratio"),
 			FAIL);
@@ -32,7 +31,7 @@ int	new_ambience(char **raw_input, t_scene *scene)
 		return (ft_perror("Error\nAmbient light: invalid lighting ratio"),
 			FAIL);
 	ambience->colour = atorgb(raw_input[1]);
-	if (!ambience->colour)
+	if (!is_valid_rgb(ambience->colour))
 		return (ft_perror("Error\nAmbient light: invalid RGB format"), FAIL);
 	return (OK);
 }
@@ -72,7 +71,6 @@ int	new_light(char **raw_input, t_scene *scene)
 	light = scene->light;
 	if (!light)
 		return (FAIL);
-	light->colour = NULL;
 	light->point = atoxyz(raw_input[0]);
 	if (!light->point)
 		return (ft_perror("Error\nLight: invalid light point"), FAIL);
@@ -82,7 +80,7 @@ int	new_light(char **raw_input, t_scene *scene)
 	if (light->brightness < 0.0 || light->brightness > 1.0)
 		return (ft_perror("Error\nLight: invalid brightness"), FAIL);
 	light->colour = atorgb(raw_input[2]);
-	if (!light->colour)
+	if (!is_valid_rgb(light->colour))
 		return (ft_perror("Error\nLight: invalid RGB format"), FAIL);
 	return (OK);
 }

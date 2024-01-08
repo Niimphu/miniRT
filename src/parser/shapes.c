@@ -23,7 +23,6 @@ int	new_sphere(char **raw_input, t_scene *scene)
 	sphere = ft_calloc(1, sizeof(t_sphere));
 	if (!sphere)
 		return (FAIL);
-	sphere->colour = NULL;
 	sphere->centre = atoxyz(raw_input[0]);
 	if (!sphere->centre)
 		return (ft_perror("Error\nSphere: invalid centre"), FAIL);
@@ -31,7 +30,7 @@ int	new_sphere(char **raw_input, t_scene *scene)
 		return (ft_perror("Error\nSphere: invalid diameter"), FAIL);
 	sphere->diameter = ft_atod(raw_input[1]);
 	sphere->colour = atorgb(raw_input[2]);
-	if (!sphere->colour)
+	if (!is_valid_rgb(sphere->colour))
 		return (ft_perror("Error\nSphere: invalid RGB format"), FAIL);
 	if (!(scene->spheres))
 		scene->spheres = ft_lstnew(sphere);
@@ -49,7 +48,6 @@ int	new_plane(char **raw_input, t_scene *scene)
 	plane = ft_calloc(1, sizeof(t_plane));
 	if (!plane)
 		return (FAIL);
-	plane->colour = NULL;
 	plane->point = atoxyz(raw_input[0]);
 	if (!plane->point)
 		return (ft_perror("Error\nPlane: invalid point"), FAIL);
@@ -57,7 +55,7 @@ int	new_plane(char **raw_input, t_scene *scene)
 	if (!plane->norm || !is_normalised(plane->norm))
 		return (ft_perror("Error\nPlane: invalid norm vector"), FAIL);
 	plane->colour = atorgb(raw_input[2]);
-	if (!plane->colour)
+	if (!is_valid_rgb(plane->colour))
 		return (ft_perror("Error\nPlane: invalid RGB format"), FAIL);
 	if (!(scene->planes))
 		scene->planes = ft_lstnew(plane);
@@ -75,7 +73,6 @@ int	new_cylinder(char **raw_input, t_scene *scene)
 	cylinder = ft_calloc(1, sizeof(t_cylinder));
 	if (!cylinder)
 		return (FAIL);
-	cylinder->colour = NULL;
 	cylinder->axis = NULL;
 	cylinder->centre = atoxyz(raw_input[0]);
 	if (!cylinder->centre)
@@ -90,7 +87,7 @@ int	new_cylinder(char **raw_input, t_scene *scene)
 		return (ft_perror("Error\nCylinder: invalid height"), FAIL);
 	cylinder->height = ft_atod(raw_input[3]);
 	cylinder->colour = atorgb(raw_input[4]);
-	if (!cylinder->colour)
+	if (!is_valid_rgb(cylinder->colour))
 		return (ft_perror("Error\nCylinder: invalid RGB format"), FAIL);
 	return (new_cylinder2(cylinder, scene), OK);
 }

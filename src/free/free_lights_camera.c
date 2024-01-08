@@ -16,8 +16,6 @@ void	free_ambience(t_ambience **ambience)
 {
 	if (*ambience)
 	{
-		if ((*ambience)->colour)
-			free((*ambience)->colour);
 		free(*ambience);
 		ambience = NULL;
 	}
@@ -42,8 +40,6 @@ void	free_light(t_light **light)
 	{
 		if ((*light)->point)
 			free((*light)->point);
-		if ((*light)->colour)
-			free((*light)->colour);
 		free(*light);
 		light = NULL;
 	}

@@ -104,9 +104,9 @@ void	print_scene_info(t_scene	*scene)
 	printf("=====        END        =====\n\n\n");
 }
 
-void	print_colour_info(t_rgb *colour)
+void	print_colour_info(t_rgb colour)
 {
-	printf("%i, %i, %i\n", colour->r, colour->g, colour->b);
+	printf("%i, %i, %i\n", colour.r, colour.g, colour.b);
 }
 
 void	print_coord_info(t_vector *vector)

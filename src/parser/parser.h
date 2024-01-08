@@ -34,7 +34,7 @@ bool		is_normalised(t_vector *vector);
 char		*trim_nl(char *str);
 
 double		ft_atod(const char *str);
-t_rgb		*atorgb(char *string);
+t_rgb		atorgb(char *string);
 t_vector	*atoxyz(char *string);
 
 int			new_ambience(char **raw_input, t_scene *scene);

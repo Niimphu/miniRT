@@ -12,27 +12,20 @@
 
 #include "parser.h"
 
-t_rgb	*atorgb(char *string)
+t_rgb	atorgb(char *string)
 {
-	t_rgb	*rgb;
+	t_rgb	rgb;
 	char	**str_rgb;
 
 	str_rgb = ft_split(string, ',');
 	if (!str_rgb)
-		return (NULL);
+		return ((t_rgb){-1, -1, -1});
 	if (strarray_size(str_rgb) != 3 || !ft_isint(str_rgb[R])
 		|| !ft_isint(str_rgb[G]) || !ft_isint(str_rgb[B]))
-		return (free_string_array(&str_rgb), NULL);
-	rgb = ft_calloc(3, sizeof(unsigned int));
-	if (!rgb)
-		return (free_string_array(&str_rgb), NULL);
-	if (ft_atoi(str_rgb[R]) < 0 || ft_atoi(str_rgb[R]) > 255
-			|| ft_atoi(str_rgb[G]) < 0 || ft_atoi(str_rgb[G]) > 255
-			|| ft_atoi(str_rgb[B]) < 0 || ft_atoi(str_rgb[B]) > 255)
-		return (free(rgb), NULL);
-	rgb->r = ft_atoi(str_rgb[R]);
-	rgb->g = ft_atoi(str_rgb[G]);
-	rgb->b = ft_atoi(str_rgb[B]);
+		return (free_string_array(&str_rgb), (t_rgb){-1, -1, -1});
+	rgb.r = ft_atoi(str_rgb[R]);
+	rgb.g = ft_atoi(str_rgb[G]);
+	rgb.b = ft_atoi(str_rgb[B]);
 	free_string_array(&str_rgb);
 	return (rgb);
 }

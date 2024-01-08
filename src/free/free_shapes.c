@@ -21,8 +21,6 @@ void	free_sphere(void *node)
 	{
 		if (sphere->centre)
 			free(sphere->centre);
-		if (sphere->colour)
-			free(sphere->colour);
 		free(sphere);
 		sphere = NULL;
 	}
@@ -39,8 +37,6 @@ void	free_plane(void *node)
 			free(plane->point);
 		if (plane->norm)
 			free(plane->norm);
-		if (plane->colour)
-			free(plane->colour);
 		free(plane);
 		plane = NULL;
 	}
@@ -57,8 +53,6 @@ void	free_cylinder(void *node)
 			free(cylinder->centre);
 		if (cylinder->axis)
 			free(cylinder->axis);
-		if (cylinder->colour)
-			free(cylinder->colour);
 		free(cylinder);
 		cylinder = NULL;
 	}
