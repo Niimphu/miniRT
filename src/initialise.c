@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/08 13:43:18 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/01/08 19:54:52 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ int	initialise(t_rt *rt)
 
 static void	create_window(t_vars *mlx_data)
 {
-	mlx_data->aspect_ratio = 16.0f / 9.0f;
-	mlx_data->win_x = 1280.0f;
-	mlx_data->win_y = mlx_data->win_x / mlx_data->aspect_ratio;
+	mlx_data->win_x = 1000.0f;
+	mlx_data->win_y = 1000.0f;
 	mlx_data->win = mlx_new_window(mlx_data->mlx, mlx_data->win_x, mlx_data->win_y, "Ray.");
 }
