@@ -42,6 +42,7 @@ typedef struct s_vars
 	void	*win;
 	int		win_x;
 	int		win_y;
+	double	aspect_ratio;
 }				t_vars;
 
 typedef struct s_scene
