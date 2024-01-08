@@ -19,7 +19,7 @@
 typedef struct s_ambience
 {
 	double		lighting;
-	t_rgb		*colour;
+	t_rgb		colour;
 }				t_ambience;
 
 typedef struct s_camera
@@ -34,21 +34,21 @@ typedef struct s_light
 {
 	t_vector	*point;
 	double		brightness;
-	t_rgb		*colour;
+	t_rgb		colour;
 }				t_light;
 
 typedef struct s_sphere
 {
 	t_vector	*centre;
 	double		diameter;
-	t_rgb		*colour;
+	t_rgb		colour;
 }				t_sphere;
 
 typedef struct s_plane
 {
 	t_vector	*point;
 	t_vector	*norm;
-	t_rgb		*colour;
+	t_rgb		colour;
 }				t_plane;
 
 typedef struct s_cylinder
@@ -57,7 +57,7 @@ typedef struct s_cylinder
 	t_vector	*axis;
 	double		diameter;
 	double		height;
-	t_rgb		*colour;
+	t_rgb		colour;
 }				t_cylinder;
 
 #endif
