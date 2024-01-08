@@ -21,7 +21,7 @@ bool	is_valid_rgb(t_rgb colour)
 	return (true);
 }
 
-int	rgb_to_hex(t_rgb *colour)
+int	rgb_to_hex(t_rgb colour)
 {
-	return ((colour->r << 16) | (colour->g << 8) | colour->b);
+	return ((colour.r << 16) | (colour.g << 8) | colour.b);
 }

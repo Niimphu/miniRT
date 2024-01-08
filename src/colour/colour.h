@@ -21,6 +21,6 @@ typedef struct s_rgb
 }				t_rgb;
 
 bool	is_valid_rgb(t_rgb colour);
-int		rgb_to_hex(t_rgb *colour);
+int		rgb_to_hex(t_rgb colour);
 
 #endif
