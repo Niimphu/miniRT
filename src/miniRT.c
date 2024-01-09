@@ -11,43 +11,61 @@
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include "math_utils.h"
+#include "vector.h"
 #include "printer.h"
 #include "colour.h"
+#include "shape.h"
 
+int	sphere_colour(t_sphere *sphere, t_intersect *data, t_scene *scene)
+{
+	double		diffuse_intensity;
+	t_rgb		colour;
+	t_vector	light_direction;
+	t_vector	surface_normal;
 
+	light_direction = v_normalize(v_diff(*scene->light->point, data->point));
+	surface_normal = s_surface_normal(sphere, data->point);
+	diffuse_intensity = fmax(0, fmin(1, (light_direction.x * surface_normal.x
+					+ light_direction.y * surface_normal.y
+					+ light_direction.z * surface_normal.z)));
+	colour = rgb_scale(sphere->colour, diffuse_intensity);
+	return (rgb_to_hex(colour));
+}
 
-double	ray_interects_sphere(t_vector *viewpoint, t_vector ray, t_sphere *sphere)
+t_intersect	*ray_interects_sphere(t_vector *viewpoint, t_vector ray,
+		t_sphere *sphere)
 {
 	t_vector	to_sphere;
+	double		projection;
+	t_vector	closest_point;
+	double		distance_squared;
 
 	to_sphere = v_diff(*sphere->centre, *viewpoint);
-
-
-	double	projection;
-
 	projection = v_dot(to_sphere, ray);
 	if (projection < 0)
-		return (0);
-
-
-	t_vector	closest_point;
-
+		return (NULL);
 	closest_point.x = viewpoint->x + projection * ray.x;
 	closest_point.y = viewpoint->y + projection * ray.y;
 	closest_point.z = viewpoint->z + projection * ray.z;
-
-
-	double	distance_squared;
 	distance_squared = pow(closest_point.x - sphere->centre->x, 2)
 		+ pow(closest_point.y - sphere->centre->y, 2)
 		+ pow(closest_point.z - sphere->centre->z, 2);
-
-
+	t_vector	intersection_point;
+	t_vector	to_intersection = v_diff(closest_point, *sphere->centre);
+	double		length = distance_between(*viewpoint, to_intersection);
+	if (length < 0)
+		return (NULL);
+	intersection_point.x = sphere->centre->x + (to_intersection.x / length)
+		* (sphere->diameter / 2);
+	intersection_point.y = sphere->centre->y + (to_intersection.y / length)
+		* (sphere->diameter / 2);
+	intersection_point.z = sphere->centre->z + (to_intersection.z / length)
+		* (sphere->diameter / 2);
 	if (distance_squared <= pow(sphere->diameter / 2, 2))
-		return (distance_squared);
+		return (new_intersect(intersection_point, length,
+				(void *)sphere, SPHERE));
 	else
-		return (0);
+		return (NULL);
 }
 
 t_vector	get_ray(t_vars *data, t_camera *camera, int x, int y)
@@ -60,44 +78,10 @@ t_vector	get_ray(t_vars *data, t_camera *camera, int x, int y)
 	scale = tanf(0.5f * (float)camera->fov * (M_PI / 180.0));
 	dx = scale * data->aspect_ratio * (((double)x / data->win_x) * 2.0 - 1.0);
 	dy = scale * (1.0 - ((double)y / data->win_y) * 2.0);
-//	result = (t_vector){dx, dy, camera->forward->z};
-//	result = v_add(result, v_scale(camera->right, dx));
-//	result = v_add(result, v_scale(camera->up, dy));
-//	return (v_normalize(result));
-
 	result = v_add(v_add(v_scale(camera->right, dx),
 				v_scale(camera->up, dy)), v_scale(*camera->forward, scale));
-
 	return (v_normalize(result));
 }
-
-//{
-//	t_vector	result;
-//	t_vector	right;
-//	t_vector	up;
-//	t_vector	forward;
-//	double		normalised_x;
-//	double		normalised_y;
-//
-//	forward = v_normalize(*camera->forward);
-//	up = v_normalize(v_cross(forward, (t_vector){0, 1, 0}));
-//	right = v_normalize(v_cross(up, forward));
-//
-//	normalised_x = (2.0 * ((double)x + 0.5) / (double)data->win_x - 1.0)
-//		* ((double)data->win_x / (double)data->win_y)
-//		* tan(camera->fov * M_PI / 180.0);
-//	normalised_y = (1.0 - 2.0 * ((double)y + 0.5) / (double)data->win_y)
-//		* tan(camera->fov_y * M_PI / 180.0);
-//
-//	result.x = camera->position->x + normalised_x * right.x
-//		+ normalised_y * up.x + forward.x;
-//	result.y = camera->position->y + normalised_x * right.y
-//		+ normalised_y * up.y + forward.y;
-//	result.z = camera->position->z + normalised_x * right.z
-//		- normalised_y * up.z + forward.z;
-//	return (result);
-//
-//}
 
 void	calculate_camera_right_up(t_camera *camera)
 {
@@ -111,6 +95,7 @@ int	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
 	int			x;
 	int			y;
 	t_vector	ray;
+	t_intersect	*intersect;
 
 	calculate_camera_right_up(camera);
 	y = 0;
@@ -124,10 +109,12 @@ int	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
 
 			// Calculate the v_dot product between the camera forward and the ray and
 			// draw the pixel if it is within the field of view of the came
-			if (ray_interects_sphere(camera->position, ray,
-					(t_sphere *)rt->scene->spheres->content))
+			intersect = ray_interects_sphere(camera->position, ray,
+					(t_sphere *)rt->scene->spheres->content);
+			if (intersect)
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y,
-					rgb_to_hex(((t_sphere *)rt->scene->spheres->content)->colour));
+					sphere_colour((t_sphere *)intersect->shape,
+						intersect, rt->scene));
 			x++;
 		}
 		y++;

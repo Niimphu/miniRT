@@ -14,7 +14,7 @@
 # define ELEMENT_H
 
 # include "../src/colour/colour.h"
-# include "../src/math/math_utils.h"
+# include "../src/math/vector.h"
 
 typedef struct s_ambience
 {

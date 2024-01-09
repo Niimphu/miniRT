@@ -1,7 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   math_utils.c                                       :+:      :+:    :+:   */
+/*   vector.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/09 18:11:27 by yiwong            #+#    #+#             */
+/*   Updated: 2024/01/09 18:40:52 by yiwong           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +22,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "math_utils.h"
+#include "vector.h"
 #include <stdlib.h>
 #include <math.h>
 //probably should add a bool to keep or free the passed the t_vector
@@ -126,6 +138,14 @@ t_vector	v_diff(t_vector v1, t_vector v2)
 	result.y = v1.y - v2.y;
 	result.z = v1.z - v2.z;
 	return (result);
+}
+
+double	distance_between(t_vector a, t_vector b)
+{
+	double	distance;
+
+	distance = sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2) + pow(b.z - a.z, 2));
+	return (distance);
 }
 
 //t_vector	vector_negativ(t_vector *v)

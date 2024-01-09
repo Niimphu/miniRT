@@ -16,14 +16,7 @@
 # include "../../lib/miniRT.h"
 # include "../free/free.h"
 # include "../colour/colour.h"
-# include "../math/math_utils.h"
-
-# define AMBIENCE 1
-# define CAMERA 2
-# define LIGHT 3
-# define SPHERE 4
-# define PLANE 5
-# define CYLINDER 6
+# include "../math/vector.h"
 
 int			new_element(char *line, t_scene *scene);
 

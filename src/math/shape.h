@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colour.h                                           :+:      :+:    :+:   */
+/*   shape.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/31 19:34:43 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/03 13:58:38 by Kekuhne          ###   ########.fr       */
+/*   Created: 2024/01/09 20:43:28 by yiwong            #+#    #+#             */
+/*   Updated: 2024/01/09 20:43:28 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLOUR_H
-# define COLOUR_H
+#ifndef SHAPE_H
+# define SHAPE_H
 
-typedef struct s_rgb
-{
-	int	r;
-	int	g;
-	int	b;
-}				t_rgb;
+# include "vector.h"
+# include "../../lib/element.h"
 
-bool	is_valid_rgb(t_rgb colour);
-int		rgb_to_hex(t_rgb colour);
-t_rgb	rgb_scale(t_rgb colour, double factor);
-t_rgb	rgb_add(t_rgb colour1, t_rgb colour2);
+t_vector	s_surface_normal(t_sphere *sphere, t_vector point);
 
 #endif

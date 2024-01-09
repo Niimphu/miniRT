@@ -36,6 +36,13 @@
 # define Y 1
 # define Z 2
 
+# define AMBIENCE 1
+# define CAMERA 2
+# define LIGHT 3
+# define SPHERE 4
+# define PLANE 5
+# define CYLINDER 6
+
 typedef struct s_vars
 {
 	void	*mlx;

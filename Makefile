@@ -18,7 +18,9 @@ SRC =	main.c \
 		parser/shapes.c \
 		parser/file.c \
 		miniRT.c \
-		math/math_utils.c \
+		math/vector.c \
+		math/intersect.c \
+		math/sphere.c \
 		colour/colour.c \
 		input_handler.c \
 		error.c \
