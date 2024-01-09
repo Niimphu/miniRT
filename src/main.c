@@ -27,7 +27,6 @@ int	main(int argc, char **argv)
 	if (parse(argv[1], rt) == FAIL)
 		return (free(rt), FAIL);
 	initialise(rt);
-	set_fov_y(rt->mlx_data, rt->scene->camera);
 	raytrace(rt);
 	free_rt(&rt);
 	return (0);

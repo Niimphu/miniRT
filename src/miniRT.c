@@ -6,41 +6,16 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/05 15:27:04 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/09 16:56:01 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
 #include "math_utils.h"
 #include "printer.h"
+#include "colour.h"
 
-void draw_sphere(t_vars *mlx, t_sphere *sphere)
-{
-	int	x;
-	int	y;
 
-	x = 0;
-	printf("x %.2f\n", sphere->centre->x);
-	printf("y %.2f\n", sphere->centre->y);
-	printf("d %.2f\n", sphere->diameter);
-	// Iterate through pixels in the window
-	while(x < mlx->win_x)
-	{
-		y = 0;
-		while (y < mlx->win_y)
-		{
-			// Calculate distance from the center of the sphere
-			double dx = x - sphere->centre->x;
-			double dy = y - sphere->centre->x;
-			double distance = sqrt(dx * dx + dy * dy);
-			// If the pixel is within the radius of the sphere, draw it
-			if (distance < sphere->diameter / 2)
-				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFF0000);
-			y++;
-		}
-		x++;
-	}
-}
 
 double	ray_interects_sphere(t_vector *viewpoint, t_vector ray, t_sphere *sphere)
 {
@@ -51,10 +26,8 @@ double	ray_interects_sphere(t_vector *viewpoint, t_vector ray, t_sphere *sphere)
 
 	double	projection;
 
-	projection = dot(to_sphere, ray);
-
-
-	if (projection < 0) //Intersection is behind viewpoint
+	projection = v_dot(to_sphere, ray);
+	if (projection < 0)
 		return (0);
 
 
@@ -65,53 +38,82 @@ double	ray_interects_sphere(t_vector *viewpoint, t_vector ray, t_sphere *sphere)
 	closest_point.z = viewpoint->z + projection * ray.z;
 
 
-	double distance_to_sphere = sqrt(pow(closest_point.x - sphere->centre->x, 2)
-			+ pow(closest_point.y - sphere->centre->y, 2)
-			+ pow(closest_point.z - sphere->centre->z, 2));
+	double	distance_squared;
+	distance_squared = pow(closest_point.x - sphere->centre->x, 2)
+		+ pow(closest_point.y - sphere->centre->y, 2)
+		+ pow(closest_point.z - sphere->centre->z, 2);
 
 
-	if (distance_to_sphere <= sphere->diameter / 2) //makes sure we are not inside the sphere
-		return (distance_to_sphere);
+	if (distance_squared <= pow(sphere->diameter / 2, 2))
+		return (distance_squared);
 	else
 		return (0);
 }
 
 t_vector	get_ray(t_vars *data, t_camera *camera, int x, int y)
 {
+	double		dx;
+	double		dy;
+	double		scale;
 	t_vector	result;
-	t_vector	right;
-	t_vector	up;
-	double		normalised_x;
-	double		normalised_y;
 
-	right = vector_normalize(cross(*camera->orientation, (t_vector){0, 1, 0}));
-	up = vector_normalize(cross(right, *camera->orientation));
+	scale = tanf(0.5f * (float)camera->fov * (M_PI / 180.0));
+	dx = scale * data->aspect_ratio * (((double)x / data->win_x) * 2.0 - 1.0);
+	dy = scale * (1.0 - ((double)y / data->win_y) * 2.0);
+//	result = (t_vector){dx, dy, camera->forward->z};
+//	result = v_add(result, v_scale(camera->right, dx));
+//	result = v_add(result, v_scale(camera->up, dy));
+//	return (v_normalize(result));
 
-	up.y *= -1.0;
+	result = v_add(v_add(v_scale(camera->right, dx),
+				v_scale(camera->up, dy)), v_scale(*camera->forward, scale));
 
-	normalised_x = (2.0 * ((double)x + 0.5) / (double)data->win_x - 1.0)
-		* ((double)data->win_x / (double)data->win_y)
-		* tan(camera->fov_x * M_PI / 360.0);
-	normalised_y = (2.0 * ((double)y + 0.5) / (double)data->win_y)
-		* tan(camera->fov_y * M_PI / 360.0);
-
-	result.x = camera->view_point->x + normalised_x * right.x
-		+ normalised_y * up.x;
-	result.y = camera->view_point->y + normalised_x * right.y
-		+ normalised_y * up.y;
-	result.z = camera->view_point->z + normalised_x * right.z
-		- normalised_y * up.z;
-	return (result);
+	return (v_normalize(result));
 }
 
-void	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
+//{
+//	t_vector	result;
+//	t_vector	right;
+//	t_vector	up;
+//	t_vector	forward;
+//	double		normalised_x;
+//	double		normalised_y;
+//
+//	forward = v_normalize(*camera->forward);
+//	up = v_normalize(v_cross(forward, (t_vector){0, 1, 0}));
+//	right = v_normalize(v_cross(up, forward));
+//
+//	normalised_x = (2.0 * ((double)x + 0.5) / (double)data->win_x - 1.0)
+//		* ((double)data->win_x / (double)data->win_y)
+//		* tan(camera->fov * M_PI / 180.0);
+//	normalised_y = (1.0 - 2.0 * ((double)y + 0.5) / (double)data->win_y)
+//		* tan(camera->fov_y * M_PI / 180.0);
+//
+//	result.x = camera->position->x + normalised_x * right.x
+//		+ normalised_y * up.x + forward.x;
+//	result.y = camera->position->y + normalised_x * right.y
+//		+ normalised_y * up.y + forward.y;
+//	result.z = camera->position->z + normalised_x * right.z
+//		- normalised_y * up.z + forward.z;
+//	return (result);
+//
+//}
+
+void	calculate_camera_right_up(t_camera *camera)
+{
+	camera->right = v_normalize(v_cross(*camera->forward, (t_vector){0, 1, 1}));
+	camera->up = v_normalize(v_cross(camera->right, *camera->forward));
+	camera->right = v_invert(camera->right);
+}
+
+int	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
 {
 	int			x;
 	int			y;
 	t_vector	ray;
 
+	calculate_camera_right_up(camera);
 	y = 0;
-	printf("fov: %i, %f\n", camera->fov_x, camera->fov_y);
 	while (y < mlx->win_y)
 	{
 		x = 0;
@@ -120,24 +122,18 @@ void	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
 			// Calculate the direction vector for the current ray
 			ray = get_ray(mlx, camera, x, y);
 
-			t_vector point_along_ray;
-			point_along_ray.x = camera->view_point->x + 1000.0 * ray.x;
-			point_along_ray.y = camera->view_point->y + 1000.0 * ray.y;
-			point_along_ray.z = camera->view_point->z + 1000.0 * ray.z;
-
-			print_vector_info(&point_along_ray);
-
-
-
-			// Calculate the dot product between the camera orientation and the ray and
+			// Calculate the v_dot product between the camera forward and the ray and
 			// draw the pixel if it is within the field of view of the came
-			if (ray_interects_sphere(camera->view_point, ray,
+			if (ray_interects_sphere(camera->position, ray,
 					(t_sphere *)rt->scene->spheres->content))
-				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0xFFFFFF);
+				mlx_pixel_put(mlx->mlx, mlx->win, x, y,
+					rgb_to_hex(((t_sphere *)rt->scene->spheres->content)->colour));
 			x++;
 		}
 		y++;
 	}
+	printf("\nDONE\n\n");
+	return (0);
 }
 
 /* void drawPlane(void *mlx, void *win, t_plane plane, int width, int height) {
@@ -166,7 +162,7 @@ int	raytrace(t_rt *rt)
 	mlx_hook(rt->mlx_data->win, DestroyNotify, 0L, window_closed, rt);
 	draw_scene(rt->mlx_data, (t_camera *)rt->scene->camera, rt);
 	/* draw_sphere(rt->mlx_data, (t_sphere *)rt->scene->spheres->content); */
-	// mlx_expose_hook(rt->mlx_data->win, draw, mlx_data);
+//	mlx_expose_hook(rt->mlx_data->win, draw_scene, rt->mlx_data);
 	mlx_loop(rt->mlx_data->mlx);
 	return (0);
 }

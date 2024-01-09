@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 19:41:49 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/15 19:41:49 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/09 16:56:01 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	free_camera(t_camera **camera)
 {
 	if (*camera)
 	{
-		if ((*camera)->view_point)
-			free((*camera)->view_point);
-		if ((*camera)->orientation)
-			free((*camera)->orientation);
+		if ((*camera)->position)
+			free((*camera)->position);
+		if ((*camera)->forward)
+			free((*camera)->forward);
 		free(*camera);
 		camera = NULL;
 	}

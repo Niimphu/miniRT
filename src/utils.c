@@ -23,8 +23,3 @@ int	strarray_size(char **array)
 		i++;
 	return (i);
 }
-
-void	set_fov_y(t_vars *mlx_data, t_camera *camera)
-{
-	camera->fov_y = (double)camera->fov_x / mlx_data->aspect_ratio;
-}

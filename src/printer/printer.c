@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 17:07:01 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/04 17:30:26 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/09 16:56:01 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	print_scene_info(t_scene	*scene)
 	}
 	printf("-----      Camera      ------\n");
 	printf("Viewpoint coordinates: ");
-	print_coord_info(scene->camera->view_point);
-	printf("3D normalised orientation vector: ");
-	print_vector_info(scene->camera->orientation);
-	printf("Field of view in degrees: %i\n", scene->camera->fov_x);
+	print_coord_info(scene->camera->position);
+	printf("3D normalised forward vector: ");
+	print_vector_info(scene->camera->forward);
+	printf("Field of view in degrees: %i\n", scene->camera->fov);
 	printf("-----     Lighting      -----\n");
 	if (scene->light)
 	{

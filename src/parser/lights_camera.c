@@ -46,17 +46,17 @@ int	new_camera(char **raw_input, t_scene *scene)
 	camera = scene->camera;
 	if (!camera)
 		return (FAIL);
-	camera->orientation = NULL;
-	camera->view_point = atoxyz(raw_input[0]);
-	if (!camera->view_point)
+	camera->forward = NULL;
+	camera->position = atoxyz(raw_input[0]);
+	if (!camera->position)
 		return (ft_perror("Error\nCamera: invalid viewpoint"), FAIL);
-	camera->orientation = atoxyz(raw_input[1]);
-	if (!camera->orientation || !is_normalised(camera->orientation))
-		return (ft_perror("Error\nCamera: invalid orientation"), FAIL);
+	camera->forward = atoxyz(raw_input[1]);
+	if (!camera->forward || !is_normalised(camera->forward))
+		return (ft_perror("Error\nCamera: invalid forward"), FAIL);
 	if (!ft_isint(raw_input[2]))
 		return (ft_perror("Error\nCamera: invalid field of view"), FAIL);
-	camera->fov_x = ft_atoi(raw_input[2]);
-	if (camera->fov_x < 0 || camera->fov_x > 180)
+	camera->fov = ft_atoi(raw_input[2]);
+	if (camera->fov < 0 || camera->fov > 180)
 		return (ft_perror("Error\nCamera: invalid field of view angle"), FAIL);
 	return (OK);
 }

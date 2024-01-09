@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:36:55 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/05 15:27:04 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/09 16:56:01 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ typedef struct s_ambience
 
 typedef struct s_camera
 {
-	t_vector	*view_point;
-	t_vector	*orientation;
-	int			fov_x;
-	double		fov_y;
+	t_vector	*position;
+	t_vector	*forward;
+	int			fov;
+	t_vector	right;
+	t_vector	up;
 }				t_camera;
 
 typedef struct s_light

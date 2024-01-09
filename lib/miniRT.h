@@ -75,6 +75,5 @@ void	quit(t_rt *rt);
 void	ft_perror(char *message);
 
 int		strarray_size(char **array);
-void	set_fov_y(t_vars *mlx_data, t_camera *camera);
 
 #endif

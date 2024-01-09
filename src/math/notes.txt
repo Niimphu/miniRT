@@ -38,20 +38,20 @@ always has lenght 1. Usally used when only interested in direction
 if v is a vector
 v / ||v||
 
-Dot product
+v_dot product
 
 u,v are vectors
 
 u . v = ||u|| * ||v|| * cos(angle between u & v)
 
-a sharp angle produces a big Dot product
-at right angle dot product is 0!
-if there oposite direction dot product is negative
+a sharp angle produces a big v_dot product
+at right angle v_dot product is 0!
+if there oposite direction v_dot product is negative
 mostly used to find the angle 
 
 u.v =( x1 * x2) + (y1 * y2) + (z1 * z2)
 
-Cross product
+v_cross product
 
 uxv= n * ||u|| * ||v|| * sin(angle between u & v)
 

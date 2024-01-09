@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 17:34:14 by Kekuhne           #+#    #+#             */
-/*   Updated: 2024/01/05 15:27:04 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/09 16:19:25 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ double	vector_length_sqr(t_vector vec)
 	return (sqrt(vector_length(vec)));
 }
 
-t_vector	vector_normalize(t_vector vector)
+t_vector	v_normalize(t_vector vector)
 {
 	double		l;
 	t_vector	result;
@@ -68,12 +68,12 @@ t_vector	vector_normalize(t_vector vector)
 	return (result);
 }
 
-double	dot(t_vector v1, t_vector v2)
+double	v_dot(t_vector v1, t_vector v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-t_vector	cross(t_vector v1, t_vector v2)
+t_vector	v_cross(t_vector v1, t_vector v2)
 {
 	t_vector	new;
 
@@ -103,23 +103,18 @@ t_vector	v_subtract(t_vector v1, t_vector v2)
 	return (result);
 }
 
-t_vector	v_multiply(t_vector v, double f)
+t_vector	v_invert(t_vector v)
 {
-	t_vector	result;
-
-	result.x = v.x * f;
-	result.y = v.y * f;
-	result.z = v.z * f;
-	return (result);
+	return (v_scale(v, -1.0));
 }
 
-t_vector	v_divide(t_vector v, double f)
+t_vector	v_scale(t_vector v, double factor)
 {
 	t_vector	result;
 
-	result.x = v.x * f;
-	result.y = v.y * f;
-	result.z = v.z * f;
+	result.x = v.x * factor;
+	result.y = v.y * factor;
+	result.z = v.z * factor;
 	return (result);
 }
 
