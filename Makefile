@@ -10,23 +10,18 @@ OBJ_DIR = obj
 
 SRC =	main.c \
 		initialise.c \
-		parser/parse.c \
-		parser/parse_utils.c \
-		parser/parse_strconversions.c \
+		parser/parse.c parser/parse_utils.c parser/parse_strconversions.c \
 		parser/new_element.c \
-		parser/lights_camera.c \
-		parser/shapes.c \
+		parser/lights_camera.c parser/shapes.c \
 		parser/file.c \
 		miniRT.c \
-		math/vector.c \
-		math/intersect.c \
-		math/sphere.c \
+		maths/vector.c maths/vector_basic.c maths/point.c \
+		maths/intersect.c \
+		maths/sphere.c \
 		colour/colour.c \
 		input_handler.c \
 		error.c \
-		free/free.c \
-		free/free_lights_camera.c \
-		free/free_shapes.c \
+		free/free.c free/free_lights_camera.c free/free_shapes.c \
 		quit.c \
 		utils.c \
 		printer/printer.c
@@ -42,7 +37,7 @@ LIB = $(LIBFT_DIR)/libft.a $(MLX_DIR)/libmlx.a
 CFLAGS +=	-I./lib \
 			-I./src/colour \
 			-I./src/free \
-			-I./src/math \
+			-I./src/maths \
 			-I./src/parser \
 			-I./src/printer
 

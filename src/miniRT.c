@@ -6,24 +6,22 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/09 16:56:01 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/10 14:00:05 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include "vector.h"
-#include "printer.h"
-#include "colour.h"
-#include "shape.h"
+#include "maths/shape.h"
 
 int	sphere_colour(t_sphere *sphere, t_intersect *data, t_scene *scene)
 {
-	double		diffuse_intensity;
-	t_rgb		colour;
-	t_vector	light_direction;
-	t_vector	surface_normal;
+	double	diffuse_intensity;
+	t_rgb	colour;
+	t_xyz	light_direction;
+	t_xyz	surface_normal;
 
-	light_direction = v_normalize(v_diff(*scene->light->point, data->point));
+	light_direction = v_normalize(v_subtract(*scene->light->point,
+				data->point));
 	surface_normal = s_surface_normal(sphere, data->point);
 	diffuse_intensity = fmax(0, fmin(1, (light_direction.x * surface_normal.x
 					+ light_direction.y * surface_normal.y
@@ -32,15 +30,15 @@ int	sphere_colour(t_sphere *sphere, t_intersect *data, t_scene *scene)
 	return (rgb_to_hex(colour));
 }
 
-t_intersect	*ray_interects_sphere(t_vector *viewpoint, t_vector ray,
+t_intersect	*ray_interects_sphere(t_xyz *viewpoint, t_xyz ray,
 		t_sphere *sphere)
 {
-	t_vector	to_sphere;
-	double		projection;
-	t_vector	closest_point;
-	double		distance_squared;
+	t_xyz	to_sphere;
+	double	projection;
+	t_xyz	closest_point;
+	double	distance_squared;
 
-	to_sphere = v_diff(*sphere->centre, *viewpoint);
+	to_sphere = v_subtract(*sphere->centre, *viewpoint);
 	projection = v_dot(to_sphere, ray);
 	if (projection < 0)
 		return (NULL);
@@ -50,9 +48,9 @@ t_intersect	*ray_interects_sphere(t_vector *viewpoint, t_vector ray,
 	distance_squared = pow(closest_point.x - sphere->centre->x, 2)
 		+ pow(closest_point.y - sphere->centre->y, 2)
 		+ pow(closest_point.z - sphere->centre->z, 2);
-	t_vector	intersection_point;
-	t_vector	to_intersection = v_diff(closest_point, *sphere->centre);
-	double		length = distance_between(*viewpoint, to_intersection);
+	t_xyz	intersection_point;
+	t_xyz	to_intersection = v_subtract(closest_point, *sphere->centre);
+	double	length = distance_between(*viewpoint, to_intersection);
 	if (length < 0)
 		return (NULL);
 	intersection_point.x = sphere->centre->x + (to_intersection.x / length)
@@ -68,12 +66,12 @@ t_intersect	*ray_interects_sphere(t_vector *viewpoint, t_vector ray,
 		return (NULL);
 }
 
-t_vector	get_ray(t_vars *data, t_camera *camera, int x, int y)
+t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y)
 {
-	double		dx;
-	double		dy;
-	double		scale;
-	t_vector	result;
+	double	dx;
+	double	dy;
+	double	scale;
+	t_xyz	result;
 
 	scale = tanf(0.5f * (float)camera->fov * (M_PI / 180.0));
 	dx = scale * data->aspect_ratio * (((double)x / data->win_x) * 2.0 - 1.0);
@@ -85,7 +83,7 @@ t_vector	get_ray(t_vars *data, t_camera *camera, int x, int y)
 
 void	calculate_camera_right_up(t_camera *camera)
 {
-	camera->right = v_normalize(v_cross(*camera->forward, (t_vector){0, 1, 1}));
+	camera->right = v_normalize(v_cross(*camera->forward, (t_xyz){0, 1, 1}));
 	camera->up = v_normalize(v_cross(camera->right, *camera->forward));
 	camera->right = v_invert(camera->right);
 }
@@ -94,7 +92,7 @@ int	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
 {
 	int			x;
 	int			y;
-	t_vector	ray;
+	t_xyz		ray;
 	t_intersect	*intersect;
 
 	calculate_camera_right_up(camera);
@@ -129,10 +127,10 @@ int	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
 	for (x = 0; x < width; x++) {
 		for (y = 0; y < height; y++) {
             // Calculate the position vector for the pixel
-            t_vector pixel = {x, y, 0};
+            t_xyz pixel = {x, y, 0};
 
             // Calculate the distance from the point to the plane
-            t_vector pointToPixel = {pixel->x - plane.point.x, pixel.y - plane.point.y, pixel.z - plane.point.z};
+            t_xyz pointToPixel = {pixel->x - plane.point.x, pixel.y - plane.point.y, pixel.z - plane.point.z};
             double distance = pointToPixel.x * plane.normal.x + pointToPixel.y * plane.normal.y + pointToPixel.z * plane.normal.z;
 
             // Draw the pixel if it is close to the plane

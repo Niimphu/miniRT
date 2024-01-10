@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   printer.h                                          :+:      :+:    :+:   */
+/*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/01 17:07:03 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/10 14:00:05 by yiwong           ###   ########.fr       */
+/*   Created: 2024/01/09 20:37:40 by yiwong            #+#    #+#             */
+/*   Updated: 2024/01/10 14:02:06 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PRINTER_H
-# define PRINTER_H
+#include "miniRT.h"
+#include "xyz.h"
+#include "element.h"
 
-# include "../../lib/miniRT.h"
-
-void	print_scene_info(t_scene *scene);
-void	print_colour_info(t_rgb colour);
-void	print_coord_info(t_xyz *vector);
-void	print_xyz_info(t_xyz *vector);
-
-#endif
+t_xyz	s_surface_normal(t_sphere *sphere, t_xyz point)
+{
+	return (v_normalize(v_subtract(point, *sphere->centre)));
+}

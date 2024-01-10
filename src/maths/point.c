@@ -1,20 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere.c                                           :+:      :+:    :+:   */
+/*   point.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/09 20:37:40 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/09 20:37:40 by yiwong           ###   ########.fr       */
+/*   Created: 2024/01/10 14:13:20 by yiwong            #+#    #+#             */
+/*   Updated: 2024/01/10 14:13:20 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-#include "vector.h"
-#include "element.h"
+#include <math.h>
+#include "xyz.h"
 
-t_vector	s_surface_normal(t_sphere *sphere, t_vector point)
+double	distance_between(t_xyz a, t_xyz b)
 {
-	return (v_normalize(v_diff(point, *sphere->centre)));
+	double	distance;
+
+	distance = sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2) + pow(b.z - a.z, 2));
+	return (distance);
 }

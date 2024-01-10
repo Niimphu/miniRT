@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 18:11:27 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/09 18:40:39 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/10 14:00:05 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,36 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef VECTOR_H
-# define VECTOR_H
+#ifndef XYZ_H
+# define XYZ_H
 
 typedef struct s_vector
 {
 	double	x;
 	double	y;
 	double	z;
-}			t_vector;
+}			t_xyz;
 
 typedef struct s_intersect
 {
-	t_vector	point;
-	double		distance;
-	void		*shape;
-	int			type;
+	t_xyz	point;
+	double	distance;
+	void	*shape;
+	int		type;
 }				t_intersect;
 
-void		set_vector_to(t_vector *set, double x, double y, double z);
-void		set_vector_to_single(t_vector *set, double n);
+t_xyz		v_cross(t_xyz v1, t_xyz v2);
+double		v_dot(t_xyz v1, t_xyz v2);
+t_xyz		v_normalize(t_xyz vector);
 
-t_vector	v_cross(t_vector v1, t_vector v2);
-double		v_dot(t_vector v1, t_vector v2);
-t_vector	v_normalize(t_vector vector);
+t_xyz		v_subtract(t_xyz v1, t_xyz v2);
+t_xyz		v_scale(t_xyz v, double factor);
+t_xyz		v_add(t_xyz v1, t_xyz v2);
+t_xyz		v_invert(t_xyz v);
 
-t_vector	v_diff(t_vector v1, t_vector v2);
-t_vector	v_scale(t_vector v, double factor);
-t_vector	v_add(t_vector v1, t_vector v2);
-t_vector	v_invert(t_vector v);
+double		distance_between(t_xyz a, t_xyz b);
 
-double		distance_between(t_vector a, t_vector b);
-
-t_intersect	*new_intersect(t_vector point, double distance, void *shape, int type);
+t_intersect	*new_intersect(t_xyz point, double distance,
+				void *shape, int type);
 
 #endif

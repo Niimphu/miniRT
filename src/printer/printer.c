@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/01 17:07:01 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/09 16:56:01 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/10 14:00:05 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	print_scene_info(t_scene	*scene)
 	printf("Viewpoint coordinates: ");
 	print_coord_info(scene->camera->position);
 	printf("3D normalised forward vector: ");
-	print_vector_info(scene->camera->forward);
+	print_xyz_info(scene->camera->forward);
 	printf("Field of view in degrees: %i\n", scene->camera->fov);
 	printf("-----     Lighting      -----\n");
 	if (scene->light)
@@ -72,7 +72,7 @@ void	print_scene_info(t_scene	*scene)
 			printf("Point on the plane: ");
 			print_coord_info(plane->point);
 			printf("3D normalised vector: ");
-			print_vector_info(plane->norm);
+			print_xyz_info(plane->norm);
 			printf("Colour: ");
 			print_colour_info(plane->colour);
 			if (node->next)
@@ -91,7 +91,7 @@ void	print_scene_info(t_scene	*scene)
 			printf("Centre coordinates: ");
 			print_coord_info(cylinder->centre);
 			printf("3D Normalised vector of axis: ");
-			print_vector_info(cylinder->axis);
+			print_xyz_info(cylinder->axis);
 			printf("Diameter: %.1f\nHeight %.1f\nColour: ", cylinder->diameter,
 				cylinder->height);
 			print_colour_info(cylinder->colour);
@@ -109,12 +109,12 @@ void	print_colour_info(t_rgb colour)
 	printf("%i, %i, %i\n", colour.r, colour.g, colour.b);
 }
 
-void	print_coord_info(t_vector *vector)
+void	print_coord_info(t_xyz *vector)
 {
 	printf("(%.1f, %.1f, %.1f)\n", vector->x, vector->y, vector->z);
 }
 
-void	print_vector_info(t_vector *vector)
+void	print_xyz_info(t_xyz *vector)
 {
 	printf("<%.1f, %.1f, %.1f>\n", vector->x, vector->y, vector->z);
 }

@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intersect.c                                        :+:      :+:    :+:   */
+/*   shape.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/09 18:42:11 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/09 18:42:11 by yiwong           ###   ########.fr       */
+/*   Created: 2024/01/09 20:43:28 by yiwong            #+#    #+#             */
+/*   Updated: 2024/01/10 14:00:33 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector.h"
-#include "miniRT.h"
+#ifndef SHAPE_H
+# define SHAPE_H
 
-t_intersect	*new_intersect(t_vector point, double distance,
-										void *shape, int type)
-{
-	t_intersect	*new;
+# include "xyz.h"
+# include "../../lib/element.h"
 
-	new = ft_calloc(1, sizeof(t_intersect));
-	if (!new)
-		return (NULL);
-	new->point = point;
-	new->distance = distance;
-	new->shape = shape;
-	new->type = type;
-	return (new);
-}
+t_xyz	s_surface_normal(t_sphere *sphere, t_xyz point);
+
+#endif

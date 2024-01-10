@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 14:23:03 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/05 15:27:24 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/10 14:00:05 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ t_rgb	atorgb(char *string)
 	return (rgb);
 }
 
-t_vector	*atoxyz(char *string)
+t_xyz	*atoxyz(char *string)
 {
-	t_vector	*xyz;
-	char		**str_xyz;
+	t_xyz	*xyz;
+	char	**str_xyz;
 
 	str_xyz = ft_split(string, ',');
 	if (!str_xyz)
