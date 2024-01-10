@@ -10,7 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#define A 0
+#define B 1
+#define C 2
+
 #include "miniRT.h"
+#include "xyz.h"
+#include "printer.h"
 #include "maths/shape.h"
 
 int	sphere_colour(t_sphere *sphere, t_intersect *data, t_scene *scene)
@@ -27,43 +33,39 @@ int	sphere_colour(t_sphere *sphere, t_intersect *data, t_scene *scene)
 					+ light_direction.y * surface_normal.y
 					+ light_direction.z * surface_normal.z)));
 	colour = rgb_scale(sphere->colour, diffuse_intensity);
+	colour = rgb_add(colour, rgb_scale(scene->ambience->colour,
+				scene->ambience->lighting));
 	return (rgb_to_hex(colour));
 }
 
 t_intersect	*ray_interects_sphere(t_xyz *viewpoint, t_xyz ray,
 		t_sphere *sphere)
 {
-	t_xyz	to_sphere;
-	double	projection;
-	t_xyz	closest_point;
-	double	distance_squared;
+	t_xyz		to_sphere_centre;
+	double		discr_vars[3];
+	double		discriminant;
+	t_intersect	*intersection;
 
-	to_sphere = v_subtract(*sphere->centre, *viewpoint);
-	projection = v_dot(to_sphere, ray);
-	if (projection < 0)
+	to_sphere_centre = v_subtract(*viewpoint, *sphere->centre);
+	discr_vars[A] = v_dot(ray, ray);
+	discr_vars[B] = 2.0 * v_dot(to_sphere_centre, ray);
+	discr_vars[C] = v_dot(to_sphere_centre, to_sphere_centre)
+		- (pow(sphere->diameter, 2) * 0.25);
+	discriminant = pow(discr_vars[B], 2) - 4 * discr_vars[A] * discr_vars[C];
+	if (discriminant < 0)
 		return (NULL);
-	closest_point.x = viewpoint->x + projection * ray.x;
-	closest_point.y = viewpoint->y + projection * ray.y;
-	closest_point.z = viewpoint->z + projection * ray.z;
-	distance_squared = pow(closest_point.x - sphere->centre->x, 2)
-		+ pow(closest_point.y - sphere->centre->y, 2)
-		+ pow(closest_point.z - sphere->centre->z, 2);
-	t_xyz	intersection_point;
-	t_xyz	to_intersection = v_subtract(closest_point, *sphere->centre);
-	double	length = p2p_distance(*viewpoint, to_intersection);
-	if (length < 0)
+	intersection = new_intersect();
+	if (!intersection)
 		return (NULL);
-	intersection_point.x = sphere->centre->x + (to_intersection.x / length)
-		* (sphere->diameter / 2);
-	intersection_point.y = sphere->centre->y + (to_intersection.y / length)
-		* (sphere->diameter / 2);
-	intersection_point.z = sphere->centre->z + (to_intersection.z / length)
-		* (sphere->diameter / 2);
-	if (distance_squared <= pow(sphere->diameter / 2, 2))
-		return (new_intersect(intersection_point, length,
-				(void *)sphere, SPHERE));
-	else
-		return (NULL);
+	intersection->distance = (-(discr_vars[B]) - sqrt(discriminant))
+		/ (2.0 * discr_vars[A]);
+	if (intersection->distance < 0)
+		return (free(intersection), NULL);
+	intersection->point = v_add(*viewpoint, v_scale(ray,
+				intersection->distance));
+	intersection->shape = sphere;
+	intersection->type = SPHERE;
+	return (intersection);
 }
 
 t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y)
@@ -110,9 +112,11 @@ int	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
 			intersect = ray_interects_sphere(camera->position, ray,
 					(t_sphere *)rt->scene->spheres->content);
 			if (intersect)
+			{
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y,
-					sphere_colour((t_sphere *)intersect->shape,
+					sphere_colour((t_sphere *) intersect->shape,
 						intersect, rt->scene));
+			}
 			x++;
 		}
 		y++;
