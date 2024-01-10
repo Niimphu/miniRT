@@ -1,4 +1,4 @@
-CC = gcc
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror -g -Isources -I/usr/X11/include -Ilib/mlx_linux
 
