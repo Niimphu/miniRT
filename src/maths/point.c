@@ -13,7 +13,7 @@
 #include <math.h>
 #include "xyz.h"
 
-double	distance_between(t_xyz a, t_xyz b)
+double	p2p_distance(t_xyz a, t_xyz b)
 {
 	double	distance;
 

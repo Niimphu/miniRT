@@ -50,7 +50,7 @@ t_intersect	*ray_interects_sphere(t_xyz *viewpoint, t_xyz ray,
 		+ pow(closest_point.z - sphere->centre->z, 2);
 	t_xyz	intersection_point;
 	t_xyz	to_intersection = v_subtract(closest_point, *sphere->centre);
-	double	length = distance_between(*viewpoint, to_intersection);
+	double	length = p2p_distance(*viewpoint, to_intersection);
 	if (length < 0)
 		return (NULL);
 	intersection_point.x = sphere->centre->x + (to_intersection.x / length)

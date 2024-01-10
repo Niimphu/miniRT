@@ -49,7 +49,7 @@ t_xyz		v_scale(t_xyz v, double factor);
 t_xyz		v_add(t_xyz v1, t_xyz v2);
 t_xyz		v_invert(t_xyz v);
 
-double		distance_between(t_xyz a, t_xyz b);
+double		p2p_distance(t_xyz a, t_xyz b);
 
 t_intersect	*new_intersect(t_xyz point, double distance,
 				void *shape, int type);
