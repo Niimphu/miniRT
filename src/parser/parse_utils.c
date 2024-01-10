@@ -67,8 +67,8 @@ bool	ft_isdouble(const char *str)
 
 bool	is_normalised(t_xyz *vector)
 {
-	if (vector->x < 0.0f || vector->x > 1.0f || vector->y < 0.0f
-		|| vector->y > 1.0f || vector->z < 0.0f || vector->z > 1.0f)
+	if (vector->x < -1.0 || vector->x > 1.0 || vector->y < -1.0
+		|| vector->y > 1.0 || vector->z < -1.0 || vector->z > 1.0)
 		return (false);
 	return (true);
 }
