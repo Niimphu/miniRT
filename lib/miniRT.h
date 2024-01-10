@@ -28,9 +28,11 @@
 # define OK 0
 # define FAIL -1
 
-# define R 0
-# define G 1
-# define B 2
+# ifndef B
+#  define R 0
+#  define G 1
+#  define B 2
+# endif
 
 # define X 0
 # define Y 1
