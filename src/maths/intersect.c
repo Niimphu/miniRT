@@ -13,17 +13,16 @@
 #include "xyz.h"
 #include "miniRT.h"
 
-t_intersect	*new_intersect(t_xyz point, double distance,
-										void *shape, int type)
+t_intersect	*new_intersect(void)
 {
 	t_intersect	*new;
 
 	new = ft_calloc(1, sizeof(t_intersect));
 	if (!new)
 		return (NULL);
-	new->point = point;
-	new->distance = distance;
-	new->shape = shape;
-	new->type = type;
+	new->point = (t_xyz){0, 0, 0};
+	new->distance = 0.0;
+	new->shape = NULL;
+	new->type = 0;
 	return (new);
 }
