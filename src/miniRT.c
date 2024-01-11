@@ -116,6 +116,7 @@ int	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y,
 					sphere_colour((t_sphere *) intersect->shape,
 						intersect, rt->scene));
+				free(intersect);
 			}
 			x++;
 		}
