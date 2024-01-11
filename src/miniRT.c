@@ -90,39 +90,39 @@ void	calculate_camera_right_up(t_camera *camera)
 	camera->right = v_invert(camera->right);
 }
 
-int	draw_scene(t_vars *mlx, t_camera *camera, t_rt *rt)
+void	find_intersections(t_vars *mlx, t_camera *camera, t_rt *rt)
 {
 	int			x;
 	int			y;
 	t_xyz		ray;
 	t_intersect	*intersect;
 
-	calculate_camera_right_up(camera);
 	y = 0;
 	while (y < mlx->win_y)
 	{
 		x = 0;
 		while (x < mlx->win_x)
 		{
-			// Calculate the direction vector for the current ray
 			ray = get_ray(mlx, camera, x, y);
-
-			// Calculate the v_dot product between the camera forward and the ray and
-			// draw the pixel if it is within the field of view of the came
 			intersect = ray_interects_sphere(camera->position, ray,
-					(t_sphere *)rt->scene->spheres->content);
+											 (t_sphere *)rt->scene->spheres->content);
 			if (intersect)
 			{
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y,
-					sphere_colour((t_sphere *) intersect->shape,
-						intersect, rt->scene));
+							  sphere_colour((t_sphere *) intersect->shape,
+											intersect, rt->scene));
 				free(intersect);
 			}
 			x++;
 		}
 		y++;
 	}
-	printf("\nDONE\n\n");
+}
+
+int	draw_scene(t_rt *rt)
+{
+	calculate_camera_right_up(rt->scene->camera);
+	find_intersections(rt->mlx_data, rt->scene->camera, rt);
 	return (0);
 }
 
@@ -150,9 +150,8 @@ int	raytrace(t_rt *rt)
 {
 	mlx_hook(rt->mlx_data->win, KeyPress, 1L << 0, key_pressed, rt);
 	mlx_hook(rt->mlx_data->win, DestroyNotify, 0L, window_closed, rt);
-	draw_scene(rt->mlx_data, (t_camera *)rt->scene->camera, rt);
-	/* draw_sphere(rt->mlx_data, (t_sphere *)rt->scene->spheres->content); */
-//	mlx_expose_hook(rt->mlx_data->win, draw_scene, rt->mlx_data);
+	draw_scene(rt);
+	mlx_expose_hook(rt->mlx_data->win, draw_scene, rt);
 	mlx_loop(rt->mlx_data->mlx);
 	return (0);
 }
