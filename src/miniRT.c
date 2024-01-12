@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/10 14:00:05 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/12 17:45:42 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,25 @@ int	sphere_colour(t_sphere *sphere, t_xyz point, t_scene *scene)
 					+ light_direction.y * surface_normal.y
 					+ light_direction.z * surface_normal.z)));
 	colour = rgb_scale(sphere->colour, diffuse_intensity);
+	colour = rgb_add(colour, rgb_scale(scene->ambience->colour,
+				scene->ambience->lighting));
+	return (rgb_to_hex(colour));
+}
+
+int	plane_colour(t_plane *plane, t_xyz point, t_scene *scene)
+{
+	double	diffuse_intensity;
+	t_rgb	colour;
+	t_xyz	light_direction;
+	t_xyz	surface_normal;
+
+	surface_normal = *plane->norm;
+	light_direction = v_normalize(v_subtract(*scene->light->point,
+				point));
+	diffuse_intensity = fmax(0, fmin(1, (light_direction.x * surface_normal.x
+					+ light_direction.y * surface_normal.y
+					+ light_direction.z * surface_normal.z)));
+	colour = rgb_scale(plane->colour, diffuse_intensity);
 	colour = rgb_add(colour, rgb_scale(scene->ambience->colour,
 				scene->ambience->lighting));
 	return (rgb_to_hex(colour));
@@ -107,6 +126,23 @@ t_intersect	get_closest_sphere(t_xyz viewpoint, t_xyz ray, t_list *spheres)
 	return (closest);
 }
 
+t_intersect	get_closest_plane(t_xyz viewpoint, t_xyz ray, t_list *planes)
+{
+	t_plane		*plane;
+	t_intersect	closest;
+	t_intersect	new;
+
+	while (planes)
+	{
+		plane = (t_plane *)planes->content;
+		new = ray_intersect_plane(&viewpoint, ray, plane);
+		if (!closest.valid || (new.valid && (new.distance < closest.distance)))
+			closest = new;
+		planes = planes->next;
+	}
+	return (closest);
+}
+
 t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 {
 	t_intersect	closest_sphere;
@@ -114,9 +150,24 @@ t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 	t_intersect	closest_cylinder;
 
 	closest_sphere = get_closest_sphere(viewpoint, ray, scene->spheres);
-	(void)closest_plane;
+	closest_plane = get_closest_plane(viewpoint, ray, scene->planes);
+	if (closest_plane.distance < closest_sphere.distance)
+		return (closest_plane);
+	(void)closest_sphere;
 	(void)closest_cylinder;
-	return (closest_sphere);
+	return (closest_plane);
+}
+
+void	print_pixel(t_rt *rt, int x, int y, t_intersect intersect)
+{
+	if (intersect.type == SPHERE)
+		mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
+			sphere_colour((t_sphere *) intersect.shape,
+				intersect.point, rt->scene));
+	else if (intersect.type == PLANE)
+		mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
+			plane_colour((t_plane *) intersect.shape,
+				intersect.point, rt->scene));
 }
 
 void	find_intersections(t_vars *mlx, t_camera *camera, t_rt *rt)
@@ -133,13 +184,11 @@ void	find_intersections(t_vars *mlx, t_camera *camera, t_rt *rt)
 		while (x < mlx->win_x)
 		{
 			ray = get_ray(mlx, camera, x, y);
-			intersect = get_closest_shape(*camera->position, ray, rt->scene);
+//			intersect = get_closest_shape(*camera->position, ray, rt->scene);
+			intersect = ray_intersect_plane(camera->position, ray,
+					(t_plane *)(rt->scene->planes->next->content));
 			if (intersect.valid)
-			{
-				mlx_pixel_put(mlx->mlx, mlx->win, x, y,
-					sphere_colour((t_sphere *) intersect.shape,
-						intersect.point, rt->scene));
-			}
+				print_pixel(rt, x, y, intersect);
 			x++;
 		}
 		y++;
