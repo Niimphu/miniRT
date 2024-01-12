@@ -13,6 +13,9 @@
 #ifndef XYZ_H
 # define XYZ_H
 
+# include <stdbool.h>
+# include "colour.h"
+
 typedef struct s_vector
 {
 	double	x;
@@ -22,7 +25,9 @@ typedef struct s_vector
 
 typedef struct s_intersect
 {
+	bool	valid;
 	t_xyz	point;
+	t_rgb	colour;
 	double	distance;
 	void	*shape;
 	int		type;
@@ -39,6 +44,6 @@ t_xyz		v_invert(t_xyz v);
 
 double		p2p_distance(t_xyz a, t_xyz b);
 
-t_intersect	*new_intersect(void);
+t_intersect	new_intersect(void);
 
 #endif
