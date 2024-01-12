@@ -115,6 +115,7 @@ t_intersect	get_closest_sphere(t_xyz viewpoint, t_xyz ray, t_list *spheres)
 	t_intersect	closest;
 	t_intersect	new;
 
+	closest = new_intersect();
 	while (spheres)
 	{
 		sphere = (t_sphere *)spheres->content;
@@ -132,6 +133,7 @@ t_intersect	get_closest_plane(t_xyz viewpoint, t_xyz ray, t_list *planes)
 	t_intersect	closest;
 	t_intersect	new;
 
+	closest = new_intersect();
 	while (planes)
 	{
 		plane = (t_plane *)planes->content;
@@ -151,11 +153,16 @@ t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 
 	closest_sphere = get_closest_sphere(viewpoint, ray, scene->spheres);
 	closest_plane = get_closest_plane(viewpoint, ray, scene->planes);
+	if (!closest_sphere.valid && !closest_plane.valid)
+		return (new_intersect());
+	if (!closest_sphere.valid && closest_plane.valid)
+		return (closest_plane);
+	if (closest_sphere.valid && !closest_plane.valid)
+		return (closest_sphere);
 	if (closest_plane.distance < closest_sphere.distance)
 		return (closest_plane);
-	(void)closest_sphere;
 	(void)closest_cylinder;
-	return (closest_plane);
+	return (closest_sphere);
 }
 
 void	print_pixel(t_rt *rt, int x, int y, t_intersect intersect)
@@ -184,9 +191,7 @@ void	find_intersections(t_vars *mlx, t_camera *camera, t_rt *rt)
 		while (x < mlx->win_x)
 		{
 			ray = get_ray(mlx, camera, x, y);
-//			intersect = get_closest_shape(*camera->position, ray, rt->scene);
-			intersect = ray_intersect_plane(camera->position, ray,
-					(t_plane *)(rt->scene->planes->next->content));
+			intersect = get_closest_shape(*camera->position, ray, rt->scene);
 			if (intersect.valid)
 				print_pixel(rt, x, y, intersect);
 			x++;
