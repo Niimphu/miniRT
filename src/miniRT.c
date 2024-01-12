@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/10 14:00:05 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/12 17:45:42 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,25 @@ int	sphere_colour(t_sphere *sphere, t_intersect *data, t_scene *scene)
 					+ light_direction.y * surface_normal.y
 					+ light_direction.z * surface_normal.z)));
 	colour = rgb_scale(sphere->colour, diffuse_intensity);
+	colour = rgb_add(colour, rgb_scale(scene->ambience->colour,
+				scene->ambience->lighting));
+	return (rgb_to_hex(colour));
+}
+
+int	plane_colour(t_plane *plane, t_intersect *data, t_scene *scene)
+{
+	double	diffuse_intensity;
+	t_rgb	colour;
+	t_xyz	light_direction;
+	t_xyz	surface_normal;
+
+	surface_normal = *plane->norm;
+	light_direction = v_normalize(v_subtract(*scene->light->point,
+				data->point));
+	diffuse_intensity = fmax(0, fmin(1, (light_direction.x * surface_normal.x
+					+ light_direction.y * surface_normal.y
+					+ light_direction.z * surface_normal.z)));
+	colour = rgb_scale(plane->colour, diffuse_intensity);
 	colour = rgb_add(colour, rgb_scale(scene->ambience->colour,
 				scene->ambience->lighting));
 	return (rgb_to_hex(colour));
@@ -104,12 +123,14 @@ void	find_intersections(t_vars *mlx, t_camera *camera, t_rt *rt)
 		while (x < mlx->win_x)
 		{
 			ray = get_ray(mlx, camera, x, y);
-			intersect = ray_interects_sphere(camera->position, ray,
-											 (t_sphere *)rt->scene->spheres->content);
+			intersect = ray_intersect_plane(camera->position, ray,
+											(t_plane *)rt->scene->planes->content);
+			/* intersect = ray_interects_sphere(camera->position, ray,
+											 (t_sphere *)rt->scene->spheres->content); */
 			if (intersect)
 			{
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y,
-							  sphere_colour((t_sphere *) intersect->shape,
+							  plane_colour((t_plane *) intersect->shape,
 											intersect, rt->scene));
 				free(intersect);
 			}

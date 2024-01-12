@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shape.h                                            :+:      :+:    :+:   */
+/*   plane.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/09 20:43:28 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/12 17:00:40 by Kekuhne          ###   ########.fr       */
+/*   Created: 2024/01/12 16:02:04 by Kekuhne           #+#    #+#             */
+/*   Updated: 2024/01/12 16:57:35 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHAPE_H
-# define SHAPE_H
+#ifndef PLANE_H
+# define PLANE_H
 
 # include "xyz.h"
-# include "plane.h"
 # include "../../lib/element.h"
 
-t_xyz	s_surface_normal(t_sphere *sphere, t_xyz point);
+t_xyz p_surface_normal(t_plane *plane, t_xyz point);
+t_intersect *ray_intersect_plane(t_xyz *viewpoint, t_xyz ray, t_plane *plane);
 
 #endif

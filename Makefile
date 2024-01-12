@@ -18,6 +18,7 @@ SRC =	main.c \
 		maths/vector.c maths/vector_basic.c maths/point.c \
 		maths/intersect.c \
 		maths/sphere.c \
+		maths/plane.c \
 		colour/colour.c \
 		input_handler.c \
 		error.c \
