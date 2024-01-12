@@ -1,21 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   plane.h                                            :+:      :+:    :+:   */
+/*   draw_cylinder.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/12 16:02:04 by Kekuhne           #+#    #+#             */
-/*   Updated: 2024/01/12 16:57:35 by Kekuhne          ###   ########.fr       */
+/*   Created: 2024/01/12 19:20:11 by yiwong            #+#    #+#             */
+/*   Updated: 2024/01/12 19:20:11 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PLANE_H
-# define PLANE_H
-
-# include "xyz.h"
-# include "../../lib/element.h"
-
-t_intersect	ray_intersect_plane(t_xyz *viewpoint, t_xyz ray, t_plane *plane);
-
-#endif
+#include "miniRT.h"
+#include "xyz.h"
+#include "shape.h"
+#include "draw.h"

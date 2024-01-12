@@ -14,7 +14,6 @@
 # define SHAPE_H
 
 # include "xyz.h"
-# include "plane.h"
 # include "../../lib/element.h"
 
 t_xyz	s_surface_normal(t_sphere *sphere, t_xyz point);

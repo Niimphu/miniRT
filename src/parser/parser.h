@@ -28,7 +28,7 @@ char		*trim_nl(char *str);
 
 double		ft_atod(const char *str);
 t_rgb		atorgb(char *string);
-t_xyz	*atoxyz(char *string);
+t_xyz		*atoxyz(char *string);
 
 int			new_ambience(char **raw_input, t_scene *scene);
 int			new_camera(char **raw_input, t_scene *scene);
