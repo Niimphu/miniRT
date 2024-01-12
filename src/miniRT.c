@@ -100,9 +100,7 @@ t_intersect	get_closest_sphere(t_xyz viewpoint, t_xyz ray, t_list *spheres)
 	{
 		sphere = (t_sphere *)spheres->content;
 		new = ray_interects_sphere(&viewpoint, ray, sphere);
-		if (!closest.valid)
-			closest = new;
-		else if (new.valid && (new.distance < closest.distance))
+		if (!closest.valid || (new.valid && (new.distance < closest.distance)))
 			closest = new;
 		spheres = spheres->next;
 	}
