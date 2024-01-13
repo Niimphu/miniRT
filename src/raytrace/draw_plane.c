@@ -49,9 +49,10 @@ int	plane_colour(t_plane *plane, t_xyz point, t_scene *scene)
 	surface_normal = *plane->norm;
 	light_direction = v_normalize(v_subtract(*scene->light->point,
 				point));
-	diffuse_intensity = fmax(0, fmin(1, (light_direction.x * surface_normal.x
-					+ light_direction.y * surface_normal.y
-					+ light_direction.z * surface_normal.z)));
+	diffuse_intensity = fmax(-1, fmin(1, v_dot(light_direction,
+					surface_normal)));
+	if (diffuse_intensity < 0)
+		diffuse_intensity *= -1.0;
 	colour = rgb_scale(plane->colour, diffuse_intensity);
 	colour = rgb_add(colour, rgb_scale(scene->ambience->colour,
 				scene->ambience->lighting));
