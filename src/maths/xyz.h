@@ -16,6 +16,8 @@
 # include <stdbool.h>
 # include "colour.h"
 
+# define TOLERANCE 0.0001
+
 typedef struct s_vector
 {
 	double	x;
@@ -26,6 +28,7 @@ typedef struct s_vector
 typedef struct s_intersect
 {
 	bool	valid;
+	bool	in_shadow;
 	t_xyz	point;
 	t_rgb	colour;
 	double	distance;
@@ -43,6 +46,7 @@ t_xyz		v_add(t_xyz v1, t_xyz v2);
 t_xyz		v_invert(t_xyz v);
 
 double		p2p_distance(t_xyz a, t_xyz b);
+bool		p_equal(t_xyz a, t_xyz b);
 
 t_intersect	new_intersect(void);
 

@@ -20,3 +20,9 @@ double	p2p_distance(t_xyz a, t_xyz b)
 	distance = sqrt(pow(b.x - a.x, 2) + pow(b.y - a.y, 2) + pow(b.z - a.z, 2));
 	return (distance);
 }
+
+bool	p_equal(t_xyz a, t_xyz b)
+{
+	return ((fabs(a.x - b.x) < TOLERANCE) && (fabs(a.y - b.y) < TOLERANCE)
+		&& (fabs(a.z - b.z) < TOLERANCE));
+}

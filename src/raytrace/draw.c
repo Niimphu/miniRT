@@ -12,7 +12,6 @@
 
 #include "miniRT.h"
 #include "xyz.h"
-#include "shape.h"
 #include "draw.h"
 
 static t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y);
@@ -42,7 +41,11 @@ static void	draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt)
 			ray = get_ray(mlx, camera, x, y);
 			intersect = get_closest_shape(*camera->position, ray, rt->scene);
 			if (intersect.valid)
+			{
+				intersect = check_shadows(rt->scene, *rt->scene->light->point,
+						intersect);
 				print_pixel(rt, x, y, intersect);
+			}
 			x++;
 		}
 		y++;
@@ -67,12 +70,6 @@ static t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y)
 
 static void	print_pixel(t_rt *rt, int x, int y, t_intersect intersect)
 {
-	if (intersect.type == SPHERE)
-		mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
-			sphere_colour((t_sphere *) intersect.shape,
-				intersect.point, rt->scene));
-	else if (intersect.type == PLANE)
-		mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
-			plane_colour((t_plane *) intersect.shape,
-				intersect.point, rt->scene));
+	mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
+		get_colour(intersect, intersect.point, rt->scene));
 }

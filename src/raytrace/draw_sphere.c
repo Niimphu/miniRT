@@ -16,7 +16,6 @@
 
 #include "miniRT.h"
 #include "xyz.h"
-#include "shape.h"
 #include "draw.h"
 
 t_intersect	ray_interects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
@@ -37,33 +36,17 @@ t_intersect	ray_interects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 		return (new_intersect());
 	intersection.distance = (-(discr_vars[B]) - sqrt(discriminant))
 		/ (2.0 * discr_vars[A]);
-	if (intersection.distance < 0)
+	if (fabs(intersection.distance) < TOLERANCE)
+		intersection.distance = (-(discr_vars[B]) + sqrt(discriminant))
+			/ (2.0 * discr_vars[A]);
+	else if (intersection.distance < 0)
 		return (intersection);
-	intersection.point = v_add(*viewpoint, v_scale(ray,
-				intersection.distance));
-	intersection.shape = sphere;
-	intersection.type = SPHERE;
-	intersection.colour = sphere->colour;
-	intersection.valid = true;
-	return (intersection);
+	return ((t_intersect){true, false,
+		v_add(*viewpoint, v_scale(ray, intersection.distance)),
+		sphere->colour, intersection.distance, sphere, SPHERE});
 }
 
-int	sphere_colour(t_sphere *sphere, t_xyz point, t_scene *scene)
+t_xyz	sphere_normal(t_sphere *sphere, t_xyz point)
 {
-	double	diffuse_intensity;
-	t_rgb	colour;
-	t_xyz	light_direction;
-	t_xyz	surface_normal;
-
-	light_direction = v_normalize(v_subtract(*scene->light->point,
-				point));
-	surface_normal = s_surface_normal(sphere, point);
-	diffuse_intensity = fmax(-1, fmin(1, v_dot(light_direction,
-					surface_normal)));
-	if (diffuse_intensity < 0)
-		diffuse_intensity *= -1.0;
-	colour = rgb_scale(sphere->colour, diffuse_intensity);
-	colour = rgb_add(colour, rgb_scale(scene->ambience->colour,
-				scene->ambience->lighting));
-	return (rgb_to_hex(colour));
+	return (v_normalize(v_subtract(point, *sphere->centre)));
 }

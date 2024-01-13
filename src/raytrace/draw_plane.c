@@ -12,7 +12,6 @@
 
 #include "miniRT.h"
 #include "xyz.h"
-#include "shape.h"
 #include "draw.h"
 
 t_intersect	ray_intersects_plane(t_xyz *viewpoint, t_xyz ray, t_plane *plane)
@@ -39,22 +38,7 @@ t_intersect	ray_intersects_plane(t_xyz *viewpoint, t_xyz ray, t_plane *plane)
 	return (intersection);
 }
 
-int	plane_colour(t_plane *plane, t_xyz point, t_scene *scene)
+t_xyz	plane_normal(t_plane *plane)
 {
-	double	diffuse_intensity;
-	t_rgb	colour;
-	t_xyz	light_direction;
-	t_xyz	surface_normal;
-
-	surface_normal = *plane->norm;
-	light_direction = v_normalize(v_subtract(*scene->light->point,
-				point));
-	diffuse_intensity = fmax(-1, fmin(1, v_dot(light_direction,
-					surface_normal)));
-	if (diffuse_intensity < 0)
-		diffuse_intensity *= -1.0;
-	colour = rgb_scale(plane->colour, diffuse_intensity);
-	colour = rgb_add(colour, rgb_scale(scene->ambience->colour,
-				scene->ambience->lighting));
-	return (rgb_to_hex(colour));
+	return (*plane->norm);
 }

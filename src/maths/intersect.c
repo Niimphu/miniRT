@@ -18,6 +18,7 @@ t_intersect	new_intersect(void)
 	t_intersect	new;
 
 	new.valid = false;
+	new.in_shadow = false;
 	new.point = (t_xyz){0};
 	new.colour = (t_rgb){0};
 	new.distance = 0.0;
