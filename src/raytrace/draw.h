@@ -24,4 +24,6 @@ t_intersect	ray_intersects_plane(t_xyz *viewpoint, t_xyz ray, t_plane *plane);
 int			sphere_colour(t_sphere *sphere, t_xyz point, t_scene *scene);
 int			plane_colour(t_plane *plane, t_xyz point, t_scene *scene);
 
+void		calculate_camera_right_up(t_camera *camera);
+
 #endif

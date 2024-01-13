@@ -15,7 +15,6 @@
 #include "shape.h"
 #include "draw.h"
 
-static void		calculate_camera_right_up(t_camera *camera);
 static t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y);
 static void		draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt);
 static void		print_pixel(t_rt *rt, int x, int y, t_intersect intersect);
@@ -25,13 +24,6 @@ int	draw_scene(t_rt *rt)
 	calculate_camera_right_up(rt->scene->camera);
 	draw_closest_shape(rt->mlx_data, rt->scene->camera, rt);
 	return (0);
-}
-
-static void	calculate_camera_right_up(t_camera *camera)
-{
-	camera->right = v_normalize(v_cross(*camera->forward, (t_xyz){0, 1, 1}));
-	camera->up = v_normalize(v_cross(camera->right, *camera->forward));
-	camera->right = v_invert(camera->right);
 }
 
 static void	draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt)
