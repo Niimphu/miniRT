@@ -56,13 +56,13 @@ static t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y)
 	double	scale;
 	t_xyz	result;
 
-	scale = tanf(0.5f * (float)camera->fov * (M_PI / 180.0));
+	scale = tanf(0.5 * (float)camera->fov * (M_PI / 180.0));
 	dx = scale * data->aspect_ratio * (((double)x / data->win_x) * 2.0 - 1.0);
 	dy = scale * (1.0 - ((double)y / data->win_y) * 2.0);
 	result = v_add(v_add(v_scale(camera->right, dx),
-				v_scale(camera->up, dy)),
-			v_scale(*camera->forward, scale));
-	return (v_normalize(result));
+				v_scale(camera->up, dy)), *camera->forward);
+	result = v_normalize(result);
+	return (result);
 }
 
 static void	print_pixel(t_rt *rt, int x, int y, t_intersect intersect)
