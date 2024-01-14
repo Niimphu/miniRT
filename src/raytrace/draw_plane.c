@@ -30,6 +30,7 @@ t_intersect	ray_intersects_plane(t_xyz *viewpoint, t_xyz ray, t_plane *plane)
 	if (t < 0.0)
 		return (intersection);
 	intersection.distance = t;
+	intersection.light_distance = 0;
 	intersection.point = v_add(*viewpoint, v_scale(ray, t));
 	intersection.shape = plane;
 	intersection.colour = plane->colour;

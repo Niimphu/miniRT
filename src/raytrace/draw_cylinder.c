@@ -12,5 +12,4 @@
 
 #include "miniRT.h"
 #include "xyz.h"
-#include "shape.h"
 #include "draw.h"

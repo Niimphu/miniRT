@@ -32,6 +32,7 @@ typedef struct s_intersect
 	t_xyz	point;
 	t_rgb	colour;
 	double	distance;
+	double	light_distance;
 	void	*shape;
 	int		type;
 }				t_intersect;
@@ -39,6 +40,7 @@ typedef struct s_intersect
 t_xyz		v_cross(t_xyz v1, t_xyz v2);
 double		v_dot(t_xyz v1, t_xyz v2);
 t_xyz		v_normalize(t_xyz vector);
+double		v_length(t_xyz vector);
 
 t_xyz		v_subtract(t_xyz v1, t_xyz v2);
 t_xyz		v_scale(t_xyz v, double factor);
