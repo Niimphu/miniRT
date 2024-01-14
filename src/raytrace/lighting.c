@@ -12,12 +12,14 @@
 
 #include "miniRT.h"
 #include "draw.h"
-#include "printer.h"
+
+#define C1 1.8
+#define C3 0.000005
 
 static t_xyz	get_surface_normal(t_intersect intersect);
-t_rgb			shadow_colour(t_rgb surface_colour, t_rgb ambient_colour);
 t_rgb			lit_colour(t_rgb base, t_light *light,
-					double diffuse_intensity, t_ambience *ambient_lighting);
+					double diffuse_intensity, t_rgb ambient_component);
+t_rgb			get_ambient_colour(t_rgb base, t_ambience *ambient_lighting);
 
 int	get_colour(t_intersect intersect, t_xyz point, t_scene *scene)
 {
@@ -26,10 +28,9 @@ int	get_colour(t_intersect intersect, t_xyz point, t_scene *scene)
 	t_xyz	light_direction;
 	t_xyz	surface_normal;
 
+	colour = get_ambient_colour(intersect.colour, scene->ambience);
 	if (intersect.in_shadow)
-		return (rgb_to_hex(shadow_colour(intersect.colour,
-					rgb_scale(scene->ambience->colour,
-						scene->ambience->lighting))));
+		return (rgb_to_hex(colour));
 	light_direction = v_normalize(v_subtract(*scene->light->point,
 				point));
 	surface_normal = get_surface_normal(intersect);
@@ -37,37 +38,36 @@ int	get_colour(t_intersect intersect, t_xyz point, t_scene *scene)
 					surface_normal)));
 	if (diffuse_intensity < 0)
 		diffuse_intensity *= -1.0;
+	if (intersect.light_distance > 0)
+		diffuse_intensity /= (C1 + C3 * pow(intersect.light_distance, 2));
 	colour = lit_colour(intersect.colour, scene->light,
-			diffuse_intensity, scene->ambience);
+			diffuse_intensity, colour);
 	return (rgb_to_hex(colour));
 }
 
 t_rgb	lit_colour(t_rgb base, t_light *light,
-				double diffuse_intensity, t_ambience *ambient_lighting)
+				double diffuse_intensity, t_rgb ambient_component)
 {
-	t_rgb	result;
 	t_rgb	light_colour;
-	t_rgb	ambient_colour;
-	t_rgb	total_light_colour;
+	t_rgb	result;
 
+//	light_colour = rgb_product(base, light->colour);
+//	light_colour = rgb_scale(light_colour,
+//			light->brightness * diffuse_intensity);
 	light_colour = rgb_scale(light->colour, light->brightness
-			* diffuse_intensity * (1.0 - ambient_lighting->lighting));
-	ambient_colour = rgb_scale(ambient_lighting->colour,
-			ambient_lighting->lighting);
-	total_light_colour = rgb_add(light_colour, ambient_colour);
-	result.r = fmin(base.r, total_light_colour.r);
-	result.g = fmin(base.g, total_light_colour.g);
-	result.b = fmin(base.b, total_light_colour.b);
+			* diffuse_intensity * 1.5);
+	light_colour = rgb_product(base, light_colour);
+	result = rgb_add(light_colour, ambient_component);
 	return (result);
 }
 
-t_rgb	shadow_colour(t_rgb surface_colour, t_rgb ambient_colour)
+t_rgb	get_ambient_colour(t_rgb base, t_ambience *ambient_lighting)
 {
+	t_rgb	ambient_component;
 	t_rgb	result;
 
-	result.r = fmin(surface_colour.r, ambient_colour.r);
-	result.g = fmin(surface_colour.g, ambient_colour.g);
-	result.b = fmin(surface_colour.b, ambient_colour.b);
+	ambient_component = rgb_product(base, ambient_lighting->colour);
+	result = rgb_scale(ambient_component, ambient_lighting->lighting);
 	return (result);
 }
 
