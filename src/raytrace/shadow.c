@@ -24,10 +24,6 @@ t_intersect	check_shadows(t_scene *scene, t_xyz light_point,
 		return (intersect);
 	intersect = intersects_plane(intersect.point, light_point,
 			scene->planes, intersect);
-//	if (intersects_sphere(intersect.point, light_point, scene->spheres,
-//			intersect)
-//		|| intersects_plane(intersect.point, light_point, scene->planes))
-//		return (intersect.in_shadow = true, intersect);
 	return (intersect);
 }
 

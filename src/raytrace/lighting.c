@@ -51,9 +51,6 @@ t_rgb	lit_colour(t_rgb base, t_light *light,
 	t_rgb	light_colour;
 	t_rgb	result;
 
-//	light_colour = rgb_product(base, light->colour);
-//	light_colour = rgb_scale(light_colour,
-//			light->brightness * diffuse_intensity);
 	light_colour = rgb_scale(light->colour, light->brightness
 			* diffuse_intensity * 1.5);
 	light_colour = rgb_product(base, light_colour);

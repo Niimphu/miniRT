@@ -33,7 +33,6 @@ t_intersect	intersects_plane(t_xyz intersect_point, t_xyz light_xyz,
 t_xyz		sphere_normal(t_sphere *sphere, t_xyz point);
 t_xyz		plane_normal(t_plane *plane);
 
-
 void		calculate_camera_right_up(t_camera *camera);
 
 #endif
