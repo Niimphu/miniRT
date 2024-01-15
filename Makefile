@@ -17,6 +17,7 @@ SRC =	main.c \
 		miniRT.c \
 		raytrace/draw.c raytrace/draw_utils.c raytrace/shadow.c raytrace/closest.c raytrace/lighting.c \
 		raytrace/draw_cylinder.c raytrace/draw_plane.c raytrace/draw_sphere.c \
+		raytrace/msaa.c raytrace/msaa_colour.c \
 		maths/vector.c maths/vector_basic.c maths/point.c \
 		maths/intersect.c \
 		colour/colour.c \

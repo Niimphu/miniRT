@@ -68,9 +68,10 @@ typedef struct s_rt
 {
 	t_vars	*mlx_data;
 	t_scene	*scene;
+	bool	msaa;
 }				t_rt;
 
-int		parse(char *filename, t_rt *rt);
+int		parse(int argc, char **argv, t_rt *rt);
 int		open_file(char *filename);
 
 int		initialise(t_rt *rt);
