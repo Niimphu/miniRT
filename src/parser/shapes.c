@@ -19,19 +19,19 @@ int	new_sphere(char **raw_input, t_scene *scene)
 	t_sphere	*sphere;
 
 	if (strarray_size(raw_input) != 3)
-		return (ft_perror("Error\nSphere: three sets of info required"), FAIL);
+		return (ft_perror("Error\nSphere: three sets of info required"));
 	sphere = ft_calloc(1, sizeof(t_sphere));
 	if (!sphere)
 		return (FAIL);
 	sphere->centre = atoxyz(raw_input[0]);
 	if (!sphere->centre)
-		return (ft_perror("Error\nSphere: invalid centre"), FAIL);
+		return (free(sphere), ft_perror("Error\nSphere: invalid centre"));
 	if (!ft_isdouble(raw_input[1]) || ft_atod(raw_input[1]) < 0.0)
-		return (ft_perror("Error\nSphere: invalid diameter"), FAIL);
+		return (free(sphere), ft_perror("Error\nSphere: invalid diameter"));
 	sphere->diameter = ft_atod(raw_input[1]);
 	sphere->colour = atorgb(raw_input[2]);
 	if (!is_valid_rgb(sphere->colour))
-		return (ft_perror("Error\nSphere: invalid RGB format"), FAIL);
+		return (free(sphere), ft_perror("Error\nSphere: invalid RGB format"));
 	if (!(scene->spheres))
 		scene->spheres = ft_lstnew(sphere);
 	else
@@ -44,19 +44,19 @@ int	new_plane(char **raw_input, t_scene *scene)
 	t_plane	*plane;
 
 	if (strarray_size(raw_input) != 3)
-		return (ft_perror("Error\nPlane: three sets of info required"), FAIL);
+		return (ft_perror("Error\nPlane: three sets of info required"));
 	plane = ft_calloc(1, sizeof(t_plane));
 	if (!plane)
 		return (FAIL);
 	plane->point = atoxyz(raw_input[0]);
 	if (!plane->point)
-		return (ft_perror("Error\nPlane: invalid point"), FAIL);
+		return (free(plane), ft_perror("Error\nPlane: invalid point"));
 	plane->norm = atoxyz(raw_input[1]);
 	if (!plane->norm || !is_normalised(plane->norm))
-		return (ft_perror("Error\nPlane: invalid norm vector"), FAIL);
+		return (free(plane), ft_perror("Error\nPlane: invalid norm vector"));
 	plane->colour = atorgb(raw_input[2]);
 	if (!is_valid_rgb(plane->colour))
-		return (ft_perror("Error\nPlane: invalid RGB format"), FAIL);
+		return (free(plane), ft_perror("Error\nPlane: invalid RGB format"));
 	if (!(scene->planes))
 		scene->planes = ft_lstnew(plane);
 	else
@@ -69,26 +69,28 @@ int	new_cylinder(char **raw_input, t_scene *scene)
 	t_cylinder	*cylinder;
 
 	if (strarray_size(raw_input) != 5)
-		return (ft_perror("Error\nCylinder: five sets info required"), FAIL);
+		return (ft_perror("Error\nCylinder: five sets of info required"));
 	cylinder = ft_calloc(1, sizeof(t_cylinder));
 	if (!cylinder)
 		return (FAIL);
 	cylinder->axis = NULL;
 	cylinder->centre = atoxyz(raw_input[0]);
 	if (!cylinder->centre)
-		return (ft_perror("Error\nCylinder: invalid centre"), FAIL);
+		return (free(cylinder), ft_perror("Error\nCylinder: invalid centre"));
 	cylinder->axis = atoxyz(raw_input[1]);
 	if (!cylinder->axis || !is_normalised(cylinder->axis))
-		return (ft_perror("Error\nCylinder: invalid axis"), FAIL);
+		return (free(cylinder), ft_perror("Error\nCylinder: invalid axis"));
 	if (!ft_isdouble(raw_input[2]) || ft_atod(raw_input[2]) < 0.0f)
-		return (ft_perror("Error\nCylinder: invalid diameter"), FAIL);
+		return (free(cylinder), ft_perror("Error\nCylinder: \
+			invalid diameter"));
 	cylinder->diameter = ft_atod(raw_input[2]);
 	if (!ft_isdouble(raw_input[3]) || ft_atod(raw_input[3]) < 0.0f)
-		return (ft_perror("Error\nCylinder: invalid height"), FAIL);
+		return (free(cylinder), ft_perror("Error\nCylinder: invalid height"));
 	cylinder->height = ft_atod(raw_input[3]);
 	cylinder->colour = atorgb(raw_input[4]);
 	if (!is_valid_rgb(cylinder->colour))
-		return (ft_perror("Error\nCylinder: invalid RGB format"), FAIL);
+		return (free(cylinder), ft_perror("Error\nCylinder: \
+			invalid RGB format"));
 	return (new_cylinder2(cylinder, scene), OK);
 }
 
