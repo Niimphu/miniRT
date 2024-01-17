@@ -16,6 +16,7 @@ int	key_pressed(int keycode, t_rt *rt)
 {
 	if (keycode == XK_Escape)
 	{
+		mlx_loop_end(rt->mlx_data->mlx);
 		mlx_clear_window(rt->mlx_data->mlx, rt->mlx_data->win);
 		mlx_destroy_window(rt->mlx_data->mlx, rt->mlx_data->win);
 		quit(rt);

@@ -15,6 +15,7 @@
 
 int	window_closed(t_rt *rt)
 {
+	mlx_loop_end(rt->mlx_data->mlx);
 	mlx_clear_window(rt->mlx_data->mlx, rt->mlx_data->win);
 	quit(rt);
 	return (0);
@@ -22,7 +23,6 @@ int	window_closed(t_rt *rt)
 
 void	quit(t_rt *rt)
 {
-	mlx_loop_end(rt->mlx_data->mlx);
 	mlx_destroy_display(rt->mlx_data->mlx);
 	free_rt(&rt);
 	exit(0);
