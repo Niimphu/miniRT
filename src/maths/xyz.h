@@ -28,11 +28,9 @@ typedef struct s_vector
 typedef struct s_intersect
 {
 	bool	valid;
-	bool	in_shadow;
 	t_xyz	point;
 	t_rgb	colour;
 	double	distance;
-	double	light_distance;
 	void	*shape;
 	int		type;
 }				t_intersect;
