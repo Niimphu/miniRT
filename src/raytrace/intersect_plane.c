@@ -24,9 +24,8 @@ t_intersect	ray_intersects_plane(t_xyz *viewpoint, t_xyz ray, t_plane *plane)
 	dot_product = v_dot(*plane->norm, ray);
 	if (dot_product == 0)
 		return (intersection);
-	t = ((plane->point->x - viewpoint->x) * plane->norm->x
-			+ (plane->point->y - viewpoint->y) * plane->norm->y
-			+ (plane->point->z - viewpoint->z) * plane->norm->z) / dot_product;
+	t = v_dot(v_subtract(*plane->point, *viewpoint), *plane->norm)
+		/ dot_product;
 	if (t < 0.0)
 		return (intersection);
 	intersection.distance = t;
