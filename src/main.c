@@ -19,12 +19,12 @@ int	main(int argc, char **argv)
 {
 	t_rt	*rt;
 
-	if (argc != 2)
-		return (ft_perror("usage: ./miniRT <path/map.rt>"), 1);
+	if (argc != 2 && argc != 3)
+		return (ft_perror("Error\nUsage: ./miniRT [-flags] path/map.rt"), 1);
 	rt = new_rt();
 	if (!rt)
 		return (FAIL);
-	if (parse(argv[1], rt) == FAIL)
+	if (parse(argc, argv, rt) == FAIL)
 		return (free(rt), FAIL);
 	initialise(rt);
 	raytrace(rt);
@@ -42,9 +42,10 @@ static t_rt	*new_rt(void)
 	rt->scene = ft_calloc(1, sizeof(t_scene));
 	if (!rt->scene)
 		return (NULL);
+	rt->msaa = false;
 	rt->scene->ambience = NULL;
 	rt->scene->camera = NULL;
-	rt->scene->light = NULL;
+	rt->scene->lights = NULL;
 	rt->scene->spheres = NULL;
 	rt->scene->planes = NULL;
 	rt->scene->cylinders = NULL;

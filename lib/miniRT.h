@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/03 13:14:27 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/01/15 19:20:19 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_scene
 {
 	t_ambience	*ambience;
 	t_camera	*camera;
-	t_light		*light;
+	t_list		*lights;
 	t_list		*spheres;
 	t_list		*planes;
 	t_list		*cylinders;
@@ -68,9 +68,10 @@ typedef struct s_rt
 {
 	t_vars	*mlx_data;
 	t_scene	*scene;
+	bool	msaa;
 }				t_rt;
 
-int		parse(char *filename, t_rt *rt);
+int		parse(int argc, char **argv, t_rt *rt);
 int		open_file(char *filename);
 
 int		initialise(t_rt *rt);
@@ -81,7 +82,7 @@ int		key_pressed(int keycode, t_rt *rt);
 int		window_closed(t_rt *rt);
 void	quit(t_rt *rt);
 
-void	ft_perror(char *message);
+int		ft_perror(char *message);
 
 int		strarray_size(char **array);
 

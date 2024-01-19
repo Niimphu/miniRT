@@ -16,22 +16,53 @@
 #define END 1
 
 static int	parse_by_line(int fd, t_rt *rt);
+static int	check_flags(char *flag, t_rt *rt);
 
-int	parse(char *filename, t_rt *rt)
+int	parse(int argc, char **argv, t_rt *rt)
 {
 	int	fd;
+	int	i;
 
-	fd = open_file(filename);
+	i = 1;
+	if (argc == 3)
+	{
+		if (check_flags(argv[i++], rt) == FAIL)
+			return (FAIL);
+	}
+	fd = open_file(argv[i]);
 	if (fd == FAIL || parse_by_line(fd, rt) == FAIL)
 		return (close(fd), FAIL);
 	close(fd);
 	if (!rt->scene->camera)
 		return (ft_perror("Error\nScene: missing camera"), FAIL);
-	if (!rt->scene->light && !rt->scene->ambience)
-		return (ft_perror("Error\nScene: missing lighting"), FAIL);
+	if (!rt->scene->lights)
+		return (ft_perror("Error\nScene: missing lights"), FAIL);
 	if (!rt->scene->spheres && !rt->scene->planes && !rt->scene->cylinders)
 		return (ft_perror("Error\nScene: missing objects"), FAIL);
 	print_scene_info(rt->scene);
+	return (OK);
+}
+
+static int	check_flags(char *flag, t_rt *rt)
+{
+	int		i;
+	size_t	len;
+
+	i = 0;
+	len = ft_strlen(flag);
+	if (!flag[i] || len != 2 || flag[i++] != '-')
+		ft_perror("Error\nArguments: invalid flag");
+	while (flag[i])
+	{
+		if (flag[i] == 'a')
+			rt->msaa = true;
+		else
+		{
+			ft_perror("Error\nValid flags: a");
+			return (FAIL);
+		}
+		i++;
+	}
 	return (OK);
 }
 

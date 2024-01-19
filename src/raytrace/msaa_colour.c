@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quit.c                                             :+:      :+:    :+:   */
+/*   msaa_colour.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/03 16:38:22 by yiwong           ###   ########.fr       */
+/*   Created: 2024/01/15 18:15:53 by yiwong            #+#    #+#             */
+/*   Updated: 2024/01/15 18:26:24 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include "free.h"
+#include "colour.h"
+#include "msaa.h"
 
-int	window_closed(t_rt *rt)
+t_rgb	hex_to_rgb(int hex_colour)
 {
-	mlx_loop_end(rt->mlx_data->mlx);
-	mlx_clear_window(rt->mlx_data->mlx, rt->mlx_data->win);
-	quit(rt);
-	return (0);
+	t_rgb	result;
+
+	result.r = (hex_colour >> 16) & 0xFF;
+	result.g = (hex_colour >> 8) & 0xFF;
+	result.b = hex_colour & 0xFF;
+	return (result);
 }
 
-void	quit(t_rt *rt)
+t_rgb	average_4colour(t_rgb a, t_rgb b, t_rgb c, t_rgb d)
 {
-	mlx_destroy_display(rt->mlx_data->mlx);
-	free_rt(&rt);
-	exit(0);
+	t_rgb	result;
+
+	result.r = (a.r + b.r + c.r + d.r) / 4;
+	result.g = (a.g + b.g + c.g + d.g) / 4;
+	result.b = (a.b + b.b + c.b + d.b) / 4;
+	return (result);
 }

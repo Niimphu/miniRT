@@ -57,6 +57,16 @@ t_rgb	rgb_add(t_rgb colour1, t_rgb colour2)
 	return (result);
 }
 
+t_rgb	rgb_product(t_rgb base, t_rgb light)
+{
+	t_rgb	result;
+
+	result.r = (int)(((base.r / 255.0) * (light.r / 255.0)) * 255);
+	result.g = (int)(((base.g / 255.0) * (light.g / 255.0)) * 255);
+	result.b = (int)(((base.b / 255.0) * (light.b / 255.0)) * 255);
+	return (result);
+}
+
 bool	is_valid_rgb(t_rgb colour)
 {
 	if (colour.r < 0 || colour.r > 255 || colour.g < 0 || colour.g > 255
