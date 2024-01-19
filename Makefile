@@ -15,8 +15,8 @@ SRC =	main.c \
 		parser/lights_camera.c parser/shapes.c \
 		parser/file.c \
 		miniRT.c \
-		raytrace/draw.c raytrace/draw_utils.c raytrace/shadow.c raytrace/closest.c raytrace/lighting.c \
-		raytrace/draw_cylinder.c raytrace/draw_plane.c raytrace/draw_sphere.c \
+		raytrace/draw.c raytrace/draw_utils.c raytrace/closest.c raytrace/colour_calcs.c \
+		raytrace/normals.c raytrace/intersection_checks.c raytrace/intersect_plane.c raytrace/intersect_sphere.c \
 		raytrace/msaa.c raytrace/msaa_colour.c \
 		maths/vector.c maths/vector_basic.c maths/point.c \
 		maths/intersect.c \
