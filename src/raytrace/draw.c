@@ -17,7 +17,7 @@
 
 static t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y);
 static void		draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt);
-static void		print_pixel(t_rt *rt, int x, int y, t_intersect intersect);
+static void		draw_pixel(t_rt *rt, int x, int y, t_intersect intersect);
 
 int	draw_scene(t_rt *rt)
 {
@@ -45,11 +45,7 @@ static void	draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt)
 			ray = get_ray(mlx, camera, x, y);
 			intersect = get_closest_shape(*camera->position, ray, rt->scene);
 			if (intersect.valid)
-			{
-				intersect = check_shadows(rt->scene, *rt->scene->light->point,
-						intersect);
-				print_pixel(rt, x, y, intersect);
-			}
+				draw_pixel(rt, x, y, intersect);
 			x++;
 		}
 		y++;
@@ -72,8 +68,11 @@ static t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y)
 	return (result);
 }
 
-static void	print_pixel(t_rt *rt, int x, int y, t_intersect intersect)
+static void	draw_pixel(t_rt *rt, int x, int y, t_intersect intersect)
 {
+	int	colour;
+
+	colour = calculate_colour(intersect, rt->scene);
 	mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
-		get_colour(intersect, intersect.point, rt->scene));
+		colour);
 }

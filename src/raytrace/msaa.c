@@ -16,7 +16,7 @@
 
 static t_msaa	get_ray_info(t_rt *rt, t_camera *camera, int x, int y);
 static t_xyz	get_ray(t_vars *data, t_camera *camera, double x, double y);
-static t_msaa	process_shadows(t_rt *rt, t_scene *scene, t_msaa ray_info);
+static t_msaa	process_shadows(t_scene *scene, t_msaa ray_info);
 static void		print_pixel(t_rt *rt, int x, int y, t_msaa ray_info);
 
 void	draw_closest_shape_msaa(t_vars *mlx, t_camera *camera, t_rt *rt)
@@ -32,7 +32,7 @@ void	draw_closest_shape_msaa(t_vars *mlx, t_camera *camera, t_rt *rt)
 		while (x < mlx->win_x)
 		{
 			ray_info = get_ray_info(rt, camera, x, y);
-			ray_info = process_shadows(rt, rt->scene, ray_info);
+			ray_info = process_shadows(rt->scene, ray_info);
 			print_pixel(rt, x, y, ray_info);
 			x++;
 		}
@@ -59,7 +59,7 @@ static t_msaa	get_ray_info(t_rt *rt, t_camera *camera, int x, int y)
 	return (result);
 }
 
-static t_msaa	process_shadows(t_rt *rt, t_scene *scene, t_msaa ray_info)
+static t_msaa	process_shadows(t_scene *scene, t_msaa ray_info)
 {
 	int	i;
 
@@ -67,12 +67,8 @@ static t_msaa	process_shadows(t_rt *rt, t_scene *scene, t_msaa ray_info)
 	while (i < 4)
 	{
 		if (ray_info.intersects[i].valid)
-		{
-			ray_info.intersects[i] = check_shadows(rt->scene,
-					*rt->scene->light->point, ray_info.intersects[i]);
-			ray_info.colours[i] = get_colour(ray_info.intersects[i],
-					ray_info.intersects[i].point, scene);
-		}
+			ray_info.colours[i] = calculate_colour(ray_info.intersects[i],
+					scene);
 		else
 			ray_info.colours[i] = 0x000000;
 		i++;
@@ -101,8 +97,8 @@ static void	print_pixel(t_rt *rt, int x, int y, t_msaa ray_info)
 	t_rgb	colour;
 
 	colour = average_4colour(hex_to_rgb(ray_info.colours[0]),
-		hex_to_rgb(ray_info.colours[1]), hex_to_rgb(ray_info.colours[2]),
-		hex_to_rgb(ray_info.colours[3]));
+			hex_to_rgb(ray_info.colours[1]), hex_to_rgb(ray_info.colours[2]),
+			hex_to_rgb(ray_info.colours[3]));
 	mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
 		rgb_to_hex(colour));
 }
