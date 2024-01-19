@@ -21,7 +21,7 @@ void	free_string_array(char ***array);
 
 void	free_ambience(t_ambience **ambience);
 void	free_camera(t_camera **camera);
-void	free_light(t_light **light);
+void	free_light(void *node);
 
 void	free_sphere(void *node);
 void	free_plane(void *node);

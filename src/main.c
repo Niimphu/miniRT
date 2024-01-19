@@ -45,7 +45,7 @@ static t_rt	*new_rt(void)
 	rt->msaa = false;
 	rt->scene->ambience = NULL;
 	rt->scene->camera = NULL;
-	rt->scene->light = NULL;
+	rt->scene->lights = NULL;
 	rt->scene->spheres = NULL;
 	rt->scene->planes = NULL;
 	rt->scene->cylinders = NULL;

@@ -44,8 +44,8 @@ static void	free_scene(t_scene **scene)
 			free_ambience(&((*scene)->ambience));
 		if ((*scene)->camera)
 			free_camera(&((*scene)->camera));
-		if ((*scene)->light)
-			free_light(&((*scene)->light));
+		if ((*scene)->lights)
+			ft_lstclear(&(*scene)->lights, free_light);
 		if ((*scene)->spheres)
 			ft_lstclear(&(*scene)->spheres, free_sphere);
 		if ((*scene)->planes)

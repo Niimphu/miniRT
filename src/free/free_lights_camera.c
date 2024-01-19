@@ -34,13 +34,16 @@ void	free_camera(t_camera **camera)
 	}
 }
 
-void	free_light(t_light **light)
+void	free_light(void *node)
 {
-	if (*light)
+	t_light	*light;
+
+	light = (t_light *)node;
+	if (light)
 	{
-		if ((*light)->point)
-			free((*light)->point);
-		free(*light);
+		if (light->point)
+			free(light->point);
+		free(light);
 		light = NULL;
 	}
 }
