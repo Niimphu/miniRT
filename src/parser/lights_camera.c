@@ -64,10 +64,9 @@ int	new_light(char **raw_input, t_scene *scene)
 
 	if (strarray_size(raw_input) != 3)
 		return (ft_perror("Error\nLight: three sets of info required"));
-	scene->light = ft_calloc(1, sizeof(t_light));
-	if (!scene->light)
+	light = ft_calloc(1, sizeof(t_light));
+	if (!light)
 		return (FAIL);
-	light = scene->light;
 	light->point = atoxyz(raw_input[0]);
 	if (!light->point)
 		return (ft_perror("Error\nLight: invalid light point"));
@@ -79,5 +78,9 @@ int	new_light(char **raw_input, t_scene *scene)
 	light->colour = atorgb(raw_input[2]);
 	if (!is_valid_rgb(light->colour))
 		return (ft_perror("Error\nLight: invalid RGB format"));
+	if (!scene->lights)
+		scene->lights = ft_lstnew(light);
+	else
+		ft_lstadd_back(&scene->lights, ft_lstnew(light));
 	return (OK);
 }

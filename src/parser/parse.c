@@ -35,8 +35,8 @@ int	parse(int argc, char **argv, t_rt *rt)
 	close(fd);
 	if (!rt->scene->camera)
 		return (ft_perror("Error\nScene: missing camera"), FAIL);
-	if (!rt->scene->light && !rt->scene->ambience)
-		return (ft_perror("Error\nScene: missing lighting"), FAIL);
+	if (!rt->scene->lights)
+		return (ft_perror("Error\nScene: missing lights"), FAIL);
 	if (!rt->scene->spheres && !rt->scene->planes && !rt->scene->cylinders)
 		return (ft_perror("Error\nScene: missing objects"), FAIL);
 	print_scene_info(rt->scene);
