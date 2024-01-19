@@ -18,6 +18,7 @@
 void	print_scene_info(t_scene	*scene)
 {
 	t_list		*node;
+	t_light		*light;
 	t_sphere	*sphere;
 	t_plane		*plane;
 	t_cylinder	*cylinder;
@@ -38,12 +39,21 @@ void	print_scene_info(t_scene	*scene)
 	print_vector_info(scene->camera->forward);
 	printf("Field of view in degrees: %i\n", scene->camera->fov);
 	printf("-----     Lighting      -----\n");
-	if (scene->light)
+	if (scene->lights)
 	{
-		printf("Light point coordinate: ");
-		print_coord_info(scene->light->point);
-		printf("Brightness ratio: %.1f\nColour: ", scene->light->brightness);
-		print_colour_info(scene->light->colour);
+		node = scene->lights;
+		while (node)
+		{
+			light = (t_light *)node->content;
+			printf("Light point coordinate: ");
+			print_coord_info(light->point);
+			printf("Brightness ratio: %.1f\nColour: ", light->brightness);
+			print_colour_info(light->colour);
+			if (node->next)
+				printf("\n");
+			node = node->next;
+		}
+		node = NULL;
 	}
 	printf("-----      Spheres      -----\n");
 	if (scene->spheres)
