@@ -43,6 +43,7 @@ typedef struct s_sphere
 	t_xyz	*centre;
 	double	diameter;
 	t_rgb	colour;
+	double	shininess;
 }				t_sphere;
 
 typedef struct s_plane
@@ -50,6 +51,7 @@ typedef struct s_plane
 	t_xyz	*point;
 	t_xyz	*norm;
 	t_rgb	colour;
+	double	shininess;
 }				t_plane;
 
 typedef struct s_cylinder
@@ -59,6 +61,7 @@ typedef struct s_cylinder
 	double	diameter;
 	double	height;
 	t_rgb	colour;
+	double	shininess;
 }				t_cylinder;
 
 #endif
