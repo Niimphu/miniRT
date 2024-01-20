@@ -61,6 +61,7 @@ static t_lighting	get_lighting(t_light *light, t_scene *scene,
 					lighting.surface_normal)));
 	if (lighting.diffuse_intensity < 0)
 		lighting.diffuse_intensity *= -1.0;
+	lighting.distance = p2p_distance(*light->point, intersection);
 	if (lighting.distance > 0)
 		lighting.diffuse_intensity /= (C1 + C3 * pow(lighting.distance, 2));
 	lighting.light = light;
