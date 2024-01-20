@@ -31,6 +31,7 @@ typedef struct s_intersect
 	t_xyz	point;
 	t_rgb	colour;
 	double	distance;
+	double	shininess;
 	void	*shape;
 	int		type;
 }				t_intersect;

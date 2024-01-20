@@ -40,7 +40,8 @@ bool		intersects_plane(t_xyz intersect_point, t_xyz light_xyz,
 				t_list *planes, t_xyz to_light);
 
 t_xyz		get_surface_normal(t_intersect intersect);
-
+t_xyz		get_halfway_vector(t_xyz intersection, t_xyz light_pos,
+				t_xyz camera_pos);
 void		calculate_camera_right_up(t_camera *camera);
 
 #endif

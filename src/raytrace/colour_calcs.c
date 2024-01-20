@@ -16,12 +16,14 @@
 #define C1 1.8
 #define C3 0.000005
 
-static t_lighting		get_lighting(t_light *light, t_scene *scene,
-							t_xyz intersection, t_intersect intersect);
-static t_rgb			add_light(t_rgb base, t_rgb colour,
-							t_lighting lighting);
-t_rgb					combine_ambient(t_rgb base, t_rgb light_colour,
-							t_ambience *ambient_lighting);
+static t_lighting	get_lighting(t_light *light, t_scene *scene,
+						t_xyz intersection, t_intersect intersect);
+static t_rgb		add_light(t_rgb base, t_rgb colour,
+						t_lighting lighting);
+static t_rgb		combine_specular(t_intersect intersect, t_lighting lighting,
+						t_rgb base, t_camera *camera);
+t_rgb				combine_ambient(t_rgb base, t_rgb light_colour,
+						t_ambience *ambient_lighting);
 
 int	calculate_colour(t_intersect intersect, t_scene *scene)
 {
@@ -37,11 +39,34 @@ int	calculate_colour(t_intersect intersect, t_scene *scene)
 		light = light_list->content;
 		lighting = get_lighting(light, scene, intersect.point, intersect);
 		if (lighting.light)
+		{
 			colour = add_light(intersect.colour, colour, lighting);
+			colour = combine_specular(intersect, lighting, colour,
+					scene->camera);
+		}
 		light_list = light_list->next;
 	}
 	colour = combine_ambient(intersect.colour, colour, scene->ambience);
 	return (rgb_to_hex(colour));
+}
+
+static t_rgb	combine_specular(t_intersect intersect, t_lighting lighting,
+						t_rgb base, t_camera *camera)
+{
+	t_xyz	halfway;
+	double	specular_factor;
+	t_rgb	specular_component;
+	t_rgb	result;
+
+	if (intersect.shininess == 0)
+		return (base);
+	halfway = get_halfway_vector(intersect.point, *lighting.light->point,
+			*camera->position);
+	specular_factor = pow(fmax(v_dot(lighting.surface_normal, halfway),
+				0.0), intersect.shininess);
+	specular_component = rgb_scale(lighting.light->colour, specular_factor);
+	result = rgb_add(base, specular_component);
+	return (result);
 }
 
 static t_lighting	get_lighting(t_light *light, t_scene *scene,
@@ -82,7 +107,7 @@ static t_rgb	add_light(t_rgb base, t_rgb colour, t_lighting lighting)
 }
 
 t_rgb	combine_ambient(t_rgb base, t_rgb light_colour,
-											t_ambience *ambient_lighting)
+					t_ambience *ambient_lighting)
 {
 	t_rgb	ambient_component;
 	t_rgb	result;
