@@ -1,7 +1,7 @@
 # miniRT (project in progress)
 
 ## Overview
-miniRT is a graphical project, in which a raytracing program must be written within the limitations of 42's minilibx graphical library. In this project, I worked with @coderkuehne to implement the parsing of the basic text maps that are required to be handled, and the rendering of spheres, planes and cylinders in the correct manner.
+miniRT is a graphical project, in which a raytracing program must be written from scratch in C within the limitations of 42's minilibx graphical library. In this project, I worked with @coderkuehne to implement the parsing of the basic text maps that are required to be handled, and the rendering of spheres, planes and cylinders in the correct manner.
 
 ## Concepts
 ### Introduction
