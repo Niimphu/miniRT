@@ -81,16 +81,6 @@ static t_rgb	add_light(t_rgb base, t_rgb colour, t_lighting lighting)
 	return (colour);
 }
 
-t_rgb	get_ambient_colour(t_rgb base, t_ambience *ambient_lighting)
-{
-	t_rgb	ambient_component;
-	t_rgb	result;
-
-	ambient_component = rgb_product(base, ambient_lighting->colour);
-	result = rgb_scale(ambient_component, ambient_lighting->lighting);
-	return (result);
-}
-
 t_rgb	combine_ambient(t_rgb base, t_rgb light_colour,
 											t_ambience *ambient_lighting)
 {
