@@ -43,6 +43,6 @@ t_intersect	ray_interects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 		return (intersection);
 	return ((t_intersect){true,
 		v_add(*viewpoint, v_scale(ray, intersection.distance)),
-		sphere->colour, intersection.distance, sphere->shininess, sphere,
-		SPHERE});
+		sphere->colour, intersection.distance, sphere,
+		SPHERE, sphere->material});
 }

@@ -21,8 +21,8 @@ t_intersect	new_intersect(void)
 	new.point = (t_xyz){0};
 	new.colour = (t_rgb){0};
 	new.distance = 0.0;
-	new.shininess = 0.0;
 	new.shape = NULL;
 	new.type = 0;
+	new.material = (t_material){0};
 	return (new);
 }

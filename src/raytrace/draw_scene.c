@@ -17,7 +17,6 @@
 
 static t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y);
 static void		draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt);
-static void		draw_pixel(t_rt *rt, int x, int y, t_intersect intersect);
 
 int	draw_scene(t_rt *rt)
 {
@@ -66,13 +65,4 @@ static t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y)
 				v_scale(camera->up, dy)), *camera->forward);
 	result = v_normalize(result);
 	return (result);
-}
-
-static void	draw_pixel(t_rt *rt, int x, int y, t_intersect intersect)
-{
-	int	colour;
-
-	colour = calculate_colour(intersect, rt->scene);
-	mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
-		colour);
 }

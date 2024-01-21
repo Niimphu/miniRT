@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 18:11:27 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/10 14:00:05 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/21 16:30:56 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdbool.h>
 # include "colour.h"
+# include "../../lib/material.h"
 
 # define TOLERANCE 0.0001
 
@@ -27,13 +28,13 @@ typedef struct s_vector
 
 typedef struct s_intersect
 {
-	bool	valid;
-	t_xyz	point;
-	t_rgb	colour;
-	double	distance;
-	double	shininess;
-	void	*shape;
-	int		type;
+	bool		valid;
+	t_xyz		point;
+	t_rgb		colour;
+	double		distance;
+	void		*shape;
+	int			type;
+	t_material	material;
 }				t_intersect;
 
 t_xyz		v_cross(t_xyz v1, t_xyz v2);

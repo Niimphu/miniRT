@@ -1,0 +1,50 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   colour_calcs.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/19 17:30:00 by yiwong            #+#    #+#             */
+/*   Updated: 2024/01/19 17:30:00 by yiwong           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "miniRT.h"
+#include "lighting.h"
+
+int	calculate_colour(t_intersect intersect, t_scene *scene);
+
+void	draw_pixel(t_rt *rt, int x, int y, t_intersect intersect)
+{
+	int	colour;
+
+	colour = calculate_colour(intersect, rt->scene);
+	mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
+				  colour);
+}
+
+int	calculate_colour(t_intersect intersect, t_scene *scene)
+{
+	t_rgb		colour;
+	t_list		*light_list;
+	t_light		*light;
+	t_lighting	lighting;
+
+	light_list = scene->lights;
+	colour = (t_rgb){0};
+	while (light_list)
+	{
+		light = light_list->content;
+		lighting = get_lighting(light, scene, intersect.point, intersect);
+		if (lighting.light)
+		{
+			colour = add_direct_light(intersect.colour, colour, lighting);
+			colour = combine_specular(intersect, lighting, colour,
+					scene->camera);
+		}
+		light_list = light_list->next;
+	}
+	colour = combine_ambient(intersect.colour, colour, scene->ambience);
+	return (rgb_to_hex(colour));
+}
