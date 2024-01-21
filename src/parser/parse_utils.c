@@ -73,14 +73,11 @@ bool	is_normalised(t_xyz *vector)
 	return (true);
 }
 
-char	*trim_nl(char *str)
+bool	is_valid_material(char **raw_material)
 {
-	int	i;
-
-	i = 0;
-	while (str[i + 1])
-		i++;
-	if (str[i] == '\n')
-		str[i] = '\0';
-	return (str);
+	if (!ft_isdouble(raw_material[0]) || !ft_isint(raw_material[1]))
+		return (false);
+	if (ft_atod(raw_material[0]) < 0 || ft_atoi(raw_material[1]) < 1)
+		return (false);
+	return (true);
 }

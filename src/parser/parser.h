@@ -24,17 +24,19 @@ bool		is_empty(const char *string);
 bool		ft_isint(const char *str);
 bool		ft_isdouble(const char *str);
 bool		is_normalised(t_xyz *vector);
+bool		is_valid_material(char **raw_material);
+
 char		*trim_nl(char *str);
 
 double		ft_atod(const char *str);
 t_rgb		atorgb(char *string);
 t_xyz		*atoxyz(char *string);
 
-int			new_ambience(char **raw_input, t_scene *scene);
-int			new_camera(char **raw_input, t_scene *scene);
-int			new_light(char **raw_input, t_scene *scene);
-int			new_sphere(char **raw_input, t_scene *scene);
-int			new_plane(char **raw_input, t_scene *scene);
-int			new_cylinder(char **raw_input, t_scene *scene);
+int			new_ambience(char **input, t_scene *scene);
+int			new_camera(char **input, t_scene *scene);
+int			new_light(char **input, t_scene *scene);
+int			new_sphere(char **input, t_scene *scene);
+int			new_plane(char **input, t_scene *scene);
+int			new_cylinder(char **input, t_scene *scene);
 
 #endif
