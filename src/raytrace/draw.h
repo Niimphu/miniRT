@@ -30,6 +30,7 @@ t_intersect	ray_interects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere);
 t_intersect	ray_intersects_plane(t_xyz *viewpoint, t_xyz ray, t_plane *plane);
 
 void		draw_pixel(t_rt *rt, int x, int y, t_intersect intersect);
+int			calculate_colour(t_intersect intersect, t_scene *scene);
 
 t_intersect	check_shadows(t_scene *scene, t_xyz light_point,
 				t_intersect intersect);

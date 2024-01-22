@@ -13,8 +13,6 @@
 #include "miniRT.h"
 #include "lighting.h"
 
-int	calculate_colour(t_intersect intersect, t_scene *scene);
-
 void	draw_pixel(t_rt *rt, int x, int y, t_intersect intersect)
 {
 	int	colour;
