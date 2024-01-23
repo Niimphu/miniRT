@@ -71,3 +71,13 @@ int	rgb_to_hex(t_rgb colour)
 {
 	return ((colour.r << 16) | (colour.g << 8) | colour.b);
 }
+
+t_rgb	hex_to_rgb(int hex_colour)
+{
+	t_rgb	result;
+
+	result.r = (hex_colour >> 16) & 0xFF;
+	result.g = (hex_colour >> 8) & 0xFF;
+	result.b = hex_colour & 0xFF;
+	return (result);
+}

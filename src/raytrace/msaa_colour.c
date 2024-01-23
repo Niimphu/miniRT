@@ -14,16 +14,6 @@
 #include "colour.h"
 #include "msaa.h"
 
-t_rgb	hex_to_rgb(int hex_colour)
-{
-	t_rgb	result;
-
-	result.r = (hex_colour >> 16) & 0xFF;
-	result.g = (hex_colour >> 8) & 0xFF;
-	result.b = hex_colour & 0xFF;
-	return (result);
-}
-
 t_rgb	average_4colour(t_rgb a, t_rgb b, t_rgb c, t_rgb d)
 {
 	t_rgb	result;
