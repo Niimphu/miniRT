@@ -12,7 +12,7 @@
 
 #include "lighting.h"
 
-#define C1 1
+#define C1 1.2
 #define C3 0.00005
 
 t_rgb	get_specular_component(t_lighting lighting, t_material material,
