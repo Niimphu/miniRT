@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-#include "draw.h"
+#include "../../lib/miniRT.h"
+#include "../raytrace/draw.h"
 
 t_intersect	get_closest_sphere(t_xyz viewpoint, t_xyz ray, t_list *spheres);
 t_intersect	get_closest_plane(t_xyz viewpoint, t_xyz ray, t_list *planes);

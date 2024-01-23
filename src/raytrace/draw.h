@@ -16,14 +16,6 @@
 # include "../../lib/miniRT.h"
 # include "../intersect/intersect.h"
 
-typedef struct s_lighting
-{
-	t_light	*light;
-	double	distance;
-	double	diffuse_intensity;
-	t_xyz	surface_normal;
-}			t_lighting;
-
 int			draw_scene(t_rt *rt);
 
 t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene);
@@ -40,9 +32,6 @@ bool		intersects_sphere(t_xyz intersect_point, t_xyz light_xyz,
 bool		intersects_plane(t_xyz intersect_point, t_xyz light_xyz,
 				t_list *planes, t_xyz to_light);
 
-t_xyz		get_surface_normal(t_intersect intersect);
-t_xyz		get_halfway_vector(t_xyz intersection, t_xyz light_pos,
-				t_xyz camera_pos);
 void		calculate_camera_right_up(t_camera *camera);
 
 #endif

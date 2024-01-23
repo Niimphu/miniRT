@@ -11,8 +11,8 @@
 /* ************************************************************************** */
 
 #include "intersect.h"
-#include "xyz.h"
-#include "miniRT.h"
+#include "../maths/xyz.h"
+#include "../../lib/miniRT.h"
 
 t_intersect	new_intersect(void)
 {

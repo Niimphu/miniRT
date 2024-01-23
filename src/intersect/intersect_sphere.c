@@ -14,9 +14,7 @@
 #define B 1
 #define C 2
 
-#include "miniRT.h"
-#include "xyz.h"
-#include "draw.h"
+#include "../raytrace/draw.h"
 
 t_intersect	ray_interects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 {

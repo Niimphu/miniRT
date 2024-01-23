@@ -61,19 +61,19 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	t_xyz	*point;
-	t_xyz	*norm;
-	t_rgb	colour;
+	t_xyz		*point;
+	t_xyz		*norm;
+	t_rgb		colour;
 	t_material	material;
 }				t_plane;
 
 typedef struct s_cylinder
 {
-	t_xyz	*centre;
-	t_xyz	*axis;
-	double	diameter;
-	double	height;
-	t_rgb	colour;
+	t_xyz		*centre;
+	t_xyz		*axis;
+	double		diameter;
+	double		height;
+	t_rgb		colour;
 	t_material	material;
 }				t_cylinder;
 

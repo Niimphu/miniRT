@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "miniRT.h"
-#include "lighting.h"
+#include "../lighting/lighting.h"
 
 void	draw_pixel(t_rt *rt, int x, int y, t_intersect intersect)
 {

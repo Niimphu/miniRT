@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-#include "xyz.h"
-#include "draw.h"
+#include "../raytrace/draw.h"
 
 t_intersect	ray_intersects_plane(t_xyz *viewpoint, t_xyz ray, t_plane *plane)
 {
