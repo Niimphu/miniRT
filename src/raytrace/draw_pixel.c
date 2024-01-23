@@ -19,7 +19,7 @@ void	draw_pixel(t_rt *rt, int x, int y, t_intersect intersect)
 
 	colour = calculate_colour(intersect, rt->scene);
 	mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
-				  colour);
+		colour);
 }
 
 int	calculate_colour(t_intersect intersect, t_scene *scene)

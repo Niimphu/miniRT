@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/15 19:20:19 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/23 16:03:19 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int		key_pressed(int keycode, t_rt *rt);
 int		window_closed(t_rt *rt);
 void	quit(t_rt *rt);
 
-int		ft_perror(char *message);
+int		error(char *message);
 
 int		strarray_size(char **array);
 

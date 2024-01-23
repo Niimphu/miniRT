@@ -24,24 +24,24 @@ int	new_sphere(char **input, t_scene *scene)
 
 	info_count = strarray_size(input);
 	if (info_count != 3 && info_count != 5)
-		return (ft_perror("Error\nSphere: invalid parameter count"));
+		return (error("Error\nSphere: invalid parameter count"));
 	sphere = ft_calloc(1, sizeof(t_sphere));
 	if (!sphere)
 		return (FAIL);
 	if (!ft_isdouble(input[1]) || ft_atod(input[1]) < 0.0)
-		return (free(sphere), ft_perror("Error\nSphere: invalid diameter"));
+		return (free(sphere), error("Error\nSphere: invalid diameter"));
 	sphere->diameter = ft_atod(input[1]);
 	sphere->colour = atorgb(input[2]);
 	if (!is_valid_rgb(sphere->colour))
-		return (free(sphere), ft_perror("Error\nSphere: invalid colour"));
+		return (free(sphere), error("Error\nSphere: invalid colour"));
 	sphere->centre = atoxyz(input[0]);
 	if (!sphere->centre)
-		return (free(sphere), ft_perror("Error\nSphere: invalid centre"));
+		return (free(sphere), error("Error\nSphere: invalid centre"));
 	if (info_count == 3)
-		return (sphere->material = (t_material){0}, add_shape(scene, sphere, SPHERE), OK);
+		return (sphere->material = (t_material){0},
+				add_shape(scene, sphere, SPHERE), OK);
 	if (!is_valid_material(input + 3))
-		return (free_sphere(sphere),
-			ft_perror("Error\nSphere: invalid material"));
+		return (free_sphere(sphere), error("Error\nSphere: invalid material"));
 	sphere->material = (t_material){ft_atod(input[3]), ft_atoi(input[4])};
 	return (add_shape(scene, sphere, SPHERE), OK);
 }
@@ -53,24 +53,24 @@ int	new_plane(char **input, t_scene *scene)
 
 	info_count = strarray_size(input);
 	if (info_count != 3 && info_count != 5)
-		return (ft_perror("Error\nPlane: invalid parameter count"));
+		return (error("Error\nPlane: invalid parameter count"));
 	plane = ft_calloc(1, sizeof(t_plane));
 	if (!plane)
 		return (FAIL);
 	plane->norm = atoxyz(input[1]);
 	if (!plane->norm || !is_normalised(plane->norm))
-		return (free(plane), ft_perror("Error\nPlane: invalid norm vector"));
+		return (free(plane), error("Error\nPlane: invalid norm vector"));
 	plane->colour = atorgb(input[2]);
 	if (!is_valid_rgb(plane->colour))
-		return (free(plane), ft_perror("Error\nPlane: invalid colour"));
+		return (free(plane), error("Error\nPlane: invalid colour"));
 	plane->point = atoxyz(input[0]);
 	if (!plane->point)
-		return (free(plane), ft_perror("Error\nPlane: invalid point"));
+		return (free(plane), error("Error\nPlane: invalid point"));
 	if (info_count == 3)
-		return (plane->material = (t_material){0}, add_shape(scene, plane, PLANE), OK);
+		return (plane->material = (t_material){0},
+				add_shape(scene, plane, PLANE), OK);
 	if (!is_valid_material(input + 3))
-		return (free_plane(plane),
-			ft_perror("Error\nPlane: invalid material"));
+		return (free_plane(plane), error("Error\nPlane: invalid material"));
 	plane->material = (t_material){ft_atod(input[3]), ft_atoi(input[4])};
 	return (add_shape(scene, plane, PLANE), OK);
 }
@@ -82,20 +82,20 @@ int	new_cylinder(char **input, t_scene *scene)
 
 	info_count = strarray_size(input);
 	if (info_count != 5 && info_count != 7)
-		return (ft_perror("Error\nCylinder: invalid parameter count"));
+		return (error("Error\nCylinder: invalid parameter count"));
 	cylinder = ft_calloc(1, sizeof(t_cylinder));
 	if (!cylinder)
 		return (FAIL);
 	if (!ft_isdouble(input[2]) || ft_atod(input[2]) < 0.0f)
-		return (free(cylinder), ft_perror("Error\nCylinder: \
+		return (free(cylinder), error("Error\nCylinder: \
 			invalid diameter"));
 	cylinder->diameter = ft_atod(input[2]);
 	if (!ft_isdouble(input[3]) || ft_atod(input[3]) < 0.0f)
-		return (free(cylinder), ft_perror("Error\nCylinder: invalid height"));
+		return (free(cylinder), error("Error\nCylinder: invalid height"));
 	cylinder->height = ft_atod(input[3]);
 	cylinder->colour = atorgb(input[4]);
 	if (!is_valid_rgb(cylinder->colour))
-		return (free(cylinder), ft_perror("Error\nCylinder: invalid colour"));
+		return (free(cylinder), error("Error\nCylinder: invalid colour"));
 	cylinder = cylinder_extended(input, cylinder, info_count);
 	if (!cylinder)
 		return (FAIL);
@@ -108,16 +108,16 @@ static t_cylinder	*cylinder_extended(char **input, t_cylinder *cylinder,
 	cylinder->axis = NULL;
 	cylinder->centre = atoxyz(input[0]);
 	if (!cylinder->centre)
-		return (free(cylinder), ft_perror("Error\nCylinder: invalid centre"),
+		return (free(cylinder), error("Error\nCylinder: invalid centre"),
 			NULL);
 	cylinder->axis = atoxyz(input[1]);
 	if (!cylinder->axis || !is_normalised(cylinder->axis))
 		return (free_cylinder(cylinder),
-			ft_perror("Error\nCylinder: invalid axis"), NULL);
+			error("Error\nCylinder: invalid axis"), NULL);
 	if (info_count == 5)
 		return (cylinder->material = (t_material){0}, cylinder);
 	if (!is_valid_material(input + 5))
-		return (free_cylinder(cylinder), ft_perror("Error\nCylinder: \
+		return (free_cylinder(cylinder), error("Error\nCylinder: \
 			invalid shininess"), NULL);
 	cylinder->material = (t_material){ft_atod(input[5]), ft_atoi(input[6])};
 	return (cylinder);

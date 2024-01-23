@@ -40,13 +40,13 @@ static int	create_element(int id, char **raw_input, t_scene *scene)
 	if (id == AMBIENCE)
 	{
 		if (scene->ambience)
-			return (ft_perror("Error\nMultiple ambient lighting elements"));
+			return (error("Error\nMultiple ambient lighting elements"));
 		return (new_ambience(raw_input, scene));
 	}
 	else if (id == CAMERA)
 	{
 		if (scene->camera)
-			return (ft_perror("Error\nMultiple camera elements"));
+			return (error("Error\nMultiple camera elements"));
 		return (new_camera(raw_input, scene));
 	}
 	else if (id == LIGHT)
@@ -73,5 +73,5 @@ static int	get_element_id(char *string)
 		return (PLANE);
 	if (!ft_strncmp(string, "cy", 2))
 		return (CYLINDER);
-	return (ft_perror("Error\nInvalid identifier found"));
+	return (error("Error\nInvalid identifier found"));
 }

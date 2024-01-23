@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/02 18:11:50 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/23 16:03:19 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	parse(int argc, char **argv, t_rt *rt)
 		return (close(fd), FAIL);
 	close(fd);
 	if (!rt->scene->camera)
-		return (ft_perror("Error\nScene: missing camera"), FAIL);
+		return (error("Error\nScene: missing camera"), FAIL);
 	if (!rt->scene->lights)
-		return (ft_perror("Error\nScene: missing lights"), FAIL);
+		return (error("Error\nScene: missing lights"), FAIL);
 	if (!rt->scene->spheres && !rt->scene->planes && !rt->scene->cylinders)
-		return (ft_perror("Error\nScene: missing objects"), FAIL);
+		return (error("Error\nScene: missing objects"), FAIL);
 	print_scene_info(rt->scene);
 	return (OK);
 }
@@ -51,14 +51,14 @@ static int	check_flags(char *flag, t_rt *rt)
 	i = 0;
 	len = ft_strlen(flag);
 	if (!flag[i] || len != 2 || flag[i++] != '-')
-		ft_perror("Error\nArguments: invalid flag");
+		error("Error\nArguments: invalid flag");
 	while (flag[i])
 	{
 		if (flag[i] == 'a')
 			rt->msaa = true;
 		else
 		{
-			ft_perror("Error\nValid flags: a");
+			error("Error\nValid flags: a");
 			return (FAIL);
 		}
 		i++;
