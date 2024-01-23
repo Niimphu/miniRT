@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lighting.h"
+#include "../../lib/miniRT.h"
+#include "../intersect/intersect.h"
+#include "../lighting/lighting.h"
 
 #define C1 1.2
 #define C3 0.00005
