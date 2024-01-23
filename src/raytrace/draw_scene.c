@@ -44,7 +44,7 @@ static void	draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt)
 			ray = get_ray(mlx, camera, x, y);
 			intersect = get_closest_shape(*camera->position, ray, rt->scene);
 			if (intersect.valid)
-				draw_pixel(rt, x, y, intersect);
+				draw_pixel(rt, (t_xyz){x, y, 0}, intersect, ray);
 			x++;
 		}
 		y++;
