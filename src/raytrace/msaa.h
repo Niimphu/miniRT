@@ -14,6 +14,7 @@
 # define MSAA_H
 
 # include "../../lib/miniRT.h"
+# include "../intersect/intersect.h"
 # include "../maths/xyz.h"
 # include "../colour/colour.h"
 

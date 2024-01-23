@@ -14,6 +14,7 @@
 # define DRAW_H
 
 # include "../../lib/miniRT.h"
+# include "../intersect/intersect.h"
 
 typedef struct s_lighting
 {

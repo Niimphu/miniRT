@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "miniRT.h"
+#include "intersect.h"
 #include "xyz.h"
 
 t_xyz	sphere_normal(t_sphere *sphere, t_xyz point);
