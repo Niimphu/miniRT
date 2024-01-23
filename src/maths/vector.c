@@ -14,6 +14,14 @@
 #include <stdlib.h>
 #include <math.h>
 
+bool	is_normalised(t_xyz vector)
+{
+	if (vector.x < -1.0 || vector.x > 1.0 || vector.y < -1.0
+		|| vector.y > 1.0 || vector.z < -1.0 || vector.z > 1.0)
+		return (false);
+	return (true);
+}
+
 double	v_length(t_xyz vector)
 {
 	return (sqrt(pow(vector.x, 2) + pow(vector.y, 2) + pow(vector.z, 2)));

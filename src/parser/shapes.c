@@ -58,7 +58,7 @@ int	new_plane(char **input, t_scene *scene)
 	if (!plane)
 		return (FAIL);
 	plane->norm = atoxyz(input[1]);
-	if (!plane->norm || !is_normalised(plane->norm))
+	if (!plane->norm || !is_normalised(*plane->norm))
 		return (free(plane), error("Error\nPlane: invalid norm vector"));
 	plane->colour = atorgb(input[2]);
 	if (!is_valid_rgb(plane->colour))
@@ -111,7 +111,7 @@ static t_cylinder	*cylinder_extended(char **input, t_cylinder *cylinder,
 		return (free(cylinder), error("Error\nCylinder: invalid centre"),
 			NULL);
 	cylinder->axis = atoxyz(input[1]);
-	if (!cylinder->axis || !is_normalised(cylinder->axis))
+	if (!cylinder->axis || !is_normalised(*cylinder->axis))
 		return (free_cylinder(cylinder),
 			error("Error\nCylinder: invalid axis"), NULL);
 	if (info_count == 5)

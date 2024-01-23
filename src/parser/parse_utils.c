@@ -65,14 +65,6 @@ bool	ft_isdouble(const char *str)
 	return (digits > 0 && !str[i]);
 }
 
-bool	is_normalised(t_xyz *vector)
-{
-	if (vector->x < -1.0 || vector->x > 1.0 || vector->y < -1.0
-		|| vector->y > 1.0 || vector->z < -1.0 || vector->z > 1.0)
-		return (false);
-	return (true);
-}
-
 bool	is_valid_material(char **raw_material)
 {
 	if (!ft_isdouble(raw_material[0]) || !ft_isint(raw_material[1]))

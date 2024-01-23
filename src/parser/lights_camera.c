@@ -48,7 +48,7 @@ int	new_camera(char **raw_input, t_scene *scene)
 	if (!camera->position)
 		return (error("Error\nCamera: invalid viewpoint"));
 	camera->forward = atoxyz(raw_input[1]);
-	if (!camera->forward || !is_normalised(camera->forward))
+	if (!camera->forward || !is_normalised(*camera->forward))
 		return (error("Error\nCamera: invalid forward"));
 	if (!ft_isint(raw_input[2]))
 		return (error("Error\nCamera: invalid field of view"));
