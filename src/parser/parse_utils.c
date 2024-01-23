@@ -73,3 +73,11 @@ bool	is_valid_material(char **raw_material)
 		return (false);
 	return (true);
 }
+
+bool	is_valid_rgb(t_rgb colour)
+{
+	if (colour.r < 0 || colour.r > 255 || colour.g < 0 || colour.g > 255
+		|| colour.b < 0 || colour.b > 255)
+		return (false);
+	return (true);
+}

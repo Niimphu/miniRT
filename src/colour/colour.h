@@ -20,7 +20,6 @@ typedef struct s_rgb
 	int	b;
 }				t_rgb;
 
-bool	is_valid_rgb(t_rgb colour);
 int		rgb_to_hex(t_rgb colour);
 t_rgb	rgb_scale(t_rgb colour, double factor);
 t_rgb	rgb_add(t_rgb colour1, t_rgb colour2);

@@ -67,14 +67,6 @@ t_rgb	rgb_product(t_rgb base, t_rgb light)
 	return (result);
 }
 
-bool	is_valid_rgb(t_rgb colour)
-{
-	if (colour.r < 0 || colour.r > 255 || colour.g < 0 || colour.g > 255
-		|| colour.b < 0 || colour.b > 255)
-		return (false);
-	return (true);
-}
-
 int	rgb_to_hex(t_rgb colour)
 {
 	return ((colour.r << 16) | (colour.g << 8) | colour.b);

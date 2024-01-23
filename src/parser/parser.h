@@ -24,6 +24,7 @@ bool		is_empty(const char *string);
 bool		ft_isint(const char *str);
 bool		ft_isdouble(const char *str);
 bool		is_valid_material(char **raw_material);
+bool		is_valid_rgb(t_rgb colour);
 
 char		*trim_nl(char *str);
 
