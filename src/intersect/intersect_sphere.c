@@ -37,7 +37,7 @@ t_intersect	ray_interects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 	if (fabs(intersection.distance) < TOLERANCE)
 		intersection.distance = (-(discr_vars[B]) + sqrt(discriminant))
 			/ (2.0 * discr_vars[A]);
-	else if (intersection.distance < 0)
+	else if (intersection.distance < TOLERANCE)
 		return (intersection);
 	return ((t_intersect){true,
 		v_add(*viewpoint, v_scale(ray, intersection.distance)),

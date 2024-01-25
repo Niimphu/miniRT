@@ -24,7 +24,7 @@ t_intersect	ray_intersects_plane(t_xyz *viewpoint, t_xyz ray, t_plane *plane)
 		return (intersection);
 	t = v_dot(v_subtract(*plane->point, *viewpoint), *plane->norm)
 		/ dot_product;
-	if (t < 0.0)
+	if (t < TOLERANCE)
 		return (intersection);
 	intersection.distance = t;
 	intersection.point = v_add(*viewpoint, v_scale(ray, t));
