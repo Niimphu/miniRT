@@ -67,9 +67,12 @@ bool	ft_isdouble(const char *str)
 
 bool	is_valid_material(char **raw_material)
 {
-	if (!ft_isdouble(raw_material[0]) || !ft_isint(raw_material[1]))
+	if (!ft_isdouble(raw_material[0]) || !ft_isint(raw_material[1])
+		|| !ft_isdouble(raw_material[2]))
 		return (false);
-	if (ft_atod(raw_material[0]) < 0 || ft_atoi(raw_material[1]) < 1)
+	if (ft_atod(raw_material[0]) < 0 || ft_atod(raw_material[0]) > 1
+		|| ft_atoi(raw_material[1]) < 1
+		|| ft_atod(raw_material[2]) < 0 || ft_atod(raw_material[2]) > 1)
 		return (false);
 	return (true);
 }

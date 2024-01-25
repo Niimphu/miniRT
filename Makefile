@@ -12,7 +12,7 @@ SRC =	main.c \
 		initialise.c \
 		parser/parse.c parser/parse_utils.c parser/parse_strconversions.c \
 		parser/new_element.c \
-		parser/lights_camera.c parser/shapes.c \
+		parser/lights_camera.c parser/shapes.c parser/shapes_utils.c \
 		parser/file.c \
 		miniRT.c \
 		raytrace/draw_scene.c raytrace/draw_pixel.c raytrace/draw_utils.c \

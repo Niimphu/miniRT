@@ -19,6 +19,8 @@
 # include "../maths/xyz.h"
 
 int			new_element(char *line, t_scene *scene);
+void		add_shape(t_scene *scene, void *shape, int type);
+t_material	create_material(char **input);
 
 bool		is_empty(const char *string);
 bool		ft_isint(const char *str);

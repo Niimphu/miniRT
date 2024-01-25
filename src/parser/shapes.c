@@ -13,7 +13,6 @@
 #include "parser.h"
 #include "material.h"
 
-static void			add_shape(t_scene *scene, void *shape, int type);
 static t_cylinder	*cylinder_extended(char **input, t_cylinder *cylinder,
 						size_t info_count);
 
@@ -23,7 +22,7 @@ int	new_sphere(char **input, t_scene *scene)
 	size_t		info_count;
 
 	info_count = strarray_size(input);
-	if (info_count != 3 && info_count != 5)
+	if (info_count != 3 && info_count != 6)
 		return (error("Error\nSphere: invalid parameter count"));
 	sphere = ft_calloc(1, sizeof(t_sphere));
 	if (!sphere)
@@ -42,7 +41,7 @@ int	new_sphere(char **input, t_scene *scene)
 				add_shape(scene, sphere, SPHERE), OK);
 	if (!is_valid_material(input + 3))
 		return (free_sphere(sphere), error("Error\nSphere: invalid material"));
-	sphere->material = (t_material){ft_atod(input[3]), ft_atoi(input[4])};
+	sphere->material = create_material(input + 3);
 	return (add_shape(scene, sphere, SPHERE), OK);
 }
 
@@ -52,7 +51,7 @@ int	new_plane(char **input, t_scene *scene)
 	size_t	info_count;
 
 	info_count = strarray_size(input);
-	if (info_count != 3 && info_count != 5)
+	if (info_count != 3 && info_count != 6)
 		return (error("Error\nPlane: invalid parameter count"));
 	plane = ft_calloc(1, sizeof(t_plane));
 	if (!plane)
@@ -71,7 +70,7 @@ int	new_plane(char **input, t_scene *scene)
 				add_shape(scene, plane, PLANE), OK);
 	if (!is_valid_material(input + 3))
 		return (free_plane(plane), error("Error\nPlane: invalid material"));
-	plane->material = (t_material){ft_atod(input[3]), ft_atoi(input[4])};
+	plane->material = create_material(input + 3);
 	return (add_shape(scene, plane, PLANE), OK);
 }
 
@@ -81,7 +80,7 @@ int	new_cylinder(char **input, t_scene *scene)
 	size_t		info_count;
 
 	info_count = strarray_size(input);
-	if (info_count != 5 && info_count != 7)
+	if (info_count != 5 && info_count != 8)
 		return (error("Error\nCylinder: invalid parameter count"));
 	cylinder = ft_calloc(1, sizeof(t_cylinder));
 	if (!cylinder)
@@ -119,31 +118,6 @@ static t_cylinder	*cylinder_extended(char **input, t_cylinder *cylinder,
 	if (!is_valid_material(input + 5))
 		return (free_cylinder(cylinder), error("Error\nCylinder: \
 			invalid shininess"), NULL);
-	cylinder->material = (t_material){ft_atod(input[5]), ft_atoi(input[6])};
+	cylinder->material = create_material(input + 5);
 	return (cylinder);
-}
-
-static void	add_shape(t_scene *scene, void *shape, int type)
-{
-	if (type == SPHERE)
-	{
-		if (!(scene->spheres))
-			scene->spheres = ft_lstnew(shape);
-		else
-			ft_lstadd_back(&(scene->spheres), ft_lstnew(shape));
-	}
-	else if (type == PLANE)
-	{
-		if (!(scene->planes))
-			scene->planes = ft_lstnew(shape);
-		else
-			ft_lstadd_back(&(scene->planes), ft_lstnew(shape));
-	}
-	else if (type == CYLINDER)
-	{
-		if (!(scene->cylinders))
-			scene->cylinders = ft_lstnew(shape);
-		else
-			ft_lstadd_back(&(scene->cylinders), ft_lstnew(shape));
-	}
 }
