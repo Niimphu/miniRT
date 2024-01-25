@@ -13,8 +13,6 @@
 #include "draw.h"
 #include "../lighting/lighting.h"
 
-#define MAX_BOUNCES 4
-
 t_xyz	get_reflected_ray(t_xyz incident, t_xyz normal);
 
 t_rgb	bounce(t_scene *scene, t_xyz ray, int bounces,

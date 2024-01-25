@@ -17,8 +17,6 @@
 # include "colour.h"
 # include "../../lib/material.h"
 
-# define TOLERANCE 0.0001
-
 typedef struct s_vector
 {
 	double	x;

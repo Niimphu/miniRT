@@ -14,9 +14,6 @@
 #include "../intersect/intersect.h"
 #include "../lighting/lighting.h"
 
-#define C1 1.2
-#define C3 0.00005
-
 t_rgb	get_specular_component(t_lighting lighting, t_material material,
 						t_intersect intersect, t_camera *camera)
 {
