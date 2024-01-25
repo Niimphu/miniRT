@@ -18,7 +18,7 @@ SRC =	main.c \
 		raytrace/draw.c raytrace/closest.c \
 		raytrace/draw_cylinder.c raytrace/draw_plane.c raytrace/draw_sphere.c \
 		maths/vector.c maths/vector_basic.c maths/point.c \
-		maths/intersect.c \
+		maths/intersect.c maths/matrix.c \
 		maths/sphere.c \
 		colour/colour.c \
 		input_handler.c \
