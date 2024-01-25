@@ -16,8 +16,8 @@ t_material	create_material(char **input)
 {
 	t_material	material;
 
-	material.shininess = ft_atod(input[0]);
-	material.spec_coeff = ft_atoi(input[1]);
+	material.spec_coeff = ft_atod(input[0]);
+	material.shininess = ft_atoi(input[1]);
 	material.reflectivity = ft_atod(input[2]);
 	return (material);
 }

@@ -17,10 +17,7 @@ void	draw_pixel(t_rt *rt, t_xyz coord, t_intersect intersect, t_xyz ray)
 {
 	int	colour;
 
-	if (intersect.material.reflectivity == 0)
-		colour = calculate_colour(intersect, rt->scene);
-	else
-		colour = rgb_to_hex(bounce(rt->scene, ray, 0, intersect));
+	colour = rgb_to_hex(bounce(rt->scene, ray, 0, intersect));
 	mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, coord.x, coord.y,
 		colour);
 }

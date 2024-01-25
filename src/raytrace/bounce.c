@@ -13,7 +13,7 @@
 #include "draw.h"
 #include "../lighting/lighting.h"
 
-#define REFLECTIVITY 0.7
+#define MAX_BOUNCES 4
 
 t_xyz	get_reflected_ray(t_xyz incident, t_xyz normal);
 
@@ -24,15 +24,19 @@ t_rgb	bounce(t_scene *scene, t_xyz ray, int bounces,
 	t_xyz		reflected;
 	t_intersect	next_shape;
 	t_rgb		next_colour;
+	double		reflectivity;
 
+	reflectivity = intersect.material.reflectivity;
+	if (reflectivity == 0)
+		return (hex_to_rgb(calculate_colour(intersect, scene)));
 	reflected = get_reflected_ray(ray, get_surface_normal(intersect));
 	next_shape = get_closest_shape(intersect.point, reflected, scene);
-	if (!next_shape.valid || bounces > 1)
+	if (!next_shape.valid || bounces > MAX_BOUNCES)
 		return (hex_to_rgb(calculate_colour(intersect, scene)));
 	next_colour = bounce(scene, reflected, ++bounces, next_shape);
 	intersect.colour = hex_to_rgb(calculate_colour(intersect, scene));
-	return (rgb_add(rgb_scale(intersect.colour, 1 - REFLECTIVITY),
-			rgb_scale(next_colour, REFLECTIVITY)));
+	return (rgb_add(rgb_scale(intersect.colour, 1 - reflectivity),
+			rgb_scale(next_colour, reflectivity)));
 }
 
 t_xyz	get_reflected_ray(t_xyz incident, t_xyz normal)
