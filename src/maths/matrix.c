@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 16:53:31 by Kekuhne           #+#    #+#             */
-/*   Updated: 2024/01/24 18:49:48 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/01/25 16:17:19 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,21 @@
 	m.m[3][3] = 1.0;
 	return (m);
 } */
+static t_matrix	identity_matrix(void)
+{
+	t_matrix	m;
+
+	m.m[0][0] = 1.0;
+	m.m[0][1] = 0.0;
+	m.m[0][2] = 0.0;
+	m.m[1][0] = 0.0;
+	m.m[1][1] = 1.0;
+	m.m[1][2] = 0.0;
+	m.m[2][0] = 0.0;
+	m.m[2][1] = 0.0;
+	m.m[2][2] = 1.0;
+	return (m);
+}
 
 double angle_between(t_xyz v1, t_xyz v2)
 {
@@ -55,18 +70,7 @@ t_matrix create_rotation_matrix(t_xyz axis, double angle)
 	double		c;
 
 	if (angle < 1e-6)
-	{
-		m.m[0][0] = 1.0;
-		m.m[0][1] = 0.0;
-		m.m[0][2] = 0.0;
-		m.m[1][0] = 0.0;
-		m.m[1][1] = 1.0;
-		m.m[1][2] = 0.0;
-		m.m[2][0] = 0.0;
-		m.m[2][1] = 0.0;
-		m.m[2][2] = 1.0;
-		return (m);
-	}
+		return (identity_matrix());
 	s = sin(angle);
 	c = cos(angle);
 	m.m[0][0] = (1.0 - c) * axis.x * axis.x + c;

@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:20:11 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/25 14:20:45 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/01/25 16:19:16 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "draw.h"
 #define EPSILON 1e-6
 
-t_xyz ray_intersects_cylinder_disk(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl, t_intersect *intersection);
+t_xyz ray_intersects_cylinder_disk(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl, t_intersect *intersection, t_xyz centre);
 
 static double	cylinder_closest_t(double discriminant, double *discr_vars)
 {
@@ -56,11 +56,11 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
 		return (intersection);
 	intersection.distance = cylinder_closest_t(discriminant, discr_vars);
 	intersection.point = v_add(local_viewpoint, v_scale(local_ray, intersection.distance));
-	if (intersection.point.y < cl->centre->y - (cl->height / 2)
-		|| intersection.point.y > cl->centre->y + (cl->height / 2))
+	if (intersection.point.y <= cl->centre->y - (cl->height / 2)
+		|| intersection.point.y >= cl->centre->y + (cl->height / 2))
 	{
 		rotation = create_rotation_matrix(v_normalize(v_cross((t_xyz){0,1,0},v_normalize(*cl->axis))), -angle_between((t_xyz){0,1,0}, v_normalize(*cl->axis)));
-		intersection.point = v_matrix_mul(rotation, ray_intersects_cylinder_disk(viewpoint, ray, cl, &intersection));;
+		intersection.point = v_matrix_mul(rotation, ray_intersects_cylinder_disk(&local_viewpoint, local_ray, cl, &intersection, local_cl_center));
 		return (intersection);
 	}
 	else
@@ -94,17 +94,17 @@ int	cylinder_colour(t_cylinder *cl, t_xyz point, t_scene *scene)
 	return (rgb_to_hex(colour));
 }
 
-// Function to calculate the intersection of a ray with the disk of a cylinder
-t_xyz ray_intersects_cylinder_disk(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl, t_intersect *intersection)
+t_xyz ray_intersects_cylinder_disk(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl, t_intersect *intersection, t_xyz centre)
 {
-
-	double distance_to_disk = (cl->height / 2.0) / fabs(ray.y); // is this line causing the disk to float? 
-	if (distance_to_disk >= EPSILON)
+	double distance_to_disk;
+	distance_to_disk = (cl->height / 2.0) / fabs(ray.y - centre.y);
+	if (distance_to_disk >= 0)
 	{
 		// Calculate the intersection point on the disk
-		t_xyz intersection_point = v_add(*viewpoint, v_scale(ray, distance_to_disk));
+		t_xyz intersection_point;
+		intersection_point= v_add(*viewpoint, v_scale(ray, distance_to_disk));
 		// Check if the intersection point is within the disk's radius
-		if (pow(intersection_point.x - cl->centre->x, 2) + pow(intersection_point.z - cl->centre->z, 2) <= pow(cl->diameter / 2, 2))
+		if (pow(intersection_point.x - centre.x, 2) + pow(intersection_point.z - centre.z, 2) <= pow(cl->diameter / 2, 2))
 		{
 			// Update the intersection information
 			intersection->distance = distance_to_disk;
