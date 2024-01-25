@@ -17,12 +17,10 @@ void	draw_pixel(t_rt *rt, t_xyz coord, t_intersect intersect, t_xyz ray)
 {
 	int	colour;
 
-	//TEMPORARY FOR TESTING
-	if (intersect.type == SPHERE
-		&& ((t_sphere *)(intersect.shape))->diameter > 9)
-		colour = rgb_to_hex(bounce(rt->scene, ray, 0, intersect));
-	else
+	if (intersect.material.reflectivity == 0)
 		colour = calculate_colour(intersect, rt->scene);
+	else
+		colour = rgb_to_hex(bounce(rt->scene, ray, 0, intersect));
 	mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, coord.x, coord.y,
 		colour);
 }
