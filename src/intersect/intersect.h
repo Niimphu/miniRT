@@ -1,27 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   intersect.c                                        :+:      :+:    :+:   */
+/*   intersect.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/09 18:42:11 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/10 14:00:05 by yiwong           ###   ########.fr       */
+/*   Created: 2024/01/23 15:31:46 by yiwong            #+#    #+#             */
+/*   Updated: 2024/01/23 15:31:46 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "xyz.h"
-#include "miniRT.h"
+#ifndef INTERSECT_H
+# define INTERSECT_H
 
-t_intersect	new_intersect(void)
+# include "miniRT.h"
+# include "xyz.h"
+
+typedef struct s_intersect
 {
-	t_intersect	new;
+	bool		valid;
+	t_xyz		point;
+	t_rgb		colour;
+	double		distance;
+	void		*shape;
+	int			type;
+	t_material	material;
+}				t_intersect;
 
-	new.valid = false;
-	new.point = (t_xyz){0};
-	new.colour = (t_rgb){0};
-	new.distance = 0.0;
-	new.shape = NULL;
-	new.type = 0;
-	return (new);
-}
+t_intersect	new_intersect(void);
+
+#endif

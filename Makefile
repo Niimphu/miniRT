@@ -15,11 +15,13 @@ SRC =	main.c \
 		parser/lights_camera.c parser/shapes.c \
 		parser/file.c \
 		miniRT.c \
-		raytrace/draw.c raytrace/draw_utils.c raytrace/closest.c raytrace/colour_calcs.c \
-		raytrace/normals.c raytrace/intersection_checks.c raytrace/intersect_plane.c raytrace/intersect_sphere.c \
+		raytrace/draw_scene.c raytrace/draw_pixel.c raytrace/draw_utils.c \
 		raytrace/msaa.c raytrace/msaa_colour.c \
+		raytrace/bounce.c \
+		lighting/lighting.c lighting/lighting_utils.c \
+		intersect/intersect.c intersect/intersection_checks.c \
+		intersect/closest_shape.c intersect/intersect_plane.c intersect/intersect_sphere.c \
 		maths/vector.c maths/vector_basic.c maths/point.c \
-		maths/intersect.c \
 		colour/colour.c \
 		input_handler.c \
 		error.c \
@@ -37,11 +39,13 @@ LIBFT_DIR = lib/libft
 LIB = $(LIBFT_DIR)/libft.a $(MLX_DIR)/libmlx.a
 
 CFLAGS +=	-I./lib \
-			-I./src/colour \
-			-I./src/free \
-			-I./src/maths \
 			-I./src/parser \
 			-I./src/raytrace \
+			-I./src/lighting \
+			-I./src/maths \
+			-I./src/intersect \
+			-I./src/colour \
+			-I./src/free \
 			-I./src/printer
 
 NAME = miniRT

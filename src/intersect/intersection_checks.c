@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-#include "draw.h"
+#include "../raytrace/draw.h"
 
 #define DTOLERANCE 0.00001
 

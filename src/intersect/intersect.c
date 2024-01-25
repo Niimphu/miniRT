@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/23 16:03:19 by yiwong           ###   ########.fr       */
+/*   Created: 2024/01/09 18:42:11 by yiwong            #+#    #+#             */
+/*   Updated: 2024/01/10 14:00:05 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "intersect.h"
+#include "../maths/xyz.h"
+#include "../../lib/miniRT.h"
 
-#define RED "\033[1;31m"
-#define RESET "\033[1;0m"
-
-int	error(char *message)
+t_intersect	new_intersect(void)
 {
-	ft_putstr_fd(RED, 2);
-	ft_putstr_fd(message, 2);
-	ft_putstr_fd("\n", 2);
-	ft_putstr_fd(RESET, 2);
-	return (FAIL);
+	t_intersect	new;
+
+	new.valid = false;
+	new.point = (t_xyz){0};
+	new.colour = (t_rgb){0};
+	new.distance = 0.0;
+	new.shape = NULL;
+	new.type = 0;
+	new.material = (t_material){0};
+	return (new);
 }

@@ -14,23 +14,12 @@
 #include <stdlib.h>
 #include <math.h>
 
-//void	set_xyz_to(t_xyz *set, double x, double y, double z)
-//{
-//	set->x = x;
-//	set->y = y;
-//	set->z = z;
-//}
-//
-//void	set_xyz_to_single(t_xyz *set, double n)
-//{
-//	set->x = n;
-//	set->y = n;
-//	set->z = n;
-//}
-
-double	v_length2(t_xyz vector)
+bool	is_normalised(t_xyz vector)
 {
-	return (pow(vector.x, 2) + pow(vector.y, 2) + pow(vector.z, 2));
+	if (vector.x < -1.0 || vector.x > 1.0 || vector.y < -1.0
+		|| vector.y > 1.0 || vector.z < -1.0 || vector.z > 1.0)
+		return (false);
+	return (true);
 }
 
 double	v_length(t_xyz vector)
