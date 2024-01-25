@@ -17,6 +17,7 @@ typedef struct s_material
 {
 	double			spec_coeff;
 	unsigned int	shininess;
+	double			reflectivity;
 }						t_material;
 
 #endif
