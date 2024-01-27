@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "miniRT.h"
 #include "xyz.h"
+#include "matrix.h"
 
 static t_matrix	create_skew_symmetric_matrix(t_xyz axis);
 static t_matrix	identity_matrix(void);
