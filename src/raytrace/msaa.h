@@ -14,6 +14,7 @@
 # define MSAA_H
 
 # include "../../lib/miniRT.h"
+# include "../intersect/intersect.h"
 # include "../maths/xyz.h"
 # include "../colour/colour.h"
 
@@ -24,7 +25,6 @@ typedef struct s_msaa
 	int			colours[4];
 }			t_msaa;
 
-t_rgb	hex_to_rgb(int hex_colour);
 void	draw_closest_shape_msaa(t_vars *mlx, t_camera *camera, t_rt *rt);
 t_rgb	average_4colour(t_rgb a, t_rgb b, t_rgb c, t_rgb d);
 

@@ -78,3 +78,15 @@ double	ft_atod(const char *str)
 	}
 	return (sign * result);
 }
+
+char	*trim_nl(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i + 1])
+		i++;
+	if (str[i] == '\n')
+		str[i] = '\0';
+	return (str);
+}

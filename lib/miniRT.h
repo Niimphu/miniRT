@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/15 19:20:19 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/23 16:03:19 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@
 # include <X11/keysymdef.h>
 
 # include "element.h"
+
+# define MAX_BOUNCES 5
+# define TOLERANCE 0.0001
+
+//C1 and C3 are coefficients for light intensity drop-off based on distance
+# define C1 1.2
+# define C3 0.00005
 
 # define OK 0
 # define FAIL -1
@@ -82,7 +89,7 @@ int		key_pressed(int keycode, t_rt *rt);
 int		window_closed(t_rt *rt);
 void	quit(t_rt *rt);
 
-int		ft_perror(char *message);
+int		error(char *message);
 
 int		strarray_size(char **array);
 

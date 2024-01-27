@@ -10,10 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
-#include "draw.h"
-
-#define DTOLERANCE 0.00001
+#include "../raytrace/draw.h"
 
 bool	intersects_sphere(t_xyz intersect_point, t_xyz light_xyz,
 			t_list *spheres, t_xyz to_light)
@@ -25,7 +22,7 @@ bool	intersects_sphere(t_xyz intersect_point, t_xyz light_xyz,
 	{
 		sphere = (t_sphere *)spheres->content;
 		check = ray_interects_sphere(&intersect_point, to_light, sphere);
-		if (check.valid && check.distance > DTOLERANCE
+		if (check.valid && check.distance > TOLERANCE
 			&& (check.distance < p2p_distance(intersect_point, light_xyz)))
 			return (true);
 		spheres = spheres->next;
@@ -43,7 +40,7 @@ bool	intersects_plane(t_xyz intersect_point, t_xyz light_xyz,
 	{
 		plane = (t_plane *)planes->content;
 		check = ray_intersects_plane(&intersect_point, to_light, plane);
-		if (check.valid && check.distance > DTOLERANCE
+		if (check.valid && check.distance > TOLERANCE
 			&& (check.distance < p2p_distance(intersect_point, light_xyz)))
 			return (true);
 		planes = planes->next;

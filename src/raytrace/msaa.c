@@ -99,6 +99,9 @@ static void	print_pixel(t_rt *rt, int x, int y, t_msaa ray_info)
 	colour = average_4colour(hex_to_rgb(ray_info.colours[0]),
 			hex_to_rgb(ray_info.colours[1]), hex_to_rgb(ray_info.colours[2]),
 			hex_to_rgb(ray_info.colours[3]));
+	ray_info.intersects[1].colour = colour;
+	colour = bounce(rt->scene, ray_info.rays[1], 0,
+			ray_info.intersects[1]);
 	mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
 		rgb_to_hex(colour));
 }
