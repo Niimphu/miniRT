@@ -18,7 +18,7 @@
 
 double	intersection_distance(double discriminant, double *vars);
 
-t_intersect	ray_interects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
+t_intersect	ray_intersects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 {
 	t_xyz		to_sphere_centre;
 	double		discr_vars[3];

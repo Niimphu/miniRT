@@ -12,14 +12,12 @@
 
 #include "xyz.h"
 
-t_xyz	v_copy(t_xyz *original)
+bool	is_normalised(t_xyz vector)
 {
-	t_xyz	copy;
-
-	copy.x = original->x;
-	copy.y = original->y;
-	copy.z = original->z;
-	return (copy);
+	if (vector.x < -1.0 || vector.x > 1.0 || vector.y < -1.0
+		|| vector.y > 1.0 || vector.z < -1.0 || vector.z > 1.0)
+		return (false);
+	return (true);
 }
 
 t_xyz	v_add(t_xyz v1, t_xyz v2)

@@ -53,7 +53,9 @@ t_lighting	get_lighting(t_light *light, t_scene *scene,
 	light_direction = v_normalize(v_subtract(*light->point, intersection));
 	if (intersects_sphere(intersection, *light->point,
 			scene->spheres, light_direction) || intersects_plane(intersection,
-			*light->point, scene->planes, light_direction))
+			*light->point, scene->planes, light_direction)
+		|| intersects_cylinder(intersection, *light->point,
+			scene->planes, light_direction))
 		return (lighting);
 	lighting.surface_normal = get_surface_normal(intersect);
 	lighting.diffuse_intensity = fmax(-1, fmin(1, v_dot(light_direction,

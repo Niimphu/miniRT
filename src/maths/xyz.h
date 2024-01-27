@@ -24,6 +24,11 @@ typedef struct s_vector
 	double	z;
 }			t_xyz;
 
+typedef struct s_matrix
+{
+	double	m[3][3];
+}	t_matrix;
+
 t_xyz		v_cross(t_xyz v1, t_xyz v2);
 double		v_dot(t_xyz v1, t_xyz v2);
 t_xyz		v_normalize(t_xyz vector);
@@ -37,5 +42,8 @@ t_xyz		v_invert(t_xyz v);
 
 double		p2p_distance(t_xyz a, t_xyz b);
 bool		p_equal(t_xyz a, t_xyz b);
+
+double		v_angle(t_xyz v1, t_xyz v2);
+t_matrix	matrix_multiply(t_matrix m1, t_matrix m2);
 
 #endif
