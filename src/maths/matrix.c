@@ -15,9 +15,8 @@
 #include "matrix.h"
 
 static t_matrix	create_skew_symmetric_matrix(t_xyz axis);
-static t_matrix	identity_matrix(void);
 
-static t_matrix	identity_matrix(void)
+t_matrix	identity_matrix(void)
 {
 	t_matrix	m;
 

@@ -16,7 +16,7 @@
 
 #include "../raytrace/draw.h"
 
-double	intersection_distance(double discriminant, double *vars);
+static double	intersection_distance(double discriminant, double *vars);
 
 t_intersect	ray_intersects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 {
@@ -43,7 +43,7 @@ t_intersect	ray_intersects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 		SPHERE, sphere->material});
 }
 
-double	intersection_distance(double discriminant, double *vars)
+static double	intersection_distance(double discriminant, double *vars)
 {
 	if (discriminant < TOLERANCE)
 		return (vars[B] / 2.0);

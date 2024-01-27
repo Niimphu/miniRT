@@ -21,5 +21,6 @@ typedef struct s_matrix
 t_matrix	matrix_multiply(t_matrix m1, t_matrix m2);
 t_xyz		m_v_multiply(t_matrix m, t_xyz in);
 t_matrix	create_rotation_matrix(t_matrix result, t_xyz axis, double angle);
+t_matrix	identity_matrix(void);
 
 #endif
