@@ -36,7 +36,7 @@ t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 	if (closest_cylinder.valid && (closest_cylinder.distance
 			< closest_shape.distance || !closest_shape.valid))
 		closest_shape = closest_cylinder;
-	return (closest_sphere);
+	return (closest_shape);
 }
 
 t_intersect	get_closest_sphere(t_xyz viewpoint, t_xyz ray, t_list *spheres)
