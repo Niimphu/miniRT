@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 18:08:30 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/28 20:15:46 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/28 20:23:24 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ t_intersect	local_intersection(t_xyz viewpoint, t_xyz ray,
 	intersect.distance = intersection_distance(discriminant, discr_vars);
 	if (fabs(intersect.distance) < TOLERANCE)
 		return (intersect);
-	intersect.point = v_add(viewpoint, v_scale(ray, intersection.distance));
+	intersect.point = v_add(viewpoint, v_scale(ray, intersect.distance));
 	return ((t_intersect){true,
 		intersect.point,
 		cylinder->colour, intersect.distance, cylinder,
-		SPHERE, cylinder->material});
+		CYLINDER, cylinder->material});
 }
 
 t_xyz	localise_viewpoint(t_xyz viewpoint, t_xyz cy_centre, t_matrix rotation)

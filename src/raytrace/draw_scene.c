@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   draw_scene.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:21:56 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/12 19:21:56 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/28 20:24:23 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt)
 			intersect = get_closest_shape(*camera->position, ray, rt->scene);
 			//temp
 			if (intersect.valid && intersect.type == CYLINDER)
-				mlx_pixel_put(mlx, mlx->win, x, y, 0x991199);
+				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0x991199);
 			else if (intersect.valid)
 				draw_pixel(rt, (t_xyz){x, y, 0}, intersect, ray);
 			x++;
