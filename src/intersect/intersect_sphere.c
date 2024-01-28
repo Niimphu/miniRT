@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:20:58 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/19 20:20:58 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/28 17:56:32 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #define C 2
 
 #include "../raytrace/draw.h"
+
+static double	intersection_distance(double discriminant, double *vars);
 
 t_intersect	ray_intersects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 {
@@ -32,15 +34,30 @@ t_intersect	ray_intersects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 	intersection = new_intersect();
 	if (discriminant < 0)
 		return (new_intersect());
-	intersection.distance = (-(discr_vars[B]) - sqrt(discriminant))
-		/ (2.0 * discr_vars[A]);
-	if (fabs(intersection.distance) < TOLERANCE)
-		intersection.distance = (-(discr_vars[B]) + sqrt(discriminant))
-			/ (2.0 * discr_vars[A]);
-	else if (intersection.distance < TOLERANCE)
+	intersection.distance = intersection_distance(discriminant, discr_vars);
+	if (intersection.distance < TOLERANCE)
 		return (intersection);
 	return ((t_intersect){true,
 		v_add(*viewpoint, v_scale(ray, intersection.distance)),
 		sphere->colour, intersection.distance, sphere,
 		SPHERE, sphere->material});
+}
+
+static double	intersection_distance(double discriminant, double *vars)
+{
+	double	x1;
+	double	x2;
+
+	x1 = (-(vars[B]) - sqrt(discriminant)) / (2.0 * vars[A]);
+	x2 = (-(vars[B]) + sqrt(discriminant)) / (2.0 * vars[A]);
+	if (fabs(x1) < TOLERANCE && fabs(x2) < TOLERANCE)
+		return (0);
+	if (fabs(x1) < TOLERANCE)
+		return (x2);
+	if (fabs(x2) < TOLERANCE)
+		return (x1);
+	if (fabs(x1) < fabs(x2))
+		return (x1);
+	else
+		return (x2);
 }
