@@ -27,7 +27,7 @@ t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 	closest_shape = new_intersect();
 	closest_sphere = get_closest_sphere(viewpoint, ray, scene->spheres);
 	closest_plane = get_closest_plane(viewpoint, ray, scene->planes);
-	closest_cylinder = get_closest_cylinder(viewpoint, ray, scene->planes);
+	closest_cylinder = get_closest_cylinder(viewpoint, ray, scene->cylinders);
 	if (closest_sphere.valid)
 		closest_shape = closest_sphere;
 	if (closest_plane.valid && (closest_plane.distance < closest_shape.distance
