@@ -30,11 +30,12 @@ t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 	closest_cylinder = get_closest_cylinder(viewpoint, ray, scene->cylinders);
 	if (closest_sphere.valid)
 		closest_shape = closest_sphere;
-	if (closest_plane.valid && (closest_plane.distance < closest_shape.distance
-			|| !closest_shape.valid))
+	if (closest_plane.valid && ((closest_plane.distance < closest_shape.distance
+				&& closest_shape.valid) || !closest_shape.valid))
 		closest_shape = closest_plane;
-	if (closest_cylinder.valid && (closest_cylinder.distance
-			< closest_shape.distance || !closest_shape.valid))
+	if (closest_cylinder.valid && ((closest_cylinder.distance
+				< closest_shape.distance && closest_shape.valid)
+			|| !closest_shape.valid))
 		closest_shape = closest_cylinder;
 	return (closest_shape);
 }
