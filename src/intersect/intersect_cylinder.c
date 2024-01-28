@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 18:08:30 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/27 18:08:30 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/28 20:15:46 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@
 #include "../maths/matrix.h"
 
 t_intersect		local_intersection(t_xyz viewpoint, t_xyz ray,
-					t_cylinder *cylinder, t_xyz axis);
+					t_cylinder *cylinder);
 static double	intersection_distance(double discriminant, double *vars);
+t_xyz			localise_viewpoint(t_xyz viewpoint, t_xyz cy_centre,
+					t_matrix rotation);
 
 t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray,
 					t_cylinder *cylinder)
