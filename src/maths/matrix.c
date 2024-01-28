@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 18:11:03 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/27 18:11:03 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/28 20:17:25 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,18 +85,19 @@ t_matrix	create_skew_symmetric_matrix(t_xyz axis)
 	return (m);
 }
 
-t_matrix	matrix_multiply(t_matrix m1, t_matrix m2)
+t_matrix matrix_multiply(t_matrix m1, t_matrix m2)
 {
-	t_matrix	result;
+	t_matrix result;
 
-	result.m[0][0] = m1.m[0][0] * m2.m[0][0] + m1.m[0][1] + m2.m[1][0];
-	result.m[0][1] = m1.m[0][0] * m2.m[0][1] + m1.m[0][1] + m2.m[1][1];
-	result.m[0][2] = m1.m[0][0] * m2.m[0][2] + m1.m[0][1] + m2.m[1][2];
-	result.m[1][0] = m1.m[1][0] * m2.m[0][0] + m1.m[1][1] + m2.m[1][0];
-	result.m[1][1] = m1.m[1][0] * m2.m[0][1] + m1.m[1][1] + m2.m[1][1];
-	result.m[1][2] = m1.m[1][0] * m2.m[0][2] + m1.m[1][1] + m2.m[1][2];
-	result.m[2][0] = m1.m[2][0] * m2.m[0][0] + m1.m[2][1] + m2.m[1][0];
-	result.m[2][1] = m1.m[2][0] * m2.m[0][1] + m1.m[2][1] + m2.m[1][1];
-	result.m[2][2] = m1.m[2][0] * m2.m[0][2] + m1.m[2][1] + m2.m[1][2];
-	return (result);
+	result.m[0][0] = m1.m[0][0] * m2.m[0][0] + m1.m[0][1] * m2.m[1][0] + m1.m[0][2] * m2.m[2][0];
+	result.m[0][1] = m1.m[0][0] * m2.m[0][1] + m1.m[0][1] * m2.m[1][1] + m1.m[0][2] * m2.m[2][1];
+	result.m[0][2] = m1.m[0][0] * m2.m[0][2] + m1.m[0][1] * m2.m[1][2] + m1.m[0][2] * m2.m[2][2];
+	result.m[1][0] = m1.m[1][0] * m2.m[0][0] + m1.m[1][1] * m2.m[1][0] + m1.m[1][2] * m2.m[2][0];
+	result.m[1][1] = m1.m[1][0] * m2.m[0][1] + m1.m[1][1] * m2.m[1][1] + m1.m[1][2] * m2.m[2][1];
+	result.m[1][2] = m1.m[1][0] * m2.m[0][2] + m1.m[1][1] * m2.m[1][2] + m1.m[1][2] * m2.m[2][2];
+	result.m[2][0] = m1.m[2][0] * m2.m[0][0] + m1.m[2][1] * m2.m[1][0] + m1.m[2][2] * m2.m[2][0];
+	result.m[2][1] = m1.m[2][0] * m2.m[0][1] + m1.m[2][1] * m2.m[1][1] + m1.m[2][2] * m2.m[2][1];
+	result.m[2][2] = m1.m[2][0] * m2.m[0][2] + m1.m[2][1] * m2.m[1][2] + m1.m[2][2] * m2.m[2][2];
+
+	return result;
 }
