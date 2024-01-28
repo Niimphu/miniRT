@@ -30,49 +30,70 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray,
 	t_xyz		local_viewpoint;
 	t_xyz		local_ray;
 
+	local_axis = (t_xyz){0, 1, 0};
 	rotation = create_rotation_matrix(identity_matrix(),
-			v_normalize(v_cross(*cylinder->axis, (t_xyz){0, 1, 0})),
-			v_angle(v_normalize(*cylinder->axis), (t_xyz){0, 1, 0}));
-	local_axis = m_v_multiply(rotation, *cylinder->axis);
-	local_viewpoint = m_v_multiply(rotation, *viewpoint);
+			v_normalize(v_cross(*cylinder->axis, local_axis)),
+			v_angle(v_normalize(*cylinder->axis), local_axis));
+	local_viewpoint = localise_viewpoint(*viewpoint, *cylinder->centre,
+		rotation);
 	local_ray = m_v_multiply(rotation, ray);
 	intersect = local_intersection(local_viewpoint, local_ray,
-			cylinder, local_axis);
+			cylinder);
 	return (intersect);
 }
 
 t_intersect	local_intersection(t_xyz viewpoint, t_xyz ray,
-				t_cylinder *cylinder, t_xyz axis)
+				t_cylinder *cylinder)
 {
 	t_intersect	intersect;
 	double		discriminant;
 	double		discr_vars[3];
-	t_xyz		cy_to_cam;
 
 	intersect = new_intersect();
-	cy_to_cam = v_normalize(v_subtract(viewpoint, *cylinder->centre));
-	discr_vars[A] = v_dot(ray, ray) - pow(v_dot(ray, axis), 2);
-	discr_vars[B] = 2 * (v_dot(cy_to_cam, ray) - v_dot(ray, axis)
-			* v_dot(viewpoint, axis));
-	discr_vars[C] = v_dot(cy_to_cam, cy_to_cam)
-		- pow(v_dot(cy_to_cam, axis), 2) - pow(cylinder->diameter / 2, 2);
-	discriminant = discr_vars[B] * discr_vars[B]
-		- 4 * discr_vars[A] * discr_vars[C];
-	if (discriminant < -TOLERANCE)
-		return (new_intersect());
+	discr_vars[A] = ray.x * ray.x + ray.z * ray.z;
+	discr_vars[B] = 2 * (viewpoint.x * ray.x + viewpoint.z * ray.z);
+	discr_vars[C] = viewpoint.x * viewpoint.x + viewpoint.z * viewpoint.z;
+	discriminant = pow(discr_vars[B], 2) - 4 * discr_vars[A] * discr_vars[C];
+	if (discriminant < 0)
+		return (intersect);
 	intersect.distance = intersection_distance(discriminant, discr_vars);
-	if (intersect.distance < TOLERANCE)
-		return (new_intersect());
+	if (fabs(intersect.distance) < TOLERANCE)
+		return (intersect);
+	intersect.point = v_add(viewpoint, v_scale(ray, intersection.distance));
 	return ((t_intersect){true,
-		v_add(viewpoint, v_scale(ray, intersect.distance)),
+		intersect.point,
 		cylinder->colour, intersect.distance, cylinder,
 		SPHERE, cylinder->material});
 }
 
+t_xyz	localise_viewpoint(t_xyz viewpoint, t_xyz cy_centre, t_matrix rotation)
+{
+	t_xyz	local_viewpoint;
+	t_xyz	cy_to_cam;
+	t_xyz	cy_to_local_cam;
+
+	cy_to_cam = v_subtract(viewpoint, cy_centre);
+	cy_to_local_cam = m_v_multiply(rotation, cy_to_cam);
+	local_viewpoint = v_add(cy_centre, cy_to_local_cam);
+	local_viewpoint = v_subtract(local_viewpoint, cy_centre);
+	return (local_viewpoint);
+}
+
 static double	intersection_distance(double discriminant, double *vars)
 {
-	if (discriminant < TOLERANCE)
-		return (vars[B] / 2.0);
-	return (fmin(fmax(0, -(vars[B]) - sqrt(discriminant)) / (2.0 * vars[A]),
-			fmax(0, -(vars[B]) + sqrt(discriminant)) / (2.0 * vars[A])));
+	double	x1;
+	double	x2;
+
+	x1 = (-(vars[B]) - sqrt(discriminant)) / (2.0 * vars[A]);
+	x2 = (-(vars[B]) + sqrt(discriminant)) / (2.0 * vars[A]);
+	if (fabs(x1) < TOLERANCE && fabs(x2) < TOLERANCE)
+		return (0);
+	if (fabs(x1) < TOLERANCE)
+		return (x2);
+	if (fabs(x2) < TOLERANCE)
+		return (x1);
+	if (fabs(x1) < fabs(x2))
+		return (x1);
+	else
+		return (x2);
 }
