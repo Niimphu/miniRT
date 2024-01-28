@@ -14,12 +14,16 @@
 #include <stdlib.h>
 #include <math.h>
 
-bool	is_normalised(t_xyz vector)
+double	v_angle(t_xyz v1, t_xyz v2)
 {
-	if (vector.x < -1.0 || vector.x > 1.0 || vector.y < -1.0
-		|| vector.y > 1.0 || vector.z < -1.0 || vector.z > 1.0)
-		return (false);
-	return (true);
+	double	dot;
+	double	length_v1;
+	double	length_v2;
+
+	dot = v_dot(v1, v2);
+	length_v1 = v_length(v1);
+	length_v2 = v_length(v2);
+	return (acos(dot / (length_v1 * length_v2)));
 }
 
 double	v_length(t_xyz vector)

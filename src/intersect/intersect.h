@@ -29,4 +29,17 @@ typedef struct s_intersect
 
 t_intersect	new_intersect(void);
 
+t_intersect	ray_intersects_sphere(t_xyz *viewpoint, t_xyz ray,
+				t_sphere *sphere);
+t_intersect	ray_intersects_plane(t_xyz *viewpoint, t_xyz ray, t_plane *plane);
+t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray,
+				t_cylinder *cylinder);
+
+bool		intersects_sphere(t_xyz intersect_point, t_xyz light_xyz,
+				t_list *spheres, t_xyz to_light);
+bool		intersects_plane(t_xyz intersect_point, t_xyz light_xyz,
+				t_list *planes, t_xyz to_light);
+bool		intersects_cylinder(t_xyz intersect_point, t_xyz light_xyz,
+				t_list *cylinders, t_xyz to_light);
+
 #endif

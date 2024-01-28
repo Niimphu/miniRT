@@ -16,7 +16,7 @@
 
 #include "../raytrace/draw.h"
 
-t_intersect	ray_interects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
+t_intersect	ray_intersects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 {
 	t_xyz		to_sphere_centre;
 	double		discr_vars[3];
@@ -33,10 +33,10 @@ t_intersect	ray_interects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 	if (discriminant < 0)
 		return (new_intersect());
 	intersection.distance = (-(discr_vars[B]) - sqrt(discriminant))
-							/ (2.0 * discr_vars[A]);
+		/ (2.0 * discr_vars[A]);
 	if (fabs(intersection.distance) < TOLERANCE)
 		intersection.distance = (-(discr_vars[B]) + sqrt(discriminant))
-								/ (2.0 * discr_vars[A]);
+			/ (2.0 * discr_vars[A]);
 	else if (intersection.distance < TOLERANCE)
 		return (intersection);
 	return ((t_intersect){true,

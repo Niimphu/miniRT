@@ -24,6 +24,7 @@ typedef struct s_vector
 	double	z;
 }			t_xyz;
 
+
 t_xyz		v_cross(t_xyz v1, t_xyz v2);
 double		v_dot(t_xyz v1, t_xyz v2);
 t_xyz		v_normalize(t_xyz vector);
@@ -37,5 +38,7 @@ t_xyz		v_invert(t_xyz v);
 
 double		p2p_distance(t_xyz a, t_xyz b);
 bool		p_equal(t_xyz a, t_xyz b);
+
+double		v_angle(t_xyz v1, t_xyz v2);
 
 #endif
