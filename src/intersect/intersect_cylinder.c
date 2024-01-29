@@ -17,6 +17,8 @@
 #include "../raytrace/draw.h"
 #include "../maths/matrix.h"
 
+#include "../printer/printer.h"
+
 t_intersect		local_intersection(t_xyz viewpoint, t_xyz ray,
 					t_cylinder *cylinder);
 static double	intersection_distance(double discriminant, double *vars);
@@ -27,20 +29,23 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray,
 					t_cylinder *cylinder)
 {
 	t_matrix	rotation;
+	t_matrix	reverse;
 	t_intersect	intersect;
-	t_xyz		local_axis;
 	t_xyz		local_viewpoint;
 	t_xyz		local_ray;
 
-	local_axis = (t_xyz){0, 1, 0};
 	rotation = create_rotation_matrix(identity_matrix(),
-			v_normalize(v_cross(*cylinder->axis, local_axis)),
-			v_angle(v_normalize(*cylinder->axis), local_axis));
+			v_normalize(v_cross(*cylinder->axis, (t_xyz){0, 1, 0})),
+			v_angle(v_normalize(*cylinder->axis), (t_xyz){0, 1, 0}));
+	reverse = create_rotation_matrix(identity_matrix(),
+			v_normalize(v_cross(*cylinder->axis, (t_xyz){0, 1, 0})),
+			v_angle((t_xyz){0, 1, 0}, v_normalize(*cylinder->axis)));
 	local_viewpoint = localise_viewpoint(*viewpoint, *cylinder->centre,
 		rotation);
 	local_ray = m_v_multiply(rotation, ray);
 	intersect = local_intersection(local_viewpoint, local_ray,
 			cylinder);
+	intersect.point = v_add(*cylinder->centre, m_v_multiply(reverse, intersect.point));
 	return (intersect);
 }
 
@@ -62,8 +67,7 @@ t_intersect	local_intersection(t_xyz viewpoint, t_xyz ray,
 	if (fabs(intersect.distance) < TOLERANCE)
 		return (intersect);
 	intersect.point = v_add(viewpoint, v_scale(ray, intersect.distance));
-	return ((t_intersect){true,
-		intersect.point,
+	return ((t_intersect){true, intersect.point,
 		cylinder->colour, intersect.distance, cylinder,
 		CYLINDER, cylinder->material});
 }
