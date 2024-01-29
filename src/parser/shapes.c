@@ -88,7 +88,7 @@ int	new_cylinder(char **input, t_scene *scene)
 	if (!ft_isdouble(input[2]) || ft_atod(input[2]) < 0.0f)
 		return (free(cylinder), error("Error\nCylinder: \
 			invalid diameter"));
-	cylinder->diameter = ft_atod(input[2]);
+	cylinder->radius = ft_atod(input[2]) / 2.0;
 	if (!ft_isdouble(input[3]) || ft_atod(input[3]) < 0.0f)
 		return (free(cylinder), error("Error\nCylinder: invalid height"));
 	cylinder->height = ft_atod(input[3]);

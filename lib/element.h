@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/16 14:17:55 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/21 16:29:03 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/29 19:04:34 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ typedef struct s_cylinder
 {
 	t_xyz		*centre;
 	t_xyz		*axis;
-	double		diameter;
+	double		radius;
 	double		height;
 	t_rgb		colour;
 	t_material	material;

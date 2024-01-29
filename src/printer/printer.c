@@ -102,7 +102,7 @@ void	print_scene_info(t_scene	*scene)
 			print_coord_info(cylinder->centre);
 			printf("3D Normalised vector of axis: ");
 			print_vector_info(cylinder->axis);
-			printf("Diameter: %.1f\nHeight %.1f\nColour: ", cylinder->diameter,
+			printf("Radius: %.1f\nHeight %.1f\nColour: ", cylinder->radius,
 				cylinder->height);
 			print_colour_info(cylinder->colour);
 			if (node->next)
