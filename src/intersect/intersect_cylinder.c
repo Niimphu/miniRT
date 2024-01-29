@@ -41,7 +41,7 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray,
 			v_normalize(v_cross(*cylinder->axis, (t_xyz){0, 1, 0})),
 			v_angle((t_xyz){0, 1, 0}, v_normalize(*cylinder->axis)));
 	local_viewpoint = localise_viewpoint(*viewpoint, *cylinder->centre,
-		rotation);
+			rotation);
 	local_ray = m_v_multiply(rotation, ray);
 	intersect = local_intersection(local_viewpoint, local_ray,
 			cylinder);
