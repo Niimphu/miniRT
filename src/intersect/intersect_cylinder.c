@@ -21,7 +21,7 @@
 
 t_intersect		local_intersection(t_xyz viewpoint, t_xyz ray,
 					t_cylinder *cylinder);
-static double	intersection_distance(double discriminant, double *vars);
+static double	intersection_distance(double discriminant, const double *vars);
 t_xyz			localise_viewpoint(t_xyz viewpoint, t_xyz cy_centre,
 					t_matrix rotation);
 
@@ -85,11 +85,13 @@ t_xyz	localise_viewpoint(t_xyz viewpoint, t_xyz cy_centre, t_matrix rotation)
 	return (local_viewpoint);
 }
 
-static double	intersection_distance(double discriminant, double *vars)
+static double	intersection_distance(double discriminant, const double *vars)
 {
 	double	x1;
 	double	x2;
 
+	if (discriminant < TOLERANCE)
+		return ((-vars[B]) / 2.0 * vars[A]);
 	x1 = (-(vars[B]) - sqrt(discriminant)) / (2.0 * vars[A]);
 	x2 = (-(vars[B]) + sqrt(discriminant)) / (2.0 * vars[A]);
 	if (fabs(x1) < TOLERANCE && fabs(x2) < TOLERANCE)
