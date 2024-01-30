@@ -6,15 +6,18 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:21:56 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/28 20:24:23 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/01/30 18:36:42 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BONUS
+#ifdef BONUS
 
 # include "miniRT.h"
+# include "xyz.h"
 # include "draw.h"
 # include "msaa.h"
+
+# include <pthread.h>
 
 static t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y);
 static void		draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt);
@@ -44,10 +47,7 @@ static void	draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt)
 		{
 			ray = get_ray(mlx, camera, x, y);
 			intersect = get_closest_shape(*camera->position, ray, rt->scene);
-			//temp
-			if (intersect.valid && intersect.type == CYLINDER)
-				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0x991199);
-			else if (intersect.valid)
+			if (intersect.valid)
 				draw_pixel(rt, (t_xyz){x, y, 0}, intersect, ray);
 			x++;
 		}

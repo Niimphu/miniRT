@@ -29,6 +29,7 @@ SRC =	main.c \
 		free/free.c free/free_lights_camera.c free/free_shapes.c \
 		quit.c \
 		utils.c \
+		bonus/draw_multithreaded.c \
 		printer/printer.c
 
 OBJ =	$(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
@@ -71,4 +72,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+bonus: CFLAGS += -DBONUS
+bonus: all
+
+.PHONY: all clean fclean re bonus
