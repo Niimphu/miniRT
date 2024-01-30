@@ -14,33 +14,9 @@
 #include "xyz.h"
 #include "draw.h"
 
-static t_msaa	get_ray_info(t_rt *rt, t_camera *camera, int x, int y);
 static t_xyz	get_ray(t_vars *data, t_camera *camera, double x, double y);
-static t_msaa	process_shadows(t_scene *scene, t_msaa ray_info);
-static void		print_pixel(t_rt *rt, int x, int y, t_msaa ray_info);
 
-void	draw_closest_shape_msaa(t_vars *mlx, t_camera *camera, t_rt *rt)
-{
-	int			x;
-	int			y;
-	t_msaa		ray_info;
-
-	y = 0;
-	while (y < mlx->win_y)
-	{
-		x = 0;
-		while (x < mlx->win_x)
-		{
-			ray_info = get_ray_info(rt, camera, x, y);
-			ray_info = process_shadows(rt->scene, ray_info);
-			print_pixel(rt, x, y, ray_info);
-			x++;
-		}
-		y++;
-	}
-}
-
-static t_msaa	get_ray_info(t_rt *rt, t_camera *camera, int x, int y)
+t_msaa	get_ray_info(t_rt *rt, t_camera *camera, int x, int y)
 {
 	t_msaa	result;
 
@@ -59,7 +35,7 @@ static t_msaa	get_ray_info(t_rt *rt, t_camera *camera, int x, int y)
 	return (result);
 }
 
-static t_msaa	process_shadows(t_scene *scene, t_msaa ray_info)
+t_msaa	process_shadows(t_scene *scene, t_msaa ray_info)
 {
 	int	i;
 
@@ -92,7 +68,7 @@ static t_xyz	get_ray(t_vars *data, t_camera *camera, double x, double y)
 	return (result);
 }
 
-static void	print_pixel(t_rt *rt, int x, int y, t_msaa ray_info)
+void	print_pixel_msaa(t_rt *rt, int x, int y, t_msaa ray_info)
 {
 	t_rgb	colour;
 

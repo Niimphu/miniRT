@@ -18,6 +18,8 @@
 
 static t_xyz	get_ray(t_vars *data, t_camera *camera, int x, int y);
 static void		draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt);
+static void		draw_closest_shape_msaa(t_vars *mlx, t_camera *camera,
+					t_rt *rt);
 
 int	draw_scene(t_rt *rt)
 {
@@ -49,6 +51,27 @@ static void	draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt)
 				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0x991199);
 			else if (intersect.valid)
 				draw_pixel(rt, (t_xyz){x, y, 0}, intersect, ray);
+			x++;
+		}
+		y++;
+	}
+}
+
+static void	draw_closest_shape_msaa(t_vars *mlx, t_camera *camera, t_rt *rt)
+{
+	int			x;
+	int			y;
+	t_msaa		ray_info;
+
+	y = 0;
+	while (y < mlx->win_y)
+	{
+		x = 0;
+		while (x < mlx->win_x)
+		{
+			ray_info = get_ray_info(rt, camera, x, y);
+			ray_info = process_shadows(rt->scene, ray_info);
+			print_pixel_msaa(rt, x, y, ray_info);
 			x++;
 		}
 		y++;

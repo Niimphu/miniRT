@@ -25,7 +25,9 @@ typedef struct s_msaa
 	int			colours[4];
 }			t_msaa;
 
-void	draw_closest_shape_msaa(t_vars *mlx, t_camera *camera, t_rt *rt);
+t_msaa	get_ray_info(t_rt *rt, t_camera *camera, int x, int y);
+t_msaa	process_shadows(t_scene *scene, t_msaa ray_info);
+void	print_pixel_msaa(t_rt *rt, int x, int y, t_msaa ray_info);
 t_rgb	average_4colour(t_rgb a, t_rgb b, t_rgb c, t_rgb d);
 
 #endif
