@@ -68,6 +68,8 @@ static t_xyz	get_ray(t_vars *data, t_camera *camera, double x, double y)
 	return (result);
 }
 
+#ifndef BONUS
+
 void	print_pixel_msaa(t_rt *rt, int x, int y, t_msaa ray_info)
 {
 	t_rgb	colour;
@@ -78,3 +80,5 @@ void	print_pixel_msaa(t_rt *rt, int x, int y, t_msaa ray_info)
 	mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, x, y,
 		rgb_to_hex(colour));
 }
+
+#endif

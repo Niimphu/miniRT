@@ -71,12 +71,26 @@ typedef struct s_scene
 	t_list		*cylinders;
 }				t_scene;
 
+# ifndef BONUS
+
 typedef struct s_rt
 {
 	t_vars	*mlx_data;
 	t_scene	*scene;
 	bool	msaa;
 }				t_rt;
+
+# else
+
+typedef struct s_rt
+{
+	t_vars			*mlx_data;
+	t_scene			*scene;
+	bool			msaa;
+	pthread_mutex_t	print_lock;
+}				t_rt;
+
+# endif
 
 int		parse(int argc, char **argv, t_rt *rt);
 int		open_file(char *filename);

@@ -13,6 +13,8 @@
 #include "miniRT.h"
 #include "../lighting/lighting.h"
 
+#ifndef BONUS
+
 void	draw_pixel(t_rt *rt, t_xyz coord, t_intersect intersect, t_xyz ray)
 {
 	int	colour;
@@ -21,6 +23,8 @@ void	draw_pixel(t_rt *rt, t_xyz coord, t_intersect intersect, t_xyz ray)
 	mlx_pixel_put(rt->mlx_data->mlx, rt->mlx_data->win, coord.x, coord.y,
 		colour);
 }
+
+#endif
 
 int	calculate_colour(t_intersect intersect, t_scene *scene)
 {

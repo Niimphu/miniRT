@@ -30,6 +30,7 @@ SRC =	main.c \
 		quit.c \
 		utils.c \
 		bonus/draw_multithreaded.c \
+		bonus/multithread_utils.c \
 		printer/printer.c
 
 OBJ =	$(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
