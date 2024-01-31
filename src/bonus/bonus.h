@@ -15,7 +15,7 @@
 
 # include "../../lib/miniRT.h"
 # include <pthread.h>
-# define THREADS 10
+# define THREADS 12
 
 typedef struct s_thread_info
 {
