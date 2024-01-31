@@ -76,4 +76,6 @@ re: fclean all
 bonus: CFLAGS += -DBONUS
 bonus: all
 
+rebonus: fclean bonus
+
 .PHONY: all clean fclean re bonus
