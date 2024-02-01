@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:20:11 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/01 19:58:42 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/01 20:28:54 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_xyz ray_intersects_cylinder_disk(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl, 
 }
  */
 
-/* double	cyl_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cylinder *cl)
+double	cyl_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cylinder *cl)
 {
 	double	t1;
 	double	t2;
@@ -32,8 +32,8 @@ t_xyz ray_intersects_cylinder_disk(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl, 
 
 	//printf("local_viewpoint is %f %f %f", local_viewpoint.x, local_viewpoint.y, local_viewpoint.z);
 	discr_vars[0] = v_dot(local_ray, local_ray) - pow(v_dot(local_ray, (t_xyz){0, 1, 0}), 2);
-	discr_vars[1] = 2 * (v_dot((t_xyz){0, 0, 0}, local_ray) - v_dot(local_ray, (t_xyz){0, 1, 0}) * v_dot((t_xyz){0, 0, 0}, (t_xyz){0, 1, 0}));
-	discr_vars[2] = v_dot((t_xyz){0, 0, 0}, (t_xyz){0, 0, 0}) - pow(v_dot((t_xyz){0, 0, 0}, (t_xyz){0, 1, 0}), 2) - pow(cl->diameter / 2, 2);
+	discr_vars[1] = 2 * (v_dot(local_viewpoint, local_ray) - v_dot(local_ray, (t_xyz){0, 1, 0}) * v_dot(local_viewpoint, (t_xyz){0, 1, 0}));
+	discr_vars[2] = v_dot(local_viewpoint, local_viewpoint) - pow(v_dot(local_viewpoint, (t_xyz){0, 1, 0}), 2) - pow(cl->diameter / 2, 2);
 	discr_vars[3] = discr_vars[1] * discr_vars[1] - 4 * discr_vars[0] * discr_vars[2];
 	t1 = (-discr_vars[1] - sqrt(discr_vars[3])) / (2 * discr_vars[0]);
 	t2 = (-discr_vars[1] + sqrt(discr_vars[3])) / (2 * discr_vars[0]);
@@ -42,9 +42,9 @@ t_xyz ray_intersects_cylinder_disk(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl, 
 	else if (t2 >= 0)
 		return (t2);
 	else
-		return (0);
-} */
-double	cyl_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cylinder *cl)
+		return (-1);
+}
+/* double	cyl_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cylinder *cl)
 {
     double a = local_ray.x * local_ray.x + local_ray.z * local_ray.z;
     double b = 2 * (local_ray.x * local_viewpoint.x + local_ray.z * local_viewpoint.z);
@@ -67,7 +67,7 @@ double	cyl_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cylinder *c
         // Both intersections are behind the viewpoint or negative
         return -1.0;
     }
-}
+} */
 
 t_xyz	localise_viewpoint(t_xyz viewpoint, t_xyz cy_centre, t_matrix rotation)
 {
@@ -110,10 +110,13 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
 	printf("intersection distance = %f\n", intersection.distance);
 	if (intersection.distance < 0)
 		return (intersection);
-	intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance));
-	//printf("intersection.point = x = %f y = %f z = %f\n",intersection.point.x,intersection.point.y,intersection.point.z);
-	/* intersection.point = v_matrix_mul(to_world, intersection.point); */
-	intersection.valid = true;
+	intersection.point = v_add(local_viewpoint ,v_scale(local_ray, intersection.distance));
+	if (fabs(intersection.point.y) <= fabs(cl->centre->y) + (cl->height / 2))
+	{
+		intersection.point = v_matrix_mul(to_world, intersection.point);
+		//printf("intersection.point = x = %f y = %f z = %f\n",intersection.point.x,intersection.point.y,intersection.point.z);
+		intersection.valid = true;
+	}
 	intersection.shape = cl;
 	intersection.type = CYLINDER;
 	intersection.colour = cl->colour;
