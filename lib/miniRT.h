@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/23 16:03:19 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/02 17:59:59 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "libft/libft.h"
 # include "mlx_linux/mlx.h"
 
+# include <pthread.h>
 # include <math.h>
 # include <stdbool.h>
 # include <fcntl.h>
