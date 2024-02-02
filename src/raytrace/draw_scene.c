@@ -46,10 +46,7 @@ static void	draw_closest_shape(t_vars *mlx, t_camera *camera, t_rt *rt)
 		{
 			ray = get_ray(mlx, camera, x, y);
 			intersect = get_closest_shape(*camera->position, ray, rt->scene);
-			//temp
-			if (intersect.valid && intersect.type == CYLINDER)
-				mlx_pixel_put(mlx->mlx, mlx->win, x, y, 0x991199);
-			else if (intersect.valid)
+			if (intersect.valid)
 				draw_pixel(rt, (t_xyz){x, y, 0}, intersect, ray);
 			x++;
 		}

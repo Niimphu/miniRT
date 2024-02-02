@@ -18,7 +18,6 @@ t_xyz	get_reflected_ray(t_xyz incident, t_xyz normal);
 t_rgb	bounce(t_scene *scene, t_xyz ray, int bounces,
 				t_intersect intersect)
 {
-	//NEED TO GET REFLECTIVITY FROM INTERSECT/SHAPE, REPARSE
 	t_xyz		reflected;
 	t_intersect	next_shape;
 	t_rgb		next_colour;
