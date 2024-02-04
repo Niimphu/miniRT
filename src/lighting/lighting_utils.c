@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lighting_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 17:12:59 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/23 17:12:59 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/04 16:51:48 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
