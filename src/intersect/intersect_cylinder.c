@@ -27,6 +27,8 @@ double	cyl_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cylinder *c
 	discr_vars[1] = 2 * (v_dot(local_viewpoint, local_ray) - v_dot(local_ray, (t_xyz){0, 1, 0}) * v_dot(local_viewpoint, (t_xyz){0, 1, 0}));
 	discr_vars[2] = v_dot(local_viewpoint, local_viewpoint) - pow(v_dot(local_viewpoint, (t_xyz){0, 1, 0}), 2) - pow(cl->radius, 2);
 	discr_vars[3] = discr_vars[1] * discr_vars[1] - 4 * discr_vars[0] * discr_vars[2];
+	if (discr_vars[3] <= 0)
+		return (-1);
 	t1 = (-discr_vars[1] - sqrt(discr_vars[3])) / (2 * discr_vars[0]);
 	t2 = (-discr_vars[1] + sqrt(discr_vars[3])) / (2 * discr_vars[0]);
 	if (t1 <= t2 && t1 >= 0)
@@ -78,15 +80,16 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
 	rotation = create_rotation_matrix(v_cross(*cl->axis, (t_xyz){0,1,0}), rotation_angle);
 	to_local = local_matrix(*cl->axis, *cl->centre, rotation_angle);
 	to_world = world_matrix(*cl->axis, *cl->centre, rotation_angle);
-	local_ray = v_matrix_mul(rotation,ray);
+	local_ray = v_matrix_mul(rotation, ray);
 	local_viewpoint = v_matrix_mul(to_local, *viewpoint);
 	intersection.distance = cyl_local_intersect(local_viewpoint, local_ray, cl);
 	if (intersection.distance < 0)
 		return (intersection);
-	intersection.point = v_add(local_viewpoint ,v_scale(local_ray, intersection.distance));
+	intersection.point = v_add(local_viewpoint, v_scale(local_ray, intersection.distance));
 	if (intersection.point.y < cl->height / 2 && intersection.point.y > cl->height / -2)
 	{
 		intersection.point = v_matrix_mul(to_world, intersection.point);
+		intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance - TOLERANCE));
 		intersection.valid = true;
 	}
 	else
@@ -94,9 +97,9 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
 		t_xyz top_centre = (t_xyz) {0, cl->height / 2.0, 0};
 		t_xyz bot_centre = (t_xyz) {0, cl->height / -2.0, 0};
 		double dist_top =
-				v_dot(v_subtract(top_centre, local_viewpoint), (t_xyz) {0, 1, 0}) / v_dot(local_ray, (t_xyz) {0, 1, 0});
+				v_dot(v_subtract(top_centre, local_viewpoint), (t_xyz){0, 1, 0}) / v_dot(local_ray, (t_xyz) {0, 1, 0});
 		double dist_bot =
-				v_dot(v_subtract(bot_centre, local_viewpoint), (t_xyz) {0, 1, 0}) / v_dot(local_ray, (t_xyz) {0, 1, 0});
+				v_dot(v_subtract(bot_centre, local_viewpoint), (t_xyz){0, 1, 0}) / v_dot(local_ray, (t_xyz) {0, 1, 0});
 		t_xyz top_point = v_add(local_viewpoint, v_scale(local_ray, dist_top));
 		t_xyz bot_point = v_add(local_viewpoint, v_scale(local_ray, dist_bot));
 		if (p2p_distance(top_centre, top_point) <= cl->radius) {
