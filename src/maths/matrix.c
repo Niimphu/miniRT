@@ -152,17 +152,17 @@ t_matrix	local_matrix(t_xyz axis, t_xyz center, double angle)
 	m = m_matrix_mul(r, t);
 	return (m);
 }
-
-t_matrix	world_matrix(t_xyz axis, t_xyz center, double angle)
-{
-	t_matrix	r;
-	t_matrix	t;
-	t_matrix	m;
-
-	axis = v_normalize(axis);
-	center = v_invert(center);
-	t = create_translation_matrix(center.x, center.y, center.z);
-	r = create_rotation_matrix(v_cross((t_xyz){0,1,0}, axis), -angle);
-	m = m_matrix_mul(t, r);
-	return (m);
-}
+//
+//t_matrix	world_matrix(t_xyz axis, t_xyz center, double angle)
+//{
+//	t_matrix	r;
+//	t_matrix	t;
+//	t_matrix	m;
+//
+//	axis = v_normalize(axis);
+//	center = v_invert(center);
+//	t = create_translation_matrix(center.x, center.y, center.z);
+//	r = create_rotation_matrix(v_cross((t_xyz){0,1,0}, axis), -angle);
+//	m = m_matrix_mul(t, r);
+//	return (m);
+//}

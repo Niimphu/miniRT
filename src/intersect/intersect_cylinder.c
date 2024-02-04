@@ -39,37 +39,10 @@ double	cyl_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cylinder *c
 		return (-1);
 }
 
-t_xyz ray_intersects_cylinder_disk(t_xyz viewpoint, t_xyz ray, t_intersect intersection,  t_cylinder *cl)
-{
-	double distance_to_disk;
-	distance_to_disk = (cl->height / 2.0) / fabs(ray.y);
-	if (distance_to_disk >= 0)
-	{
-		// Calculate the intersection point on the disk
-		t_xyz intersection_point;
-		intersection_point= v_add(viewpoint, v_scale(ray, distance_to_disk));
-		// Check if the intersection point is within the disk's radius
-		if (pow(intersection_point.x, 2) + pow(intersection_point.z, 2) <= pow(cl->radius, 2))
-		{
-			// Update the intersection information
-			intersection.point = intersection_point;
-			intersection.distance = distance_to_disk;
-			intersection.shape = cl;
-			intersection.type = CYLINDER;
-			intersection.colour = cl->colour;
-			intersection.valid = true;
-			return (intersection_point);
-		}
-	}
-	intersection.valid = false;
-	return (intersection.point);
-}
-
 t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
 {
 	t_matrix	to_local;
 	t_matrix	rotation;
-	t_matrix	to_world;
 	t_xyz		local_viewpoint;
 	t_xyz		local_ray;
 	t_intersect	intersection;
@@ -79,7 +52,6 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
 	rotation_angle = angle_between(v_normalize(*cl->axis),(t_xyz){0,1,0});
 	rotation = create_rotation_matrix(v_cross(*cl->axis, (t_xyz){0,1,0}), rotation_angle);
 	to_local = local_matrix(*cl->axis, *cl->centre, rotation_angle);
-	to_world = world_matrix(*cl->axis, *cl->centre, rotation_angle);
 	local_ray = v_matrix_mul(rotation, ray);
 	local_viewpoint = v_matrix_mul(to_local, *viewpoint);
 	intersection.distance = cyl_local_intersect(local_viewpoint, local_ray, cl);
@@ -88,7 +60,6 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
 	intersection.point = v_add(local_viewpoint, v_scale(local_ray, intersection.distance));
 	if (intersection.point.y < cl->height / 2 && intersection.point.y > cl->height / -2)
 	{
-		intersection.point = v_matrix_mul(to_world, intersection.point);
 		intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance - TOLERANCE));
 		intersection.valid = true;
 	}
@@ -102,14 +73,16 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
 				v_dot(v_subtract(bot_centre, local_viewpoint), (t_xyz){0, 1, 0}) / v_dot(local_ray, (t_xyz) {0, 1, 0});
 		t_xyz top_point = v_add(local_viewpoint, v_scale(local_ray, dist_top));
 		t_xyz bot_point = v_add(local_viewpoint, v_scale(local_ray, dist_bot));
-		if (p2p_distance(top_centre, top_point) <= cl->radius) {
-			intersection.point = v_matrix_mul(to_world, top_point);
-			intersection.distance = p2p_distance(*viewpoint, intersection.point);
+		if (p2p_distance(top_centre, top_point) <= cl->radius)
+		{
+			intersection.distance = p2p_distance(local_viewpoint, top_point);
+			intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance - TOLERANCE));
 			intersection.valid = true;
 		}
-		if (p2p_distance(bot_centre, bot_point) <= cl->radius) {
-			intersection.point = v_matrix_mul(to_world, bot_point);
-			intersection.distance = p2p_distance(*viewpoint, intersection.point);
+		if (p2p_distance(bot_centre, bot_point) <= cl->radius)
+		{
+			intersection.distance = p2p_distance(local_viewpoint, bot_point);
+			intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance - TOLERANCE));
 			intersection.valid = true;
 		}
 	}
