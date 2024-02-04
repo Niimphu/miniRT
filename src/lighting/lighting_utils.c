@@ -43,15 +43,20 @@ t_xyz	cylinder_normal(t_cylinder *cylinder, t_xyz point)
 {
 	t_xyz	to_surface;
 	double	to_surface_axis_dot;
-	double	axis_l2;
-	t_xyz	axis_parallel;
+	double	axis2;
+	t_xyz	projected;
+	t_xyz	closest_point;
 	t_xyz	surface_normal;
 
 	to_surface = v_subtract(point, *cylinder->centre);
 	to_surface_axis_dot = v_dot(*cylinder->axis, to_surface);
-	axis_l2 = v_dot(*cylinder->axis, *cylinder->axis);
-	axis_parallel = v_scale(*cylinder->axis, (to_surface_axis_dot / axis_l2));
-	surface_normal = v_subtract(to_surface, axis_parallel);
+	axis2 = v_dot(*cylinder->axis, *cylinder->axis);
+	projected = v_scale(*cylinder->axis, to_surface_axis_dot / axis2);
+	closest_point = v_add(*cylinder->centre, projected);
+	if (p2p_distance(closest_point, point) < cylinder->radius)
+		surface_normal = projected;
+	else
+		surface_normal = v_subtract(to_surface, projected);
 	return (v_normalize(surface_normal));
 }
 
