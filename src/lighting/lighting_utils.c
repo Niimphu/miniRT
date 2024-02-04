@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../maths/xyz.h"
-#include "../../lib/miniRT.h"
-#include "../intersect/intersect.h"
+#include "lighting.h"
 
 t_xyz	sphere_normal(t_sphere *sphere, t_xyz point);
 t_xyz	plane_normal(t_plane *plane);
