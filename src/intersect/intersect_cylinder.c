@@ -76,13 +76,13 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
 		if (p2p_distance(top_centre, top_point) <= cl->radius)
 		{
 			intersection.distance = p2p_distance(local_viewpoint, top_point);
-			intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance - TOLERANCE));
+			intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance));
 			intersection.valid = true;
 		}
 		if (p2p_distance(bot_centre, bot_point) <= cl->radius)
 		{
 			intersection.distance = p2p_distance(local_viewpoint, bot_point);
-			intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance - TOLERANCE));
+			intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance));
 			intersection.valid = true;
 		}
 	}
