@@ -27,7 +27,7 @@
 # include "element.h"
 
 # define MAX_BOUNCES 5
-# define TOLERANCE 1e-8
+# define TOLERANCE 1e-6
 
 //C1 and C3 are coefficients for light intensity drop-off based on distance
 # define C1 1.2
