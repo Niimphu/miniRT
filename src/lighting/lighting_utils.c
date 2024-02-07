@@ -44,7 +44,6 @@ t_xyz	cylinder_normal(t_cylinder *cylinder, t_xyz point)
 	double	axis2;
 	t_xyz	projected;
 	t_xyz	closest_point;
-	t_xyz	surface_normal;
 
 	to_surface = v_subtract(point, *cylinder->centre);
 	to_surface_axis_dot = v_dot(*cylinder->axis, to_surface);
@@ -52,10 +51,9 @@ t_xyz	cylinder_normal(t_cylinder *cylinder, t_xyz point)
 	projected = v_scale(*cylinder->axis, to_surface_axis_dot / axis2);
 	closest_point = v_add(*cylinder->centre, projected);
 	if (p2p_distance(closest_point, point) < cylinder->radius)
-		surface_normal = projected;
+		return (v_normalize(projected));
 	else
-		surface_normal = v_subtract(to_surface, projected);
-	return (v_normalize(surface_normal));
+		return (v_normalize(v_subtract(to_surface, projected)));
 }
 
 t_xyz	get_halfway_vector(t_xyz intersection, t_xyz light_pos,
