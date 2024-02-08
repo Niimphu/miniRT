@@ -19,6 +19,7 @@
 
 #include "../raytrace/draw.h"
 #include "../maths/matrix.h"
+#include "transform.h"
 
 double	cyl_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cylinder *cl)
 {
@@ -79,23 +80,15 @@ double	cyl_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cylinder *c
 
 t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
 {
-	t_matrix	to_local;
-	t_matrix	rotation;
-	t_xyz		local_viewpoint;
-	t_xyz		local_ray;
-	t_intersect	intersection;
-	double		rotation_angle;
+	t_location_transformation_information_station	t;
+	t_intersect										intersection;
 
 	intersection = new_intersect();
-	rotation_angle = angle_between(v_normalize(*cl->axis),(t_xyz){0,1,0});
-	rotation = create_rotation_matrix(v_cross(*cl->axis, (t_xyz){0,1,0}), rotation_angle);
-	to_local = local_matrix(*cl->axis, *cl->centre, rotation_angle);
-	local_ray = v_matrix_mul(rotation, ray);
-	local_viewpoint = v_matrix_mul(to_local, *viewpoint);
-	intersection.distance = cyl_local_intersect(local_viewpoint, local_ray, cl);
+	t = new_transform(*cl->axis, *cl->centre, ray, *viewpoint);
+	intersection.distance = cyl_local_intersect(t.local_viewpoint, t.local_ray, cl);
 	if (intersection.distance < TOLERANCE)
 		return (intersection);
-	intersection.point = v_add(local_viewpoint, v_scale(local_ray, intersection.distance));
+	intersection.point = v_add(t.local_viewpoint, v_scale(t.local_ray, intersection.distance));
 	if (intersection.point.y < cl->height / 2 && intersection.point.y > cl->height / -2)
 	{
 		intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance - TOLERANCE));
@@ -129,18 +122,18 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
 
 		int			closest;
 		t_xyz		centre[2];
-		centre[TOP] = (t_xyz) {0, cl->height / 2.0, 0};
-		centre[BOT] = (t_xyz) {0, cl->height / -2.0, 0};
-		if (p2p_distance(local_viewpoint, centre[TOP]) < p2p_distance(local_viewpoint, centre[BOT]))
+		centre[TOP] = (t_xyz){0, cl->height / 2.0, 0};
+		centre[BOT] = (t_xyz){0, cl->height / -2.0, 0};
+		if (p2p_distance(t.local_viewpoint, centre[TOP]) < p2p_distance(t.local_viewpoint, centre[BOT]))
 			closest = TOP;
 		else
 			closest = BOT;
 
-		double		dist = v_dot(v_subtract(centre[closest], local_viewpoint), (t_xyz){0, 1, 0}) / v_dot(local_ray, (t_xyz) {0, 1, 0});
-		t_xyz		point = v_add(local_viewpoint, v_scale(local_ray, dist));
+		double		dist = v_dot(v_subtract(centre[closest], t.local_viewpoint), (t_xyz){0, 1, 0}) / v_dot(t.local_ray, (t_xyz) {0, 1, 0});
+		t_xyz		point = v_add(t.local_viewpoint, v_scale(t.local_ray, dist));
 		if (p2p_distance(centre[closest], point) + TOLERANCE < cl->radius && dist > TOLERANCE)
 		{
-			intersection.distance = p2p_distance(local_viewpoint, point);
+			intersection.distance = p2p_distance(t.local_viewpoint, point);
 			intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance));
 			if (intersection.distance > TOLERANCE)
 				intersection.valid = true;
