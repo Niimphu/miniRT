@@ -27,15 +27,17 @@ double	cyl_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cylinder *c
 	double	discr_vars[3];
 	double	discriminant;
 
-	discr_vars[0] = v_dot(local_ray, local_ray) - pow(v_dot(local_ray, (t_xyz){0, 1, 0}), 2);
-	discr_vars[1] = 2 * (v_dot(local_viewpoint, local_ray) - v_dot(local_ray, (t_xyz){0, 1, 0}) * v_dot(local_viewpoint, (t_xyz){0, 1, 0}));
-	discr_vars[2] = v_dot(local_viewpoint, local_viewpoint) - pow(v_dot(local_viewpoint, (t_xyz){0, 1, 0}), 2) - pow(cl->radius, 2);
-	discriminant = discr_vars[1] * discr_vars[1] - 4 * discr_vars[0] * discr_vars[2];
-	if (discriminant <= 0)
+	discr_vars[A] = v_dot(local_ray, local_ray) - pow(v_dot(local_ray, (t_xyz){0, 1, 0}), 2);
+	discr_vars[B] = 2 * (v_dot(local_viewpoint, local_ray) - v_dot(local_ray, (t_xyz){0, 1, 0}) * v_dot(local_viewpoint, (t_xyz){0, 1, 0}));
+	discr_vars[C] = v_dot(local_viewpoint, local_viewpoint) - pow(v_dot(local_viewpoint, (t_xyz){0, 1, 0}), 2) - pow(cl->radius, 2);
+	discriminant = discr_vars[B] * discr_vars[B] - 4 * discr_vars[A] * discr_vars[C];
+	if (discriminant < 0)
 		return (-1);
+	if (discriminant < TOLERANCE)
+		return (-discr_vars[B] / 2.0 * discr_vars[A]);
 	t1 = (-discr_vars[1] - sqrt(discriminant)) / (2 * discr_vars[0]);
 	t2 = (-discr_vars[1] + sqrt(discriminant)) / (2 * discr_vars[0]);
-	if (fabs(t1) < TOLERANCE && fabs(t2) < TOLERANCE)
+	if (t1 < TOLERANCE && t2 < TOLERANCE)
 		return (-1);
 	if (t1 < TOLERANCE)
 		return (t2);
