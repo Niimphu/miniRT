@@ -35,7 +35,6 @@ t_xyz		v_scale(t_xyz v, double factor);
 t_xyz		v_add(t_xyz v1, t_xyz v2);
 t_xyz		v_invert(t_xyz v);
 
-
 double		p2p_distance(t_xyz a, t_xyz b);
 bool		p_equal(t_xyz a, t_xyz b);
 

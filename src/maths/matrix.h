@@ -17,7 +17,7 @@
 
 typedef struct s_matrix
 {
-	double m[4][4];
+	double	m[4][4];
 }	t_matrix;
 
 t_matrix	create_translation_matrix(double tx, double ty, double tz);
