@@ -45,21 +45,16 @@ t_intersect	ray_intersects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 
 static double	intersection_distance(double discriminant, const double *vars)
 {
-	double	x1;
-	double	x2;
+	double	t1;
+	double	t2;
 
 	if (discriminant < TOLERANCE)
 		return ((-vars[B]) / 2.0 * vars[A]);
-	x1 = (-(vars[B]) - sqrt(discriminant)) / (2.0 * vars[A]);
-	x2 = (-(vars[B]) + sqrt(discriminant)) / (2.0 * vars[A]);
-	if (fabs(x1) < TOLERANCE && fabs(x2) < TOLERANCE)
-		return (0);
-	if (fabs(x1) < TOLERANCE)
-		return (x2);
-	if (fabs(x2) < TOLERANCE)
-		return (x1);
-	if (fabs(x1) < fabs(x2))
-		return (x1);
-	else
-		return (x2);
+	t1 = (-(vars[B]) - sqrt(discriminant)) / (2.0 * vars[A]);
+	t2 = (-(vars[B]) + sqrt(discriminant)) / (2.0 * vars[A]);
+	if (t1 > TOLERANCE && t2 > TOLERANCE)
+		return (fmin(t1, t2));
+	if (t1 > TOLERANCE)
+		return (t1);
+	return (t2);
 }
