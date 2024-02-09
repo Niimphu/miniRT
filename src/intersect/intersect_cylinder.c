@@ -89,7 +89,7 @@ static t_intersect	ray_intersects_caps(t_xyz viewpoint, t_xyz ray,
 			v_scale(ray, intersect[TOP].distance));
 	intersect[BOT].point = v_add(viewpoint,
 			v_scale(ray, intersect[BOT].distance));
-	intersect[BOT] = get_cap_intersection(centre[TOP], cylinder, t);
+	intersect[BOT] = get_cap_intersection(centre[BOT], cylinder, t);
 	if (intersect[TOP].valid && intersect[BOT].valid)
 		return (intersect[closest]);
 	if (intersect[TOP].valid)
