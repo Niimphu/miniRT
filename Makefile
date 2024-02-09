@@ -22,7 +22,8 @@ SRC =	main.c \
 		intersect/intersect.c intersect/intersection_checks.c \
 		intersect/closest_shape.c \
 		intersect/intersect_plane.c intersect/intersect_sphere.c intersect/intersect_cylinder.c \
-		maths/vector.c maths/vector_basic.c maths/point.c maths/matrix.c \
+		intersect/transform.c \
+		maths/vector.c maths/vector_basic.c maths/point.c maths/matrix.c maths/matrix_utils.c \
 		colour/colour.c \
 		input_handler.c \
 		error.c \

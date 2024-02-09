@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../maths/xyz.h"
-#include "../../lib/miniRT.h"
-#include "../intersect/intersect.h"
+#include "lighting.h"
 
 t_xyz	sphere_normal(t_sphere *sphere, t_xyz point);
 t_xyz	plane_normal(t_plane *plane);
@@ -43,16 +41,19 @@ t_xyz	cylinder_normal(t_cylinder *cylinder, t_xyz point)
 {
 	t_xyz	to_surface;
 	double	to_surface_axis_dot;
-	double	axis_l2;
-	t_xyz	axis_parallel;
-	t_xyz	surface_normal;
+	double	axis2;
+	t_xyz	projected;
+	t_xyz	closest_point;
 
 	to_surface = v_subtract(point, *cylinder->centre);
 	to_surface_axis_dot = v_dot(*cylinder->axis, to_surface);
-	axis_l2 = v_dot(*cylinder->axis, *cylinder->axis);
-	axis_parallel = v_scale(*cylinder->axis, (to_surface_axis_dot / axis_l2));
-	surface_normal = v_subtract(to_surface, axis_parallel);
-	return (v_normalize(surface_normal));
+	axis2 = v_dot(*cylinder->axis, *cylinder->axis);
+	projected = v_scale(*cylinder->axis, to_surface_axis_dot / axis2);
+	closest_point = v_add(*cylinder->centre, projected);
+	if (p2p_distance(closest_point, point) < cylinder->radius)
+		return (v_normalize(projected));
+	else
+		return (v_normalize(v_subtract(to_surface, projected)));
 }
 
 t_xyz	get_halfway_vector(t_xyz intersection, t_xyz light_pos,

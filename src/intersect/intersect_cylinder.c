@@ -14,104 +14,134 @@
 #define B 1
 #define C 2
 
+#define TOP 0
+#define BOT 1
+
 #include "../raytrace/draw.h"
 #include "../maths/matrix.h"
+#include "transform.h"
 
-double	cyl_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cylinder *cl)
+static t_intersect	ray_intersects_tube(t_xyz viewpoint, t_xyz ray,
+						t_cylinder *cylinder,
+						t_location_transformation_information_station t);
+static t_intersect	ray_intersects_caps(t_xyz viewpoint, t_xyz ray,
+						t_cylinder *cylinder,
+						t_location_transformation_information_station t);
+static double		get_tube_distance(t_xyz viewpoint, t_xyz ray,
+						t_cylinder *cylinder);
+static t_intersect	get_cap_intersection(t_xyz centre, t_cylinder *cylinder,
+						t_location_transformation_information_station t);
+
+t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray,
+				t_cylinder *cylinder)
+{
+	t_location_transformation_information_station	t;
+	t_intersect										intersection;
+
+	t = new_transform(*cylinder->axis, *cylinder->centre, ray, *viewpoint);
+	intersection = ray_intersects_tube(*viewpoint, ray, cylinder, t);
+	if (!intersection.valid)
+		intersection = ray_intersects_caps(*viewpoint, ray, cylinder, t);
+	intersection.shape = cylinder;
+	intersection.type = CYLINDER;
+	intersection.colour = cylinder->colour;
+	return (intersection);
+}
+
+static t_intersect	ray_intersects_tube(t_xyz viewpoint, t_xyz ray,
+						t_cylinder *cylinder,
+						t_location_transformation_information_station t)
+{
+	t_intersect	intersect;
+
+	intersect = new_intersect();
+	intersect.distance = get_tube_distance(t.local_viewpoint,
+			t.local_ray, cylinder);
+	if (intersect.distance < TOLERANCE)
+		return (intersect);
+	intersect.point = v_add(t.local_viewpoint,
+			v_scale(t.local_ray, intersect.distance));
+	if (intersect.point.y < cylinder->height / 2
+		&& intersect.point.y > cylinder->height / -2)
+		intersect.valid = true;
+	intersect.point = v_add(viewpoint,
+			v_scale(ray, intersect.distance - TOLERANCE));
+	return (intersect);
+}
+
+static t_intersect	ray_intersects_caps(t_xyz viewpoint, t_xyz ray,
+						t_cylinder *cylinder,
+						t_location_transformation_information_station t)
+{
+	int			closest;
+	t_xyz		centre[2];
+	t_intersect	intersect[2];
+
+	centre[TOP] = (t_xyz){0, cylinder->height / 2.0, 0};
+	centre[BOT] = (t_xyz){0, cylinder->height / -2.0, 0};
+	if (p2p_distance(t.local_viewpoint, centre[TOP])
+		< p2p_distance(t.local_viewpoint, centre[BOT]))
+		closest = TOP;
+	else
+		closest = BOT;
+	intersect[TOP] = get_cap_intersection(centre[TOP], cylinder, t);
+	intersect[TOP].point = v_add(viewpoint,
+			v_scale(ray, intersect[TOP].distance));
+	intersect[BOT].point = v_add(viewpoint,
+			v_scale(ray, intersect[BOT].distance));
+	intersect[BOT] = get_cap_intersection(centre[BOT], cylinder, t);
+	if (intersect[TOP].valid && intersect[BOT].valid)
+		return (intersect[closest]);
+	if (intersect[TOP].valid)
+		return (intersect[TOP]);
+	return (intersect[BOT]);
+}
+
+static double	get_tube_distance(t_xyz viewpoint, t_xyz ray,
+			t_cylinder *cylinder)
 {
 	double	t1;
 	double	t2;
-	double	discr_vars[4];
+	double	vars[3];
+	double	discriminant;
+	t_xyz	axis;
 
-	discr_vars[0] = v_dot(local_ray, local_ray) - pow(v_dot(local_ray, (t_xyz){0, 1, 0}), 2);
-	discr_vars[1] = 2 * (v_dot(local_viewpoint, local_ray) - v_dot(local_ray, (t_xyz){0, 1, 0}) * v_dot(local_viewpoint, (t_xyz){0, 1, 0}));
-	discr_vars[2] = v_dot(local_viewpoint, local_viewpoint) - pow(v_dot(local_viewpoint, (t_xyz){0, 1, 0}), 2) - pow(cl->radius, 2);
-	discr_vars[3] = discr_vars[1] * discr_vars[1] - 4 * discr_vars[0] * discr_vars[2];
-	t1 = (-discr_vars[1] - sqrt(discr_vars[3])) / (2 * discr_vars[0]);
-	t2 = (-discr_vars[1] + sqrt(discr_vars[3])) / (2 * discr_vars[0]);
-	if (t1 <= t2 && t1 >= 0)
+	axis = (t_xyz){0, 1, 0};
+	vars[A] = v_dot(ray, ray) - pow(v_dot(ray, axis), 2);
+	vars[B] = 2 * (v_dot(viewpoint, ray) - v_dot(ray, axis) * v_dot(viewpoint,
+				axis));
+	vars[C] = v_dot(viewpoint, viewpoint) - pow(v_dot(viewpoint, axis), 2)
+		- pow(cylinder->radius, 2);
+	discriminant = vars[B] * vars[B] - 4 * vars[A] * vars[C];
+	if (discriminant < 0)
+		return (0);
+	if (discriminant < TOLERANCE)
+		return (-vars[B] / 2.0 * vars[A]);
+	t1 = (-vars[1] - sqrt(discriminant)) / (2 * vars[0]);
+	t2 = (-vars[1] + sqrt(discriminant)) / (2 * vars[0]);
+	if (t1 > TOLERANCE && t2 > TOLERANCE)
+		return (fmin(t1, t2));
+	if (t1 > TOLERANCE)
 		return (t1);
-	else if (t2 >= 0)
-		return (t2);
-	else
-		return (-1);
+	return (t2);
 }
 
-t_xyz ray_intersects_cylinder_disk(t_xyz viewpoint, t_xyz ray, t_intersect intersection,  t_cylinder *cl)
+static t_intersect	get_cap_intersection(t_xyz centre, t_cylinder *cylinder,
+				t_location_transformation_information_station t)
 {
-	double distance_to_disk;
-	distance_to_disk = (cl->height / 2.0) / fabs(ray.y);
-	if (distance_to_disk >= 0)
-	{
-		// Calculate the intersection point on the disk
-		t_xyz intersection_point;
-		intersection_point= v_add(viewpoint, v_scale(ray, distance_to_disk));
-		// Check if the intersection point is within the disk's radius
-		if (pow(intersection_point.x, 2) + pow(intersection_point.z, 2) <= pow(cl->radius, 2))
-		{
-			// Update the intersection information
-			intersection.point = intersection_point;
-			intersection.distance = distance_to_disk;
-			intersection.shape = cl;
-			intersection.type = CYLINDER;
-			intersection.colour = cl->colour;
-			intersection.valid = true;
-			return (intersection_point);
-		}
-	}
-	intersection.valid = false;
-	return (intersection.point);
-}
+	t_intersect	intersect;
+	double		dist;
 
-t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray, t_cylinder *cl)
-{
-	t_matrix	to_local;
-	t_matrix	rotation;
-	t_matrix	to_world;
-	t_xyz		local_viewpoint;
-	t_xyz		local_ray;
-	t_intersect	intersection;
-	double		rotation_angle;
-
-	intersection = new_intersect();
-	rotation_angle = angle_between(v_normalize(*cl->axis),(t_xyz){0,1,0});
-	rotation = create_rotation_matrix(v_cross(*cl->axis, (t_xyz){0,1,0}), rotation_angle);
-	to_local = local_matrix(*cl->axis, *cl->centre, rotation_angle);
-	to_world = world_matrix(*cl->axis, *cl->centre, rotation_angle);
-	local_ray = v_matrix_mul(rotation,ray);
-	local_viewpoint = v_matrix_mul(to_local, *viewpoint);
-	intersection.distance = cyl_local_intersect(local_viewpoint, local_ray, cl);
-	if (intersection.distance < 0)
-		return (intersection);
-	intersection.point = v_add(local_viewpoint ,v_scale(local_ray, intersection.distance));
-	if (intersection.point.y < cl->height / 2 && intersection.point.y > cl->height / -2)
+	intersect = new_intersect();
+	dist = v_dot(v_subtract(centre, t.local_viewpoint), (t_xyz){0, 1, 0})
+		/ v_dot(t.local_ray, (t_xyz){0, 1, 0});
+	intersect.point = v_add(t.local_viewpoint, v_scale(t.local_ray, dist));
+	if (p2p_distance(centre, intersect.point)
+		+ TOLERANCE < cylinder->radius && dist > TOLERANCE)
 	{
-		intersection.point = v_matrix_mul(to_world, intersection.point);
-		intersection.valid = true;
+		intersect.distance = p2p_distance(t.local_viewpoint, intersect.point);
+		if (intersect.distance > TOLERANCE)
+			intersect.valid = true;
 	}
-	else
-	{
-		t_xyz top_centre = (t_xyz) {0, cl->height / 2.0, 0};
-		t_xyz bot_centre = (t_xyz) {0, cl->height / -2.0, 0};
-		double dist_top =
-				v_dot(v_subtract(top_centre, local_viewpoint), (t_xyz) {0, 1, 0}) / v_dot(local_ray, (t_xyz) {0, 1, 0});
-		double dist_bot =
-				v_dot(v_subtract(bot_centre, local_viewpoint), (t_xyz) {0, 1, 0}) / v_dot(local_ray, (t_xyz) {0, 1, 0});
-		t_xyz top_point = v_add(local_viewpoint, v_scale(local_ray, dist_top));
-		t_xyz bot_point = v_add(local_viewpoint, v_scale(local_ray, dist_bot));
-		if (p2p_distance(top_centre, top_point) <= cl->radius) {
-			intersection.point = v_matrix_mul(to_world, top_point);
-			intersection.distance = p2p_distance(*viewpoint, intersection.point);
-			intersection.valid = true;
-		}
-		if (p2p_distance(bot_centre, bot_point) <= cl->radius) {
-			intersection.point = v_matrix_mul(to_world, bot_point);
-			intersection.distance = p2p_distance(*viewpoint, intersection.point);
-			intersection.valid = true;
-		}
-	}
-	intersection.shape = cl;
-	intersection.type = CYLINDER;
-	intersection.colour = cl->colour;
-	return (intersection);
+	return (intersect);
 }

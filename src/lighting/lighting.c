@@ -14,6 +14,32 @@
 #include "../intersect/intersect.h"
 #include "../lighting/lighting.h"
 
+t_lighting	get_lighting(t_light *light, t_scene *scene,
+				t_xyz intersection, t_intersect intersect)
+{
+	t_lighting	lighting;
+	t_xyz		light_direction;
+
+	lighting.light = NULL;
+	light_direction = v_normalize(v_subtract(*light->point, intersection));
+	if (intersects_sphere(intersection, *light->point,
+			scene->spheres, light_direction) || intersects_plane(intersection,
+			*light->point, scene->planes, light_direction)
+		|| intersects_cylinder(intersection, *light->point,
+			scene->cylinders, light_direction))
+		return (lighting);
+	lighting.surface_normal = get_surface_normal(intersect);
+	lighting.diffuse_intensity = fmax(-1, fmin(1, v_dot(light_direction,
+					lighting.surface_normal)));
+	if (lighting.diffuse_intensity < 0)
+		lighting.diffuse_intensity *= -1.0;
+	lighting.distance = p2p_distance(*light->point, intersection);
+	if (lighting.distance > 0)
+		lighting.diffuse_intensity /= (C1 + C3 * pow(lighting.distance, 2));
+	lighting.light = light;
+	return (lighting);
+}
+
 t_rgb	get_specular_component(t_lighting lighting, t_material material,
 						t_intersect intersect, t_camera *camera)
 {
@@ -41,32 +67,6 @@ t_rgb	combine_specular(t_intersect intersect, t_lighting lighting,
 			intersect, camera);
 	result = rgb_add(base, specular_component);
 	return (result);
-}
-
-t_lighting	get_lighting(t_light *light, t_scene *scene,
-				t_xyz intersection, t_intersect intersect)
-{
-	t_lighting	lighting;
-	t_xyz		light_direction;
-
-	lighting.light = NULL;
-	light_direction = v_normalize(v_subtract(*light->point, intersection));
-	if (intersects_sphere(intersection, *light->point,
-			scene->spheres, light_direction) || intersects_plane(intersection,
-			*light->point, scene->planes, light_direction)
-		|| intersects_cylinder(intersection, *light->point,
-			scene->cylinders, light_direction))
-		return (lighting);
-	lighting.surface_normal = get_surface_normal(intersect);
-	lighting.diffuse_intensity = fmax(-1, fmin(1, v_dot(light_direction,
-					lighting.surface_normal)));
-	if (lighting.diffuse_intensity < 0)
-		lighting.diffuse_intensity *= -1.0;
-	lighting.distance = p2p_distance(*light->point, intersection);
-	if (lighting.distance > 0)
-		lighting.diffuse_intensity /= (C1 + C3 * pow(lighting.distance, 2));
-	lighting.light = light;
-	return (lighting);
 }
 
 t_rgb	add_direct_light(t_rgb base, t_rgb colour, t_lighting lighting)
