@@ -92,10 +92,9 @@ static t_intersect	ray_intersects_caps(t_xyz viewpoint, t_xyz ray,
 	intersect[BOT] = get_cap_intersection(centre[TOP], cylinder, t);
 	if (intersect[TOP].valid && intersect[BOT].valid)
 		return (intersect[closest]);
-	else if (intersect[TOP].valid)
+	if (intersect[TOP].valid)
 		return (intersect[TOP]);
-	else
-		return (intersect[BOT]);
+	return (intersect[BOT]);
 }
 
 static double	get_tube_distance(t_xyz viewpoint, t_xyz ray,
