@@ -45,6 +45,7 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray,
 	intersection.shape = cylinder;
 	intersection.type = CYLINDER;
 	intersection.colour = cylinder->colour;
+	intersection.material = cylinder->material;
 	return (intersection);
 }
 
