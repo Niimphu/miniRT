@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   closest.c                                          :+:      :+:    :+:   */
+/*   closest_shape.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:28:24 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/12 19:28:24 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/09 19:43:11 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@
 t_intersect	get_closest_sphere(t_xyz viewpoint, t_xyz ray, t_list *spheres);
 t_intersect	get_closest_plane(t_xyz viewpoint, t_xyz ray, t_list *planes);
 t_intersect	get_closest_cylinder(t_xyz viewpoint, t_xyz ray, t_list *cylinders);
+t_intersect	get_closest_cone(t_xyz viewpoint, t_xyz ray, t_list *cones);
 
-t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
+/* t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 {
 	t_intersect	closest_sphere;
 	t_intersect	closest_plane;
@@ -28,6 +29,7 @@ t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 	closest_sphere = get_closest_sphere(viewpoint, ray, scene->spheres);
 	closest_plane = get_closest_plane(viewpoint, ray, scene->planes);
 	closest_cylinder = get_closest_cylinder(viewpoint, ray, scene->cylinders);
+	closest_cone = get_closest_cone(viewpoint, ray, scene->cone);
 	if (closest_sphere.valid)
 		closest_shape = closest_sphere;
 	if (closest_plane.valid && ((closest_plane.distance < closest_shape.distance
@@ -37,6 +39,35 @@ t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 				< closest_shape.distance && closest_shape.valid)
 			|| !closest_shape.valid))
 		closest_shape = closest_cylinder;
+	return (closest_shape);
+} */
+
+t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
+{
+	int			i;
+	int			j;
+	t_intersect	closest[4];
+	t_intersect	closest_shape;
+	
+	i = 0;
+	closest_shape = new_intersect();
+	closest_shape.distance = -1;
+	closest[0] = get_closest_sphere(viewpoint, ray, scene->spheres);
+	closest[1] = get_closest_plane(viewpoint, ray, scene->planes);
+	closest[2] = get_closest_cylinder(viewpoint, ray, scene->cylinders);
+	closest[3] = get_closest_cone(viewpoint, ray, scene->cone);
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			if (closest[j].valid && ((closest[j].distance < closest[i].distance)
+				|| !closest[i].valid))
+				closest_shape = closest[j];
+			j++;
+		}
+		i++;
+	}
 	return (closest_shape);
 }
 
@@ -90,6 +121,24 @@ t_intersect	get_closest_cylinder(t_xyz viewpoint, t_xyz ray, t_list *cylinders)
 		if (!closest.valid || (new.valid && (new.distance < closest.distance)))
 			closest = new;
 		cylinders = cylinders->next;
+	}
+	return (closest);
+}
+
+t_intersect	get_closest_cone(t_xyz viewpoint, t_xyz ray, t_list *cones)
+{
+	t_cone	*cone;
+	t_intersect	closest;
+	t_intersect	new;
+
+	closest = new_intersect();
+	while (cones)
+	{
+		cone = (t_cone *)cones->content;
+		new = ray_intersects_cone(&viewpoint, ray, cone);
+		if (!closest.valid || (new.valid && (new.distance < closest.distance)))
+			closest = new;
+		cones = cones->next;
 	}
 	return (closest);
 }

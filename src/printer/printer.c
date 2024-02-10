@@ -22,6 +22,7 @@ void	print_scene_info(t_scene	*scene)
 	t_sphere	*sphere;
 	t_plane		*plane;
 	t_cylinder	*cylinder;
+	t_triangle	*triangle;
 
 	node = NULL;
 	printf("\n\n");
@@ -105,6 +106,27 @@ void	print_scene_info(t_scene	*scene)
 			printf("Radius: %.1f\nHeight %.1f\nColour: ", cylinder->radius,
 				cylinder->height);
 			print_colour_info(cylinder->colour);
+			if (node->next)
+				printf("\n");
+			node = node->next;
+		}
+		node = NULL;
+	}
+	printf("-----     Triangles     -----\n");
+	if (scene->triangles)
+	{
+		node = scene->triangles;
+		while (node)
+		{
+			triangle = (t_triangle *) node->content;
+			printf("Point A: ");
+			print_coord_info(triangle->a);
+			printf("Point B: ");
+			print_coord_info(triangle->b);
+			printf("Point C: ");
+			print_coord_info(triangle->c);
+			printf("Colour: \n");
+			print_colour_info(triangle->colour);
 			if (node->next)
 				printf("\n");
 			node = node->next;
