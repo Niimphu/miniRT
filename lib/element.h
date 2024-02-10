@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:36:55 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/02 17:22:38 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/04 15:27:00 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,15 @@ typedef struct s_cylinder
 	t_rgb		colour;
 	t_material	material;
 }				t_cylinder;
+
+typedef struct s_cone
+{
+	t_xyz		*centre;
+	t_xyz		*axis;
+	double		radius;
+	double		height;
+	t_rgb		colour;
+	t_material	material;
+}				t_cone;
 
 #endif

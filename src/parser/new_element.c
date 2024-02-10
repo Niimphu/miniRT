@@ -55,8 +55,10 @@ static int	create_element(int id, char **raw_input, t_scene *scene)
 		return (new_sphere(raw_input, scene));
 	else if (id == PLANE)
 		return (new_plane(raw_input, scene));
-	else
+	else if (id == CYLINDER)
 		return (new_cylinder(raw_input, scene));
+	else
+		return (new_cone(raw_input, scene));
 }
 
 static int	get_element_id(char *string)
@@ -73,5 +75,7 @@ static int	get_element_id(char *string)
 		return (PLANE);
 	if (!ft_strncmp(string, "cy", 2))
 		return (CYLINDER);
+	if (!ft_strncmp(string, "co", 2))
+		return (CONE);
 	return (error("Error\nInvalid identifier found"));
 }
