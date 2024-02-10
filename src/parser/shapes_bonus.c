@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapes_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:18:35 by Kekuhne           #+#    #+#             */
-/*   Updated: 2024/02/05 17:01:26 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/10 17:37:57 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,15 @@ int	new_cone(char **input, t_scene *scene)
 	if (!cone)
 		return (FAIL);
 	if (!ft_isdouble(input[2]) || ft_atod(input[2]) < 0.0f)
-		return (free(cone), error("Error\ncone: \
+		return (free(cone), error("Error\nCone: \
 			invalid diameter"));
 	cone->radius = ft_atod(input[2]) / 2.0;
 	if (!ft_isdouble(input[3]) || ft_atod(input[3]) < 0.0f)
-		return (free(cone), error("Error\ncone: invalid height"));
+		return (free(cone), error("Error\nCone: invalid height"));
 	cone->height = ft_atod(input[3]);
 	cone->colour = atorgb(input[4]);
 	if (!is_valid_rgb(cone->colour))
-		return (free(cone), error("Error\ncone: invalid colour"));
+		return (free(cone), error("Error\nCone: invalid colour"));
 	cone = cone_extended(input, cone, info_count);
 	if (!cone)
 		return (FAIL);
@@ -49,17 +49,47 @@ static t_cone	*cone_extended(char **input, t_cone *cone,
 	cone->axis = NULL;
 	cone->centre = atoxyz(input[0]);
 	if (!cone->centre)
-		return (free(cone), error("Error\ncone: invalid centre"),
+		return (free(cone), error("Error\nCone: invalid centre"),
 			NULL);
 	cone->axis = atoxyz(input[1]);
 	if (!cone->axis || !is_normalised(*cone->axis))
 		return (free_cone(cone),
-			error("Error\ncone: invalid axis"), NULL);
+			error("Error\nCone: invalid axis"), NULL);
 	if (info_count == 5)
 		return (cone->material = (t_material){0}, cone);
 	if (!is_valid_material(input + 5))
-		return (free_cone(cone), error("Error\ncone: \
-			invalid shininess"), NULL);
+		return (free_cone(cone), error("Error\nCone: \
+			invalid material"), NULL);
 	cone->material = create_material(input + 5);
 	return (cone);
+}
+
+int	new_triangle(char **input, t_scene *scene)
+{
+	t_triangle	*triangle;
+	size_t		info_count;
+
+	info_count = strarray_size(input);
+	if (info_count != 4 && info_count != 7)
+		return (error("Error\nTriangle: invalid parameter count"));
+	triangle = ft_calloc(1, sizeof(t_triangle));
+	if (!triangle)
+		return (FAIL);
+	triangle->a = atoxyz(input[0]);
+	triangle->b = atoxyz(input[1]);
+	triangle->c = atoxyz(input[2]);
+	if (!triangle->a || !triangle->b || !triangle->c)
+		return (free_triangle(triangle),
+			error("Error\nTriangle: invalid points"));
+	triangle->colour = atorgb(input[3]);
+	if (!is_valid_rgb(triangle->colour))
+		return (free(triangle), error("Error\nTriangle: invalid colour"));
+	if (info_count == 4)
+		return (triangle->material = (t_material){0},
+				add_triangle(scene, triangle), OK);
+	if (!is_valid_material(input + 4))
+		return (free_triangle(triangle),
+			error("Error\nTriangle: invalid material"));
+	triangle->material = create_material(input + 4);
+	return (add_triangle(scene, triangle), OK);
 }

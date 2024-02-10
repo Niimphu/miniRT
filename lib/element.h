@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   element.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:36:55 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/04 15:27:00 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/10 17:05:42 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,14 @@ typedef struct s_cone
 	t_rgb		colour;
 	t_material	material;
 }				t_cone;
+
+typedef struct s_triangle
+{
+	t_xyz		*a;
+	t_xyz		*b;
+	t_xyz		*c;
+	t_rgb		colour;
+	t_material	material;
+}				t_triangle;
 
 #endif

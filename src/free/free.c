@@ -6,7 +6,7 @@
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:57:56 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/23 18:08:47 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/10 17:37:19 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ static void	free_scene(t_scene **scene)
 			ft_lstclear(&(*scene)->planes, free_plane);
 		if ((*scene)->cylinders)
 			ft_lstclear(&(*scene)->cylinders, free_cylinder);
+		if ((*scene)->cones)
+			ft_lstclear(&(*scene)->cones, free_cone);
+		if ((*scene)->triangles)
+			ft_lstclear(&(*scene)->triangles, free_triangle);
 		free(*scene);
 	}
 	scene = NULL;

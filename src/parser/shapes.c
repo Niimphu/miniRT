@@ -117,7 +117,7 @@ static t_cylinder	*cylinder_extended(char **input, t_cylinder *cylinder,
 		return (cylinder->material = (t_material){0}, cylinder);
 	if (!is_valid_material(input + 5))
 		return (free_cylinder(cylinder), error("Error\nCylinder: \
-			invalid shininess"), NULL);
+			invalid material"), NULL);
 	cylinder->material = create_material(input + 5);
 	return (cylinder);
 }

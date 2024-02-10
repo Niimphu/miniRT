@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/04 16:17:34 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/10 17:16:16 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
 # define PLANE 5
 # define CYLINDER 6
 # define CONE 7
+# define TRIANGLE 8
 
 typedef struct s_vars
 {
@@ -73,7 +74,8 @@ typedef struct s_scene
 	t_list		*spheres;
 	t_list		*planes;
 	t_list		*cylinders;
-	t_list		*cone;
+	t_list		*cones;
+	t_list		*triangles;
 }				t_scene;
 
 # ifndef BONUS
