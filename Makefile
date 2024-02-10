@@ -18,7 +18,7 @@ SRC =	main.c \
 		raytrace/draw_scene.c raytrace/draw_pixel.c raytrace/draw_utils.c \
 		raytrace/msaa.c raytrace/msaa_colour.c \
 		raytrace/bounce.c \
-		lighting/lighting.c lighting/lighting_utils.c \
+		lighting/lighting.c lighting/lighting_utils.c lighting/normal.c \
 		intersect/intersect.c intersect/intersection_checks.c \
 		intersect/closest_shape.c \
 		intersect/intersect_plane.c intersect/intersect_sphere.c intersect/intersect_cylinder.c intersect/intersect_triangle.c \
