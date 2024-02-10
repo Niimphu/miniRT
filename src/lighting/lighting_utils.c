@@ -20,6 +20,8 @@ t_xyz	get_surface_normal(t_intersect intersect)
 		return (plane_normal(intersect.shape));
 	if (intersect.type == CYLINDER)
 		return (cylinder_normal(intersect.shape, intersect.point));
+	if (intersect.type == TRIANGLE)
+		return (triangle_normal(intersect.shape));
 	return ((t_xyz){0});
 }
 
