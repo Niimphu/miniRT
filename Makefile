@@ -12,7 +12,7 @@ SRC =	main.c \
 		initialise.c \
 		parser/parse.c parser/parse_utils.c parser/parse_strconversions.c \
 		parser/new_element.c \
-		parser/lights_camera.c parser/shapes.c parser/shapes_utils.c \
+		parser/lights_camera.c parser/shapes.c parser/shapes_bonus.c parser/shapes_utils.c \
 		parser/file.c \
 		miniRT.c \
 		raytrace/draw_scene.c raytrace/draw_pixel.c raytrace/draw_utils.c \
@@ -21,9 +21,8 @@ SRC =	main.c \
 		lighting/lighting.c lighting/lighting_utils.c \
 		intersect/intersect.c intersect/intersection_checks.c \
 		intersect/closest_shape.c \
-		intersect/intersect_plane.c intersect/intersect_sphere.c intersect/intersect_cylinder.c \
-		intersect/transform.c \
-		maths/vector.c maths/vector_basic.c maths/point.c maths/matrix.c maths/matrix_utils.c \
+		intersect/intersect_plane.c intersect/intersect_sphere.c intersect/intersect_cylinder.c intersect/intersect_cone.c\
+		maths/vector.c maths/vector_basic.c maths/point.c maths/matrix.c \
 		colour/colour.c \
 		input_handler.c \
 		error.c \
