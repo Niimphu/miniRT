@@ -25,14 +25,11 @@ t_intersect	ray_intersects_triangle(t_xyz *viewpoint, t_xyz ray, t_triangle *tri
 	double		det = v_dot(edge1, ray_cross_e2);
 
 	intersect = new_intersect();
-	if (fabs(det) > TOLERANCE)
+	if (fabs(det) < TOLERANCE)
 		return (intersect);
-
 	double	inv_det = 1.0 / det;
 	t_xyz	s = v_subtract(*viewpoint, *triangle->a);
 	double	u = inv_det * v_dot(s, ray_cross_e2);
-	if (u < 10000 && u > -10000)
-		printf("U valued: %f\n", u);
 	if (u < 0 || u > 1)
 		return (intersect);
 
@@ -46,7 +43,6 @@ t_intersect	ray_intersects_triangle(t_xyz *viewpoint, t_xyz ray, t_triangle *tri
 		return (intersect);
 
 	intersect.distance = t;
-
 	return ((t_intersect){true,
 		v_add(*viewpoint, v_scale(ray, intersect.distance)),
 		triangle->colour, intersect.distance, triangle,

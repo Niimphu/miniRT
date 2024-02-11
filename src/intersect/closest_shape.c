@@ -19,33 +19,63 @@ t_intersect	get_closest_cylinder(t_xyz viewpoint, t_xyz ray, t_list *cylinders);
 t_intersect	get_closest_cone(t_xyz viewpoint, t_xyz ray, t_list *cones);
 t_intersect	get_closest_triangle(t_xyz viewpoint, t_xyz ray, t_list *triangles);
 
+//t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
+//{
+//	int			i;
+//	int			j;
+//	t_intersect	closest[5];
+//	t_intersect	closest_shape;
+//
+//	i = 0;
+//	closest_shape = new_intersect();
+//	closest_shape.distance = -1;
+//	closest[0] = get_closest_sphere(viewpoint, ray, scene->spheres);
+//	closest[1] = get_closest_plane(viewpoint, ray, scene->planes);
+//	closest[2] = get_closest_cylinder(viewpoint, ray, scene->cylinders);
+//	closest[3] = get_closest_cone(viewpoint, ray, scene->cones);
+//	closest[4] = get_closest_triangle(viewpoint, ray, scene->triangles);
+//	while (i < 5)
+//	{
+//		j = 0;
+//		while (j < 4)
+//		{
+//			if (closest[j].valid && ((closest[j].distance < closest[i].distance)
+//					|| !closest[i].valid))
+//				closest_shape = closest[j];
+//			j++;
+//		}
+//		i++;
+//	}
+//	closest_shape = closest[4];
+//	return (closest_shape);
+//}
+
 t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 {
-	int			i;
-	int			j;
-	t_intersect	closest[5];
+	t_intersect	closest_sphere;
+	t_intersect	closest_plane;
+	t_intersect	closest_cylinder;
 	t_intersect	closest_shape;
+	t_intersect	closest_triangle;
 
-	i = 0;
 	closest_shape = new_intersect();
-	closest_shape.distance = -1;
-	closest[0] = get_closest_sphere(viewpoint, ray, scene->spheres);
-	closest[1] = get_closest_plane(viewpoint, ray, scene->planes);
-	closest[2] = get_closest_cylinder(viewpoint, ray, scene->cylinders);
-	closest[3] = get_closest_cone(viewpoint, ray, scene->cones);
-	closest[4] = get_closest_triangle(viewpoint, ray, scene->triangles);
-	while (i < 5)
-	{
-		j = 0;
-		while (j < 4)
-		{
-			if (closest[j].valid && ((closest[j].distance < closest[i].distance)
-					|| !closest[i].valid))
-				closest_shape = closest[j];
-			j++;
-		}
-		i++;
-	}
+	closest_sphere = get_closest_sphere(viewpoint, ray, scene->spheres);
+	closest_plane = get_closest_plane(viewpoint, ray, scene->planes);
+	closest_cylinder = get_closest_cylinder(viewpoint, ray, scene->cylinders);
+	closest_triangle = get_closest_triangle(viewpoint, ray, scene->triangles);
+	if (closest_sphere.valid)
+		closest_shape = closest_sphere;
+	if (closest_plane.valid && ((closest_plane.distance < closest_shape.distance
+				&& closest_shape.valid) || !closest_shape.valid))
+		closest_shape = closest_plane;
+	if (closest_cylinder.valid && ((closest_cylinder.distance
+				< closest_shape.distance && closest_shape.valid)
+			|| !closest_shape.valid))
+		closest_shape = closest_cylinder;
+	if (closest_triangle.valid && ((closest_triangle.distance
+				< closest_shape.distance && closest_shape.valid)
+			|| !closest_shape.valid))
+		closest_shape = closest_triangle;
 	return (closest_shape);
 }
 
