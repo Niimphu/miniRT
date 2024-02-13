@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 18:11:27 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/02 17:14:12 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:18:27 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define XYZ_H
 
 # include <stdbool.h>
-# include "colour.h"
+# include "../colour/colour.h"
 # include "../../lib/material.h"
 
 typedef struct s_xyz
