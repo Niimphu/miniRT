@@ -36,7 +36,8 @@ int	raytrace(t_rt *rt)
 //	gettimeofday(&start, NULL);
 //	draw_scene(rt);
 //	gettimeofday(&end, NULL);
-//	processing_time = (end.tv_sec - start.tv_sec) + (end.tv_usec - start.tv_usec) / 1e6;
+//	processing_time = (end.tv_sec - start.tv_sec)
+//		+ (end.tv_usec - start.tv_usec) / 1e6;
 //	printf("Draw time: %f seconds.\n", processing_time);
 //	mlx_expose_hook(rt->mlx_data->win, draw_scene, rt);
 //	mlx_loop(rt->mlx_data->mlx);
