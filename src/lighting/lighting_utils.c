@@ -39,3 +39,18 @@ t_xyz	get_halfway_vector(t_xyz intersection, t_xyz light_pos,
 	halfway = v_normalize(v_add(to_light, to_camera));
 	return (halfway);
 }
+
+bool	intersects_any_shape(t_xyz intersection, t_xyz light_point,
+			t_scene *scene, t_xyz light_direction)
+{
+	return (intersects_any_sphere(intersection, light_point,
+			scene->spheres, light_direction)
+		|| intersects_any_plane(intersection,
+			light_point, scene->planes, light_direction)
+		|| intersects_any_cylinder(intersection, light_point,
+			scene->cylinders, light_direction)
+		|| intersects_any_cone(intersection, light_point,
+			scene->cones, light_direction)
+		|| intersects_any_triangle(intersection, light_point,
+			scene->triangles, light_direction));
+}

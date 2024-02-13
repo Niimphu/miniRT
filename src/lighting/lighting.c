@@ -22,15 +22,8 @@ t_lighting	get_lighting(t_light *light, t_scene *scene,
 
 	lighting.light = NULL;
 	light_direction = v_normalize(v_subtract(*light->point, intersection));
-	if (intersects_any_sphere(intersection, *light->point,
-			scene->spheres, light_direction) || intersects_any_plane(intersection,
-			*light->point, scene->planes, light_direction)
-		|| intersects_any_cylinder(intersection, *light->point,
-			scene->cylinders, light_direction)
-		|| intersects_any_cone(intersection, *light->point,
-			scene->cones, light_direction)
-		|| intersects_any_triangle(intersection, *light->point,
-			scene->triangles, light_direction))
+	if (intersects_any_shape(intersection, *light->point,
+			scene, light_direction))
 		return (lighting);
 	lighting.surface_normal = get_surface_normal(intersect);
 	lighting.diffuse_intensity = fmax(-1, fmin(1, v_dot(light_direction,
