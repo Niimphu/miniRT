@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 19:22:07 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/05 17:02:17 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:25:17 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ void	free_sphere(void *node);
 void	free_plane(void *node);
 void	free_cylinder(void *node);
 void	free_cone(void *node);
+void	free_triangle(void *node);
 
 #endif

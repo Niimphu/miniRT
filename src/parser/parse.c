@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/05 16:51:02 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:23:31 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ int	parse(int argc, char **argv, t_rt *rt)
 	if (!rt->scene->lights)
 		return (error("Error\nScene: missing lights"), FAIL);
 	if (!rt->scene->spheres && !rt->scene->planes
-			&& !rt->scene->cylinders && !rt->scene->cone)
+		&& !rt->scene->cylinders && !rt->scene->cones
+		&& !rt->scene->triangles)
 		return (error("Error\nScene: missing objects"), FAIL);
 	print_scene_info(rt->scene);
 	return (OK);

@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:36:55 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/04 15:27:00 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:31:19 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,14 @@ typedef struct s_cone
 	t_rgb		colour;
 	t_material	material;
 }				t_cone;
+
+typedef struct s_triangle
+{
+	t_xyz		*a;
+	t_xyz		*b;
+	t_xyz		*c;
+	t_rgb		colour;
+	t_material	material;
+}				t_triangle;
 
 #endif

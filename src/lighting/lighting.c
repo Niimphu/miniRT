@@ -28,7 +28,9 @@ t_lighting	get_lighting(t_light *light, t_scene *scene,
 		|| intersects_cylinder(intersection, *light->point,
 			scene->cylinders, light_direction)
 		|| intersects_cone(intersection, *light->point,
-			scene->cone, light_direction))
+			scene->cones, light_direction)
+		|| intersects_triangle(intersection, *light->point,
+			scene->triangles, light_direction))
 		return (lighting);
 	lighting.surface_normal = get_surface_normal(intersect);
 	lighting.diffuse_intensity = fmax(-1, fmin(1, v_dot(light_direction,

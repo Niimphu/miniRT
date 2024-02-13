@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:15:03 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/10 18:38:08 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:27:45 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,24 @@ bool	intersects_cone(t_xyz intersect_point, t_xyz light_xyz,
 			&& (check.distance < p2p_distance(intersect_point, light_xyz)))
 			return (true);
 		cones = cones->next;
+	}
+	return (false);
+}
+
+bool	intersects_triangle(t_xyz intersect_point, t_xyz light_xyz,
+							t_list *triangles, t_xyz to_light)
+{
+	t_triangle	*triangle;
+	t_intersect	check;
+
+	while (triangles)
+	{
+		triangle = (t_triangle *)triangles->content;
+		check = ray_intersects_triangle(&intersect_point, to_light, triangle);
+		if (check.valid && check.distance > TOLERANCE
+			&& (check.distance < p2p_distance(intersect_point, light_xyz)))
+			return (true);
+		triangles = triangles->next;
 	}
 	return (false);
 }
