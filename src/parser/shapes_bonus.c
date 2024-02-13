@@ -13,8 +13,10 @@
 #include "parser.h"
 #include "material.h"
 
-static t_cone	*cone_extended(char **input, t_cone *cone,
-					size_t info_count);
+static t_cone		*cone_extended(char **input, t_cone *cone,
+						size_t info_count);
+static t_triangle	*triangle_extended(char **input, t_triangle *triangle,
+						size_t info_count);
 
 int	new_cone(char **input, t_scene *scene)
 {
@@ -84,12 +86,20 @@ int	new_triangle(char **input, t_scene *scene)
 	triangle->colour = atorgb(input[3]);
 	if (!is_valid_rgb(triangle->colour))
 		return (free(triangle), error("Error\nTriangle: invalid colour"));
-	if (info_count == 4)
-		return (triangle->material = (t_material){0},
-				add_triangle(scene, triangle), OK);
-	if (!is_valid_material(input + 4))
-		return (free_triangle(triangle),
-			error("Error\nTriangle: invalid material"));
-	triangle->material = create_material(input + 4);
+	triangle = triangle_extended(input, triangle, info_count);
+	if (!triangle)
+		return (FAIL);
 	return (add_triangle(scene, triangle), OK);
+}
+
+static t_triangle	*triangle_extended(char **input, t_triangle *triangle,
+						size_t info_count)
+{
+	if (info_count == 4)
+		return (triangle->material = (t_material){0}, triangle);
+	if (!is_valid_material(input + 4))
+		return (free_triangle(triangle), error("Error\nCylinder: \
+			invalid material"), NULL);
+	triangle->material = create_material(input + 4);
+	return (triangle);
 }
