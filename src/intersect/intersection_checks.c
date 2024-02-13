@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersection_checks.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:15:03 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/19 20:15:03 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/10 18:38:08 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,24 @@ bool	intersects_cylinder(t_xyz intersect_point, t_xyz light_xyz,
 			&& (check.distance < p2p_distance(intersect_point, light_xyz)))
 			return (true);
 		cylinders = cylinders->next;
+	}
+	return (false);
+}
+
+bool	intersects_cone(t_xyz intersect_point, t_xyz light_xyz,
+				t_list *cones, t_xyz to_light)
+{
+	t_cone	*cone;
+	t_intersect	check;
+
+	while (cones)
+	{
+		cone = (t_cone *)cones->content;
+		check = ray_intersects_cone(&intersect_point, to_light, cone);
+		if (check.valid && check.distance > TOLERANCE
+			&& (check.distance < p2p_distance(intersect_point, light_xyz)))
+			return (true);
+		cones = cones->next;
 	}
 	return (false);
 }

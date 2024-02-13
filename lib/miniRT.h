@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/02 17:59:59 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/10 19:00:53 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 
 # define MAX_BOUNCES 5
 # define TOLERANCE 1e-6
+# define SCREEN_HEIGHT 1080
+# define SCREEN_WIDTH 1920
 
 //C1 and C3 are coefficients for light intensity drop-off based on distance
 # define C1 1.2
@@ -52,6 +54,7 @@
 # define SPHERE 4
 # define PLANE 5
 # define CYLINDER 6
+# define CONE 7
 
 typedef struct s_vars
 {
@@ -70,6 +73,7 @@ typedef struct s_scene
 	t_list		*spheres;
 	t_list		*planes;
 	t_list		*cylinders;
+	t_list		*cone;
 }				t_scene;
 
 # ifndef BONUS
@@ -80,6 +84,7 @@ typedef struct s_rt
 	t_scene	*scene;
 	bool	msaa;
 }				t_rt;
+
 
 # else
 

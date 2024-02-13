@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bounce.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 17:21:03 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/23 17:21:03 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/03 16:24:37 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_rgb	bounce(t_scene *scene, t_xyz ray, int bounces,
 	t_intersect	next_shape;
 	t_rgb		next_colour;
 	double		reflectivity;
-
+	
 	reflectivity = intersect.material.reflectivity;
 	if (reflectivity == 0)
 		return (hex_to_rgb(calculate_colour(intersect, scene)));

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shapes_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:34:20 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/25 15:34:20 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/05 16:51:19 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,12 @@ void	add_shape(t_scene *scene, void *shape, int type)
 		else
 			ft_lstadd_back(&(scene->cylinders), ft_lstnew(shape));
 	}
+}
+
+void	add_cone(t_scene *scene, void *shape)
+{
+	if (!(scene->cone))
+		scene->cone = ft_lstnew(shape);
+	else
+		ft_lstadd_back(&(scene->cone), ft_lstnew(shape));
 }

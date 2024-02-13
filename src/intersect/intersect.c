@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 18:42:11 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/10 14:00:05 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/03 14:45:50 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_intersect	new_intersect(void)
 
 	new.valid = false;
 	new.point = (t_xyz){0};
+	new.point_normal = (t_xyz){0};
 	new.colour = (t_rgb){0};
 	new.distance = 0.0;
 	new.shape = NULL;

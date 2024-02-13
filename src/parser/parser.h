@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:00:45 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/23 18:32:09 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/05 16:51:32 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 int			new_element(char *line, t_scene *scene);
 void		add_shape(t_scene *scene, void *shape, int type);
+void		add_cone(t_scene *scene, void *shape);
 t_material	create_material(char **input);
 
 bool		is_empty(const char *string);
@@ -40,5 +41,6 @@ int			new_light(char **input, t_scene *scene);
 int			new_sphere(char **input, t_scene *scene);
 int			new_plane(char **input, t_scene *scene);
 int			new_cylinder(char **input, t_scene *scene);
+int			new_cone(char **input, t_scene *scene);
 
 #endif

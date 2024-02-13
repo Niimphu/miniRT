@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/23 16:03:19 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/05 16:51:02 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ int	parse(int argc, char **argv, t_rt *rt)
 		return (error("Error\nScene: missing camera"), FAIL);
 	if (!rt->scene->lights)
 		return (error("Error\nScene: missing lights"), FAIL);
-	if (!rt->scene->spheres && !rt->scene->planes && !rt->scene->cylinders)
+	if (!rt->scene->spheres && !rt->scene->planes
+			&& !rt->scene->cylinders && !rt->scene->cone)
 		return (error("Error\nScene: missing objects"), FAIL);
 	print_scene_info(rt->scene);
 	return (OK);

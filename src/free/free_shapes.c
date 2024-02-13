@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_shapes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 19:41:58 by yiwong            #+#    #+#             */
-/*   Updated: 2023/12/15 19:41:58 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/04 15:26:24 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,21 @@ void	free_cylinder(void *node)
 			free(cylinder->axis);
 		free(cylinder);
 		cylinder = NULL;
+	}
+}
+
+void	free_cone(void *node)
+{
+	t_cone	*cone;
+
+	cone = (t_cone *)node;
+	if (cone)
+	{
+		if (cone->centre)
+			free(cone->centre);
+		if (cone->axis)
+			free(cone->axis);
+		free(cone);
+		cone = NULL;
 	}
 }

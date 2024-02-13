@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   intersect_sphere.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
+/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:20:58 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/28 17:56:32 by yiwong           ###   ########.fr       */
+/*   Updated: 2024/02/03 14:46:07 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_intersect	ray_intersects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 	if (intersection.distance < TOLERANCE)
 		return (intersection);
 	return ((t_intersect){true,
-		v_add(*viewpoint, v_scale(ray, intersection.distance)),
+		v_add(*viewpoint, v_scale(ray, intersection.distance)), (t_xyz){0},
 		sphere->colour, intersection.distance, sphere,
 		SPHERE, sphere->material});
 }
