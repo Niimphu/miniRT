@@ -50,4 +50,9 @@ bool		intersects_cone(t_xyz intersect_point, t_xyz light_xyz,
 				t_list *cones, t_xyz to_light);
 bool		intersects_triangle(t_xyz intersect_point, t_xyz light_xyz,
 				t_list *triangles, t_xyz to_light);
+
+t_intersect	get_closest_cone(t_xyz viewpoint, t_xyz ray, t_list *cones);
+t_intersect	get_closest_triangle(t_xyz viewpoint, t_xyz ray,
+				t_list *triangles);
+
 #endif
