@@ -22,7 +22,7 @@ t_rgb	bounce(t_scene *scene, t_xyz ray, int bounces,
 	t_intersect	next_shape;
 	t_rgb		next_colour;
 	double		reflectivity;
-	
+
 	reflectivity = intersect.material.reflectivity;
 	if (reflectivity == 0)
 		return (hex_to_rgb(calculate_colour(intersect, scene)));
