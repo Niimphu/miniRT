@@ -16,94 +16,95 @@
 
 #include "../raytrace/draw.h"
 #include "../maths/matrix.h"
+#include "transform.h"
 
-#include "../printer/printer.h"
+double			get_cone_distance(t_cone *cone,
+					t_location_transformation_information_station t);
+static double	ray_intersects_disc(t_cone *cone,
+					t_location_transformation_information_station t);
+static double	closest_intersection(t_cone *cone,
+					t_location_transformation_information_station t);
 
-static double	cone_discr_vars(t_xyz local_viewpoint,
-	t_xyz local_ray, t_cone *cn)
+t_intersect	ray_intersects_cone(t_xyz *viewpoint, t_xyz ray, t_cone *cone)
 {
-	double	discr_vars[4];
-	double	t[2];
-	double	theta;
+	t_location_transformation_information_station	t;
+	t_intersect										intersection;
 
-	theta = pow(cn->radius / cn->height, 2);
-	discr_vars[A] = pow(local_ray.x, 2) + pow(local_ray.z, 2)
-		- (pow(local_ray.y, 2) * theta);
-	discr_vars[B] = (2 * local_viewpoint.x * local_ray.x)
-		+ (2 * local_viewpoint.z * local_ray.z)
-		- (2 * local_viewpoint.y * local_ray.y * theta);
-	discr_vars[C] = pow(local_viewpoint.x, 2) + pow(local_viewpoint.z, 2)
-		- (pow(local_viewpoint.y, 2) * theta);
-	discr_vars[3] = discr_vars[B] * discr_vars[B] - 4 * discr_vars[A]
-		* discr_vars[C];
-	if (discr_vars[3] < 0)
-		return (-1);
-	t[0] = (-discr_vars[B] - sqrt(discr_vars[3])) / (2 * discr_vars[A]);
-	t[1] = (-discr_vars[B] + sqrt(discr_vars[3])) / (2 * discr_vars[A]);
-	if (t[0] <= t[1] && t[0] >= 0)
-		return (t[0]);
-	else if (t[1] < t[0] && t[1] >= 0)
-		return (t[1]);
-	return (-1);
+	intersection = new_intersect();
+	t = new_transform(*cone->axis, *cone->centre, ray, *viewpoint);
+	intersection.distance = get_cone_distance(cone, t);
+	if (intersection.distance < TOLERANCE)
+		intersection.distance = ray_intersects_disc(cone, t);
+	if (intersection.distance < TOLERANCE)
+		return (intersection);
+	intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance));
+	intersection.valid = true;
+	intersection.shape = cone;
+	intersection.type = CONE;
+	intersection.material = cone->material;
+	intersection.colour = cone->colour;
+	return (intersection);
 }
 
-double	cone_local_intersect(t_xyz local_viewpoint, t_xyz local_ray, t_cone *cn)
+double	get_cone_distance(t_cone *cone,
+			t_location_transformation_information_station t)
 {
-	double	t;
+	double	distance;
 	double	intersection_y;
 
-	t = cone_discr_vars(local_viewpoint, local_ray, cn);
-	if (t >= TOLERANCE)
+	distance = closest_intersection(cone, t);
+	if (distance >= TOLERANCE)
 	{
-		intersection_y = local_viewpoint.y + local_ray.y * t;
-		if (intersection_y <= 0 && intersection_y >= -cn->height)
-			return (t);
+		intersection_y = t.local_viewpoint.y + t.local_ray.y * distance;
+		if (intersection_y <= 0 && intersection_y >= -cone->height)
+			return (distance);
 	}
 	return (-1);
 }
 
-double	cone_disk_intersect(t_cone *co, t_xyz *viewpoint, t_xyz ray)
+static double	ray_intersects_disc(t_cone *cone,
+					t_location_transformation_information_station t)
 {
 	t_xyz	disk_center;
 	t_xyz	p;
 	double	dist;
 
-	disk_center = (t_xyz){0, 0 - co->height, 0};
-	dist = v_dot(v_subtract(disk_center, *viewpoint), (t_xyz){0, 1, 0})
-		/ v_dot(ray, (t_xyz){0, 1, 0});
-	p = v_add(*viewpoint, v_scale(ray, dist));
-	if (p2p_distance(disk_center, p) + TOLERANCE < co->radius
+	disk_center = (t_xyz){0, 0 - cone->height, 0};
+	dist = v_dot(v_subtract(disk_center, t.local_viewpoint), (t_xyz){0, 1, 0})
+		/ v_dot(t.local_ray, (t_xyz){0, 1, 0});
+	p = v_add(t.local_viewpoint, v_scale(t.local_ray, dist));
+	if (p2p_distance(disk_center, p) + TOLERANCE < cone->radius
 		&& dist > TOLERANCE)
-		return (p2p_distance(*viewpoint, p));
+		return (p2p_distance(t.local_viewpoint, p));
 	else
 		return (-1);
 }
 
-t_intersect	ray_intersects_cone(t_xyz *viewpoint, t_xyz ray, t_cone *co)
+static double	closest_intersection(t_cone *cone,
+					t_location_transformation_information_station t)
 {
-	t_matrix	to_local;
-	t_matrix	rotation;
-	t_xyz		local_viewpoint;
-	t_xyz		local_ray;
-	t_intersect	intersection;
-	double		rotation_angle;
+	double	discr_vars[4];
+	double	x1;
+	double	x2;
+	double	theta;
 
-	intersection = new_intersect();
-	rotation_angle = angle_between(v_normalize(*co->axis), (t_xyz){0, 1, 0});
-	rotation = create_rotation_matrix(v_cross(*co->axis, (t_xyz){0, 1, 0}), rotation_angle);
-	to_local = local_matrix(*co->axis, *co->centre, rotation_angle);
-	local_ray = v_matrix_mul(rotation, ray);
-	local_viewpoint = v_matrix_mul(to_local, *viewpoint);
-	intersection.distance = cone_local_intersect(local_viewpoint, local_ray, co);
-	if (intersection.distance < TOLERANCE)
-		intersection.distance = cone_disk_intersect(co, &local_viewpoint, local_ray);
-	if (intersection.distance < TOLERANCE)
-		return (intersection);
-	intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance));
-	intersection.valid = true;
-	intersection.shape = co;
-	intersection.type = CONE;
-	intersection.material = co->material;
-	intersection.colour = co->colour;
-	return (intersection);
+	theta = pow(cone->radius / cone->height, 2);
+	discr_vars[A] = pow(t.local_ray.x, 2) + pow(t.local_ray.z, 2)
+		- (pow(t.local_ray.y, 2) * theta);
+	discr_vars[B] = (2 * t.local_viewpoint.x * t.local_ray.x)
+		+ (2 * t.local_viewpoint.z * t.local_ray.z)
+		- (2 * t.local_viewpoint.y * t.local_ray.y * theta);
+	discr_vars[C] = pow(t.local_viewpoint.x, 2) + pow(t.local_viewpoint.z, 2)
+		- (pow(t.local_viewpoint.y, 2) * theta);
+	discr_vars[3] = discr_vars[B] * discr_vars[B] - 4 * discr_vars[A]
+		* discr_vars[C];
+	if (discr_vars[3] < 0)
+		return (-1);
+	x1 = (-discr_vars[B] - sqrt(discr_vars[3])) / (2 * discr_vars[A]);
+	x2 = (-discr_vars[B] + sqrt(discr_vars[3])) / (2 * discr_vars[A]);
+	if (x1 <= x2 && x1 >= 0)
+		return (x1);
+	else if (x2 < x1 && x2 >= 0)
+		return (x2);
+	return (-1);
 }
