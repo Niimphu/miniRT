@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "parser.h"
-#include "printer.h" //debug
 
 #define END 1
 
@@ -41,7 +40,6 @@ int	parse(int argc, char **argv, t_rt *rt)
 		&& !rt->scene->cylinders && !rt->scene->cones
 		&& !rt->scene->triangles)
 		return (error("Error\nScene: missing objects"), FAIL);
-	print_scene_info(rt->scene);
 	return (OK);
 }
 
