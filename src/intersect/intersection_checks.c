@@ -69,7 +69,7 @@ bool	intersects_any_cylinder(t_xyz intersect_point, t_xyz light_xyz,
 bool	intersects_any_cone(t_xyz intersect_point, t_xyz light_xyz,
 				t_list *cones, t_xyz to_light)
 {
-	t_cone	*cone;
+	t_cone		*cone;
 	t_intersect	check;
 
 	while (cones)
