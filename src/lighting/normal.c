@@ -60,14 +60,14 @@ t_xyz cone_normal(t_cone *co, t_xyz point)
 	double	angle;
 
 	t_to_i = v_normalize(v_subtract(point, *co->centre));
-	printf("t_to_i = x = %f,y = %f,z= %f\n, point = x = %f,y = %f,z= %f\n centre = x = %f,y = %f,z= %f\n", t_to_i.x, t_to_i.y, t_to_i.z, point.x, point.y, point.z, co->centre->x, co->centre->y, co->centre->z);
-	angle = angle_between(*co->axis, t_to_i);
-	if (angle < co->theta + TOLERANCE)
+//	printf("t_to_i = x = %f,y = %f,z= %f\n, point = x = %f,y = %f,z= %f\n centre = x = %f,y = %f,z= %f\n", t_to_i.x, t_to_i.y, t_to_i.z, point.x, point.y, point.z, co->centre->x, co->centre->y, co->centre->z);
+	angle = angle_between(v_invert(*co->axis), t_to_i);
+	if (fabs(angle - co->theta) < 1e-2)
 		return (*co->axis);
 	angle = angle * (180 / M_PI);
-	double theta = co->theta * (180 / M_PI);
-	printf("angle = %f, theta = %f\n", angle, theta);
-	exit(1);
+//	double theta = co->theta * (180 / M_PI);
+//	printf("angle = %f, theta = %f\n", angle, theta);
+//	exit(1);
 	return (v_normalize(point));
 }
 
