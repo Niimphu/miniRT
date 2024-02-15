@@ -60,7 +60,8 @@ t_xyz cone_normal(t_cone *co, t_xyz point)
 	t_xyz	p_on_axis;
 	double	angle;
 	double	theta;
-	double	projected_length;
+	double	i_distance;
+	double	p_distance;
 
 	theta = atan(co->radius / co->height);
 	t_to_i = v_normalize(v_subtract(point, *co->centre));
@@ -68,12 +69,14 @@ t_xyz cone_normal(t_cone *co, t_xyz point)
 	angle = angle_between(v_invert(*co->axis), t_to_i);
 	if (fabs(theta - angle) > 1e-1)
 		return (v_invert(*co->axis));
-	projected_length = v_dot(t_to_i, *co->axis);
-	p_on_axis = v_subtract(t_to_i, v_scale(*co->axis, projected_length));
+	i_distance = p2p_distance(*co->centre, point);
+	p_distance = i_distance / (cos(co->theta));
+	p_on_axis = v_add(*co->centre, v_scale(*co->axis, p_distance));
+	t_xyz 	normal = v_subtract(point, p_on_axis);
 /* 	angle = angle * (180 / M_PI);
 	theta = theta * (180 / M_PI);
 	printf("angle = %f, theta = %f\n", angle, theta); */
-	return (v_normalize((t_xyz){-p_on_axis.y, p_on_axis.x, 0}));
+	return (v_normalize(normal));
 }
 
 // double calculate_angle_at_p(Vector2D c, Vector2D i, Vector2D p) {

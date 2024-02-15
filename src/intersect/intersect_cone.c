@@ -86,16 +86,14 @@ static double	closest_intersection(t_cone *cone,
 	double	discr_vars[4];
 	double	x1;
 	double	x2;
-	double	theta;
 
-	theta = pow(cone->radius / cone->height, 2);
 	discr_vars[A] = pow(t.local_ray.x, 2) + pow(t.local_ray.z, 2)
-		- (pow(t.local_ray.y, 2) * theta);
+		- (pow(t.local_ray.y, 2) * cone->theta);
 	discr_vars[B] = (2 * t.local_viewpoint.x * t.local_ray.x)
 		+ (2 * t.local_viewpoint.z * t.local_ray.z)
-		- (2 * t.local_viewpoint.y * t.local_ray.y * theta);
+		- (2 * t.local_viewpoint.y * t.local_ray.y * cone->theta);
 	discr_vars[C] = pow(t.local_viewpoint.x, 2) + pow(t.local_viewpoint.z, 2)
-		- (pow(t.local_viewpoint.y, 2) * theta);
+		- (pow(t.local_viewpoint.y, 2) * cone->theta);
 	discr_vars[3] = discr_vars[B] * discr_vars[B] - 4 * discr_vars[A]
 		* discr_vars[C];
 	if (discr_vars[3] < 0)
