@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/15 18:36:55 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/13 16:31:19 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/13 18:05:38 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_cone
 	t_xyz		*axis;
 	double		radius;
 	double		height;
+	double		theta;
 	t_rgb		colour;
 	t_material	material;
 }				t_cone;

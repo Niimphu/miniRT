@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 18:41:51 by Kekuhne           #+#    #+#             */
-/*   Updated: 2024/02/10 17:48:33 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/13 18:21:30 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,14 @@ static double	cone_discr_vars(t_xyz local_viewpoint,
 {
 	double	discr_vars[4];
 	double	t[2];
-	double	theta;
 
-	theta = pow(cn->radius / cn->height, 2);
 	discr_vars[A] = pow(local_ray.x, 2) + pow(local_ray.z, 2)
-		- (pow(local_ray.y, 2) * theta);
+		- (pow(local_ray.y, 2) * cn->theta);
 	discr_vars[B] = (2 * local_viewpoint.x * local_ray.x)
 		+ (2 * local_viewpoint.z * local_ray.z)
-		- (2 * local_viewpoint.y * local_ray.y * theta);
+		- (2 * local_viewpoint.y * local_ray.y * cn->theta);
 	discr_vars[C] = pow(local_viewpoint.x, 2) + pow(local_viewpoint.z, 2)
-		- (pow(local_viewpoint.y, 2) * theta);
+		- (pow(local_viewpoint.y, 2) * cn->theta);
 	discr_vars[3] = discr_vars[B] * discr_vars[B] - 4 * discr_vars[A]
 		* discr_vars[C];
 	if (discr_vars[3] < 0)
