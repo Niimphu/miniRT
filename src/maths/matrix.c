@@ -81,11 +81,14 @@ double	angle_between(t_xyz v1, t_xyz v2)
 	double	dot;
 	double	length_v1;
 	double	length_v2;
+	double	cos_angle;
 
 	dot = v_dot(v1, v2);
 	length_v1 = v_length(v1);
 	length_v2 = v_length(v2);
-	return (acos(dot / (length_v1 * length_v2)));
+	cos_angle = dot / (length_v1 * length_v2);
+	cos_angle = fmax(-1.0, fmin(1.0, cos_angle));
+	return (acos(cos_angle));
 }
 
 t_xyz	v_matrix_mul(t_matrix m, t_xyz in)
