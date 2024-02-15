@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 18:22:33 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/15 16:36:33 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/15 19:11:33 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,23 @@ t_xyz	triangle_normal(t_triangle *triangle)
 t_xyz cone_normal(t_cone *co, t_xyz point)
 {
 	t_xyz	t_to_i;
+	t_xyz	p_on_axis;
 	double	angle;
+	double	theta;
+	double	projected_length;
 
+	theta = atan(co->radius / co->height);
 	t_to_i = v_normalize(v_subtract(point, *co->centre));
 //	printf("t_to_i = x = %f,y = %f,z= %f\n, point = x = %f,y = %f,z= %f\n centre = x = %f,y = %f,z= %f\n", t_to_i.x, t_to_i.y, t_to_i.z, point.x, point.y, point.z, co->centre->x, co->centre->y, co->centre->z);
 	angle = angle_between(v_invert(*co->axis), t_to_i);
-	if (fabs(angle - co->theta) < 1e-2)
-		return (*co->axis);
-	angle = angle * (180 / M_PI);
-//	double theta = co->theta * (180 / M_PI);
-//	printf("angle = %f, theta = %f\n", angle, theta);
-//	exit(1);
-	return (v_normalize(point));
+	if (fabs(theta - angle) > 1e-1)
+		return (v_invert(*co->axis));
+	projected_length = v_dot(t_to_i, *co->axis);
+	p_on_axis = v_subtract(t_to_i, v_scale(*co->axis, projected_length));
+/* 	angle = angle * (180 / M_PI);
+	theta = theta * (180 / M_PI);
+	printf("angle = %f, theta = %f\n", angle, theta); */
+	return (v_normalize((t_xyz){-p_on_axis.y, p_on_axis.x, 0}));
 }
 
 // double calculate_angle_at_p(Vector2D c, Vector2D i, Vector2D p) {

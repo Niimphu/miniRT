@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/03 18:41:51 by Kekuhne           #+#    #+#             */
-/*   Updated: 2024/02/13 18:21:30 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/15 18:32:14 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ static double	cone_discr_vars(t_xyz local_viewpoint,
 		- (pow(local_viewpoint.y, 2) * cn->theta);
 	discr_vars[3] = discr_vars[B] * discr_vars[B] - 4 * discr_vars[A]
 		* discr_vars[C];
-	if (discr_vars[3] < 0)
+	if (discr_vars[3] < TOLERANCE)
 		return (-1);
 	t[0] = (-discr_vars[B] - sqrt(discr_vars[3])) / (2 * discr_vars[A]);
 	t[1] = (-discr_vars[B] + sqrt(discr_vars[3])) / (2 * discr_vars[A]);
-	if (t[0] <= t[1] && t[0] >= 0)
+	if (t[0] <= t[1] && t[0] >= TOLERANCE)
 		return (t[0]);
-	else if (t[1] < t[0] && t[1] >= 0)
+	else if (t[1] < t[0] && t[1] >= TOLERANCE)
 		return (t[1]);
 	return (-1);
 }
@@ -93,9 +93,9 @@ t_intersect	ray_intersects_cone(t_xyz *viewpoint, t_xyz ray, t_cone *co)
 	local_ray = v_matrix_mul(rotation, ray);
 	local_viewpoint = v_matrix_mul(to_local, *viewpoint);
 	intersection.distance = cone_local_intersect(local_viewpoint, local_ray, co);
-	if (intersection.distance < TOLERANCE)
+	if (intersection.distance == -1)
 		intersection.distance = cone_disk_intersect(co, &local_viewpoint, local_ray);
-	if (intersection.distance < TOLERANCE)
+	if (intersection.distance == -1)
 		return (intersection);
 	intersection.point = v_add(*viewpoint, v_scale(ray, intersection.distance));
 	intersection.valid = true;

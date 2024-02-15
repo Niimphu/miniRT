@@ -6,7 +6,7 @@
 /*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/04 15:18:35 by Kekuhne           #+#    #+#             */
-/*   Updated: 2024/02/15 16:28:09 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/15 18:23:11 by Kekuhne          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	new_cone(char **input, t_scene *scene)
 		return (free(cone), error("Error\ncone: invalid height"));
 	cone->height = ft_atod(input[3]);
 	cone->colour = atorgb(input[4]);
-	cone->theta = atan(cone->radius / cone->height);
+	cone->theta = pow(cone->radius / cone->height, 2);
 	if (!is_valid_rgb(cone->colour))
 		return (free(cone), error("Error\ncone: invalid colour"));
 	cone = cone_extended(input, cone, info_count);
