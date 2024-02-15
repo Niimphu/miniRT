@@ -20,7 +20,7 @@ SRC =	main.c \
 		raytrace/bounce.c \
 		lighting/lighting.c lighting/lighting_utils.c lighting/normal.c \
 		intersect/intersect.c intersect/intersection_checks.c \
-		intersect/closest_shape.c \
+		intersect/closest_shape.c intersect/closest_shape_bonus.c \
 		intersect/intersect_plane.c intersect/intersect_sphere.c intersect/intersect_cylinder.c \
 		intersect/intersect_cone.c intersect/intersect_triangle.c \
 		intersect/transform.c \
@@ -33,8 +33,7 @@ SRC =	main.c \
 		quit.c \
 		utils.c \
 		bonus/draw_multithreaded.c \
-		bonus/multithread_utils.c \
-		printer/printer.c
+		bonus/multithread_utils.c
 
 OBJ =	$(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

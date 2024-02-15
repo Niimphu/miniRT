@@ -24,7 +24,7 @@ t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 	int			i;
 	t_intersect	closest[5];
 	t_intersect	closest_shape;
-	
+
 	i = 0;
 	closest_shape = new_intersect();
 	closest[0] = get_closest_sphere(viewpoint, ray, scene->spheres);
@@ -34,9 +34,9 @@ t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 	closest[4] = get_closest_triangle(viewpoint, ray, scene->triangles);
 	while (i < 4)
 	{
-			if (closest[i].valid && ((closest[i].distance <= closest_shape.distance)
+		if (closest[i].valid && ((closest[i].distance <= closest_shape.distance)
 				|| !closest_shape.valid))
-				closest_shape = closest[i];
+			closest_shape = closest[i];
 		i++;
 	}
 	return (closest_shape);
@@ -92,42 +92,6 @@ t_intersect	get_closest_cylinder(t_xyz viewpoint, t_xyz ray, t_list *cylinders)
 		if (!closest.valid || (new.valid && (new.distance < closest.distance)))
 			closest = new;
 		cylinders = cylinders->next;
-	}
-	return (closest);
-}
-
-t_intersect	get_closest_cone(t_xyz viewpoint, t_xyz ray, t_list *cones)
-{
-	t_cone		*cone;
-	t_intersect	closest;
-	t_intersect	new;
-
-	closest = new_intersect();
-	while (cones)
-	{
-		cone = (t_cone *)cones->content;
-		new = ray_intersects_cone(&viewpoint, ray, cone);
-		if (!closest.valid || (new.valid && (new.distance < closest.distance)))
-			closest = new;
-		cones = cones->next;
-	}
-	return (closest);
-}
-
-t_intersect	get_closest_triangle(t_xyz viewpoint, t_xyz ray, t_list *triangles)
-{
-	t_triangle	*triangle;
-	t_intersect	closest;
-	t_intersect	new;
-
-	closest = new_intersect();
-	while (triangles)
-	{
-		triangle = (t_triangle *) triangles->content;
-		new = ray_intersects_triangle(&viewpoint, ray, triangle);
-		if (!closest.valid || (new.valid && (new.distance < closest.distance)))
-			closest = new;
-		triangles = triangles->next;
 	}
 	return (closest);
 }

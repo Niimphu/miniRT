@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   intersection_checks.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 20:15:03 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/13 16:27:45 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2024/02/13 16:56:47 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "intersect.h"
 
-bool	intersects_sphere(t_xyz intersect_point, t_xyz light_xyz,
+bool	intersects_any_sphere(t_xyz intersect_point, t_xyz light_xyz,
 			t_list *spheres, t_xyz to_light)
 {
 	t_sphere	*sphere;
@@ -30,7 +30,7 @@ bool	intersects_sphere(t_xyz intersect_point, t_xyz light_xyz,
 	return (false);
 }
 
-bool	intersects_plane(t_xyz intersect_point, t_xyz light_xyz,
+bool	intersects_any_plane(t_xyz intersect_point, t_xyz light_xyz,
 			t_list *planes, t_xyz to_light)
 {
 	t_plane		*plane;
@@ -48,7 +48,7 @@ bool	intersects_plane(t_xyz intersect_point, t_xyz light_xyz,
 	return (false);
 }
 
-bool	intersects_cylinder(t_xyz intersect_point, t_xyz light_xyz,
+bool	intersects_any_cylinder(t_xyz intersect_point, t_xyz light_xyz,
 				t_list *cylinders, t_xyz to_light)
 {
 	t_cylinder	*cylinder;
@@ -66,10 +66,10 @@ bool	intersects_cylinder(t_xyz intersect_point, t_xyz light_xyz,
 	return (false);
 }
 
-bool	intersects_cone(t_xyz intersect_point, t_xyz light_xyz,
+bool	intersects_any_cone(t_xyz intersect_point, t_xyz light_xyz,
 				t_list *cones, t_xyz to_light)
 {
-	t_cone	*cone;
+	t_cone		*cone;
 	t_intersect	check;
 
 	while (cones)
@@ -84,7 +84,7 @@ bool	intersects_cone(t_xyz intersect_point, t_xyz light_xyz,
 	return (false);
 }
 
-bool	intersects_triangle(t_xyz intersect_point, t_xyz light_xyz,
+bool	intersects_any_triangle(t_xyz intersect_point, t_xyz light_xyz,
 							t_list *triangles, t_xyz to_light)
 {
 	t_triangle	*triangle;

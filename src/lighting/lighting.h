@@ -35,6 +35,8 @@ t_rgb		combine_ambient(t_rgb base, t_rgb light_colour,
 t_xyz		get_surface_normal(t_intersect intersect);
 t_xyz		get_halfway_vector(t_xyz intersection, t_xyz light_pos,
 				t_xyz camera_pos);
+bool		intersects_any_shape(t_xyz intersection, t_xyz light_point,
+				t_scene *scene, t_xyz light_direction);
 
 t_xyz		sphere_normal(t_sphere *sphere, t_xyz point);
 t_xyz		plane_normal(t_plane *plane);
