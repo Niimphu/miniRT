@@ -57,25 +57,16 @@ t_xyz	triangle_normal(t_triangle *triangle)
 t_xyz cone_normal(t_cone *co, t_xyz point)
 {
 	t_xyz	t_to_i;
-	t_xyz	p_on_axis;
 	double	angle;
 	double	theta;
-	double	i_distance;
-	double	p_distance;
 
 	theta = atan(co->radius / co->height);
 	t_to_i = v_normalize(v_subtract(point, *co->centre));
-//	printf("t_to_i = x = %f,y = %f,z= %f\n, point = x = %f,y = %f,z= %f\n centre = x = %f,y = %f,z= %f\n", t_to_i.x, t_to_i.y, t_to_i.z, point.x, point.y, point.z, co->centre->x, co->centre->y, co->centre->z);
 	angle = angle_between(v_invert(*co->axis), t_to_i);
 	if (fabs(theta - angle) > 1e-1)
 		return (v_invert(*co->axis));
-	i_distance = p2p_distance(*co->centre, point);
-	p_distance = i_distance / (cos(co->theta));
-	p_on_axis = v_add(*co->centre, v_scale(*co->axis, p_distance));
-	t_xyz 	normal = v_subtract(point, p_on_axis);
-/* 	angle = angle * (180 / M_PI);
-	theta = theta * (180 / M_PI);
-	printf("angle = %f, theta = %f\n", angle, theta); */
+	t_xyz	perp = v_normalize(v_cross(t_to_i, *co->axis));
+	t_xyz	normal = v_cross(perp, t_to_i);
 	return (v_normalize(normal));
 }
 
