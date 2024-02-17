@@ -32,8 +32,8 @@
 # define SCREEN_WIDTH 1920
 
 //C1 and C3 are coefficients for light intensity drop-off based on distance
-# define C1 1.2
-# define C3 0.00005
+# define C1 1.1
+# define C3 0.00004
 
 # define OK 0
 # define FAIL -1
