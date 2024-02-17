@@ -54,30 +54,20 @@ t_xyz	triangle_normal(t_triangle *triangle)
 	return (v_normalize(normal));
 }
 
-t_xyz cone_normal(t_cone *co, t_xyz point)
+t_xyz	cone_normal(t_cone *co, t_xyz point)
 {
 	t_xyz	t_to_i;
 	double	angle;
 	double	theta;
+	t_xyz	orthogonal;
+	t_xyz	normal;
 
 	theta = atan(co->radius / co->height);
 	t_to_i = v_normalize(v_subtract(point, *co->centre));
 	angle = angle_between(v_invert(*co->axis), t_to_i);
-	if (fabs(theta - angle) > 1e-1)
+	if (theta > angle + TOLERANCE)
 		return (v_invert(*co->axis));
-	t_xyz	perp = v_normalize(v_cross(t_to_i, *co->axis));
-	t_xyz	normal = v_cross(perp, t_to_i);
+	orthogonal = v_normalize(v_cross(t_to_i, *co->axis));
+	normal = v_cross(orthogonal, t_to_i);
 	return (v_normalize(normal));
 }
-
-// double calculate_angle_at_p(Vector2D c, Vector2D i, Vector2D p) {
-//     // Calculate the lengths of sides CP and CI
-//     double cp_length = sqrt((p.x - c.x) * (p.x - c.x) + (p.y - c.y) * (p.y - c.y));
-//     double ci_length = sqrt((i.x - c.x) * (i.x - c.x) + (i.y - c.y) * (i.y - c.y));
-    
-//     // Calculate the cosine of the angle at P using the law of cosines
-//     double cos_angle_p = ((ci_length * ci_length) + (cp_length * cp_length) - (ip_length * ip_length)) / (2 * ci_length * cp_length);
-    
-//     // Return the angle at P in degrees
-//     return acos(cos_angle_p) * 180 / M_PI; // Convert angle from radians to degrees
-// }
