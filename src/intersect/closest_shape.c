@@ -32,7 +32,7 @@ t_intersect	get_closest_shape(t_xyz viewpoint, t_xyz ray, t_scene *scene)
 	closest[2] = get_closest_cylinder(viewpoint, ray, scene->cylinders);
 	closest[3] = get_closest_cone(viewpoint, ray, scene->cones);
 	closest[4] = get_closest_triangle(viewpoint, ray, scene->triangles);
-	while (i < 4)
+	while (i < 5)
 	{
 		if (closest[i].valid && ((closest[i].distance <= closest_shape.distance)
 				|| !closest_shape.valid))
