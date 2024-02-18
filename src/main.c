@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 	if (!rt)
 		return (FAIL);
 	if (parse(argc, argv, rt) == FAIL)
-		return (free(rt), FAIL);
+		return (free_rt(&rt), FAIL);
 	initialise(rt);
 	raytrace(rt);
 	free_rt(&rt);

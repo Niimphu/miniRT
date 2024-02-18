@@ -29,8 +29,10 @@ void	free_rt(t_rt **rt)
 static void	free_mlx(t_vars **mlx_data)
 {
 	if ((*mlx_data) && (*mlx_data)->mlx)
+	{
 		free((*mlx_data)->mlx);
-	(*mlx_data)->mlx = NULL;
+		(*mlx_data)->mlx = NULL;
+	}
 	if (*mlx_data != NULL)
 		free(*mlx_data);
 	mlx_data = NULL;
