@@ -20,7 +20,6 @@ t_intersect	new_intersect(void)
 
 	new.valid = false;
 	new.point = (t_xyz){0};
-	new.point_normal = (t_xyz){0};
 	new.colour = (t_rgb){0};
 	new.distance = 0.0;
 	new.shape = NULL;

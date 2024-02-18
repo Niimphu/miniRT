@@ -38,7 +38,7 @@ t_intersect	ray_intersects_sphere(t_xyz *viewpoint, t_xyz ray, t_sphere *sphere)
 	if (intersection.distance < TOLERANCE)
 		return (intersection);
 	return ((t_intersect){true,
-		v_add(*viewpoint, v_scale(ray, intersection.distance)), (t_xyz){0},
+		v_add(*viewpoint, v_scale(ray, intersection.distance)),
 		sphere->colour, intersection.distance, sphere,
 		SPHERE, sphere->material});
 }

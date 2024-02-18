@@ -24,6 +24,7 @@ SRC =	main.c \
 		intersect/intersect_plane.c intersect/intersect_sphere.c intersect/intersect_cylinder.c \
 		intersect/intersect_cone.c intersect/intersect_triangle.c \
 		intersect/transform.c \
+		intersect/intersect_cylinder_utils.c \
 		maths/vector.c maths/vector_basic.c maths/point.c \
 		maths/matrix.c maths/matrix_utils.c \
 		colour/colour.c \

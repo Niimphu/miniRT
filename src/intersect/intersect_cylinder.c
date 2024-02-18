@@ -17,9 +17,9 @@
 #define TOP 0
 #define BOT 1
 
-#include "../raytrace/draw.h"
 #include "../maths/matrix.h"
 #include "transform.h"
+#include "intersect.h"
 
 static t_intersect	ray_intersects_tube(t_xyz viewpoint, t_xyz ray,
 						t_cylinder *cylinder,
@@ -27,7 +27,7 @@ static t_intersect	ray_intersects_tube(t_xyz viewpoint, t_xyz ray,
 static t_intersect	ray_intersects_caps(t_xyz viewpoint, t_xyz ray,
 						t_cylinder *cylinder,
 						t_location_transformation_information_station t);
-static double		get_tube_distance(t_xyz viewpoint, t_xyz ray,
+static t_xyz		get_tube_distance(t_xyz viewpoint, t_xyz ray,
 						t_cylinder *cylinder);
 static t_intersect	get_cap_intersection(t_xyz centre, t_cylinder *cylinder,
 						t_location_transformation_information_station t);
@@ -54,17 +54,12 @@ static t_intersect	ray_intersects_tube(t_xyz viewpoint, t_xyz ray,
 						t_location_transformation_information_station t)
 {
 	t_intersect	intersect;
+	t_xyz		distances;
 
 	intersect = new_intersect();
-	intersect.distance = get_tube_distance(t.local_viewpoint,
+	distances = get_tube_distance(t.local_viewpoint,
 			t.local_ray, cylinder);
-	if (intersect.distance < TOLERANCE)
-		return (intersect);
-	intersect.point = v_add(t.local_viewpoint,
-			v_scale(t.local_ray, intersect.distance));
-	if (intersect.point.y < cylinder->height / 2
-		&& intersect.point.y > cylinder->height / -2)
-		intersect.valid = true;
+	intersect = closest_side(distances, cylinder, t);
 	intersect.point = v_add(viewpoint,
 			v_scale(ray, intersect.distance - TOLERANCE));
 	return (intersect);
@@ -98,11 +93,10 @@ static t_intersect	ray_intersects_caps(t_xyz viewpoint, t_xyz ray,
 	return (intersect[BOT]);
 }
 
-static double	get_tube_distance(t_xyz viewpoint, t_xyz ray,
+static t_xyz	get_tube_distance(t_xyz viewpoint, t_xyz ray,
 			t_cylinder *cylinder)
 {
-	double	t1;
-	double	t2;
+	t_xyz	result;
 	double	vars[3];
 	double	discriminant;
 	t_xyz	axis;
@@ -114,17 +108,14 @@ static double	get_tube_distance(t_xyz viewpoint, t_xyz ray,
 	vars[C] = v_dot(viewpoint, viewpoint) - pow(v_dot(viewpoint, axis), 2)
 		- pow(cylinder->radius, 2);
 	discriminant = vars[B] * vars[B] - 4 * vars[A] * vars[C];
+	result = (t_xyz){0};
 	if (discriminant < 0)
-		return (0);
+		return (result);
 	if (discriminant < TOLERANCE)
-		return (-vars[B] / 2.0 * vars[A]);
-	t1 = (-vars[1] - sqrt(discriminant)) / (2 * vars[0]);
-	t2 = (-vars[1] + sqrt(discriminant)) / (2 * vars[0]);
-	if (t1 > TOLERANCE && t2 > TOLERANCE)
-		return (fmin(t1, t2));
-	if (t1 > TOLERANCE)
-		return (t1);
-	return (t2);
+		return (result.x = -vars[B] / 2.0 * vars[A], result);
+	result.x = (-vars[1] - sqrt(discriminant)) / (2 * vars[0]);
+	result.y = (-vars[1] + sqrt(discriminant)) / (2 * vars[0]);
+	return (result);
 }
 
 static t_intersect	get_cap_intersection(t_xyz centre, t_cylinder *cylinder,

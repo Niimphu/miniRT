@@ -13,8 +13,8 @@
 #ifndef DRAW_H
 # define DRAW_H
 
-# include "../../lib/miniRT.h"
 # include "../intersect/intersect.h"
+# include "../../lib/miniRT.h"
 
 int			draw_scene(t_rt *rt);
 

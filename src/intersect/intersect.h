@@ -15,12 +15,12 @@
 
 # include "miniRT.h"
 # include "xyz.h"
+# include "transform.h"
 
 typedef struct s_intersect
 {
 	bool		valid;
 	t_xyz		point;
-	t_xyz		point_normal;
 	t_rgb		colour;
 	double		distance;
 	void		*shape;
@@ -54,5 +54,8 @@ bool		intersects_any_triangle(t_xyz intersect_point, t_xyz light_xyz,
 t_intersect	get_closest_cone(t_xyz viewpoint, t_xyz ray, t_list *cones);
 t_intersect	get_closest_triangle(t_xyz viewpoint, t_xyz ray,
 				t_list *triangles);
+
+t_intersect	closest_side(t_xyz distances, t_cylinder *cylinder,
+				t_location_transformation_information_station t);
 
 #endif

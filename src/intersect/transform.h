@@ -10,8 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../raytrace/draw.h"
-#include "../maths/matrix.h"
+#ifndef TRANSFORM_H
+# define TRANSFORM_H
+
+# include "../maths/matrix.h"
 
 typedef struct s_location_transformation_information_station
 {
@@ -25,3 +27,5 @@ typedef struct s_location_transformation_information_station
 t_location_transformation_information_station	new_transform(t_xyz axis,
 													t_xyz shape_centre,
 													t_xyz ray, t_xyz viewpoint);
+
+#endif
