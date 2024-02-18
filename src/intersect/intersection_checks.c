@@ -95,7 +95,7 @@ bool	intersects_any_triangle(t_xyz intersect_point, t_xyz light_xyz,
 		triangle = (t_triangle *)triangles->content;
 		check = ray_intersects_triangle(&intersect_point, to_light, triangle);
 		if (check.valid && check.distance > TOLERANCE
-			&& (check.distance < p2p_distance(intersect_point, light_xyz)))
+			&& (check.distance + TOLERANCE < p2p_distance(intersect_point, light_xyz)))
 			return (true);
 		triangles = triangles->next;
 	}
