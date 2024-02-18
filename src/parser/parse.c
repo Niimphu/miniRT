@@ -34,7 +34,7 @@ int	parse(int argc, char **argv, t_rt *rt)
 	close(fd);
 	if (!rt->scene->camera)
 		return (error("Error\nScene: missing camera"), FAIL);
-	if (!rt->scene->lights)
+	if (!rt->scene->lights || !rt->scene->ambience)
 		return (error("Error\nScene: missing lights"), FAIL);
 	if (!rt->scene->spheres && !rt->scene->planes
 		&& !rt->scene->cylinders && !rt->scene->cones
