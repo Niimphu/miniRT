@@ -57,5 +57,6 @@ t_intersect	get_closest_triangle(t_xyz viewpoint, t_xyz ray,
 
 t_intersect	closest_side(t_xyz distances, t_cylinder *cylinder,
 				t_location_transformation_information_station t);
+t_intersect	get_closer_buddy(t_intersect first, t_intersect second);
 
 #endif

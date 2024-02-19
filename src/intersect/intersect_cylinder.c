@@ -37,11 +37,15 @@ t_intersect	ray_intersects_cylinder(t_xyz *viewpoint, t_xyz ray,
 {
 	t_location_transformation_information_station	t;
 	t_intersect										intersection;
+	t_intersect										tube;
+	t_intersect										disc;
 
 	t = new_transform(*cylinder->axis, *cylinder->centre, ray, *viewpoint);
-	intersection = ray_intersects_tube(*viewpoint, ray, cylinder, t);
+	tube = ray_intersects_tube(*viewpoint, ray, cylinder, t);
+	disc = ray_intersects_caps(*viewpoint, ray, cylinder, t);
+	intersection = get_closer_buddy(tube, disc);
 	if (!intersection.valid)
-		intersection = ray_intersects_caps(*viewpoint, ray, cylinder, t);
+		return (new_intersect());
 	intersection.shape = cylinder;
 	intersection.type = CYLINDER;
 	intersection.colour = cylinder->colour;
@@ -56,7 +60,6 @@ static t_intersect	ray_intersects_tube(t_xyz viewpoint, t_xyz ray,
 	t_intersect	intersect;
 	t_xyz		distances;
 
-	intersect = new_intersect();
 	distances = get_tube_distance(t.local_viewpoint,
 			t.local_ray, cylinder);
 	intersect = closest_side(distances, cylinder, t);
@@ -83,9 +86,9 @@ static t_intersect	ray_intersects_caps(t_xyz viewpoint, t_xyz ray,
 	intersect[TOP] = get_cap_intersection(centre[TOP], cylinder, t);
 	intersect[TOP].point = v_add(viewpoint,
 			v_scale(ray, intersect[TOP].distance));
+	intersect[BOT] = get_cap_intersection(centre[BOT], cylinder, t);
 	intersect[BOT].point = v_add(viewpoint,
 			v_scale(ray, intersect[BOT].distance));
-	intersect[BOT] = get_cap_intersection(centre[BOT], cylinder, t);
 	if (intersect[TOP].valid && intersect[BOT].valid)
 		return (intersect[closest]);
 	if (intersect[TOP].valid)

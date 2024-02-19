@@ -10,11 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../../lib/element.h"
+#include "../../lib/miniRT.h"
 #include "transform.h"
-#include "../maths/matrix.h"
 #include "intersect.h"
 
-static t_intersect	get_closer_buddy(t_intersect first, t_intersect second);
+t_intersect	get_closer_buddy(t_intersect first, t_intersect second);
 
 t_intersect	closest_side(t_xyz distances, t_cylinder *cylinder,
 				t_location_transformation_information_station t)
@@ -45,7 +46,7 @@ t_intersect	closest_side(t_xyz distances, t_cylinder *cylinder,
 	return (get_closer_buddy(first, second));
 }
 
-static t_intersect	get_closer_buddy(t_intersect first, t_intersect second)
+t_intersect	get_closer_buddy(t_intersect first, t_intersect second)
 {
 	t_intersect	closest;
 
