@@ -54,7 +54,7 @@ t_xyz	triangle_normal(t_triangle *triangle)
 	return (v_normalize(normal));
 }
 
-t_xyz	cone_normal(t_cone *co, t_xyz point)
+t_xyz	cone_normal(t_cone *cone, t_xyz point)
 {
 	t_xyz	t_to_i;
 	double	angle;
@@ -62,12 +62,12 @@ t_xyz	cone_normal(t_cone *co, t_xyz point)
 	t_xyz	orthogonal;
 	t_xyz	normal;
 
-	theta = atan(co->radius / co->height);
-	t_to_i = v_normalize(v_subtract(point, *co->centre));
-	angle = angle_between(v_invert(*co->axis), t_to_i);
+	theta = atan(cone->radius / cone->height);
+	t_to_i = v_normalize(v_subtract(point, *cone->centre));
+	angle = angle_between(v_invert(*cone->axis), t_to_i);
 	if (theta > angle + TOLERANCE)
-		return (v_invert(*co->axis));
-	orthogonal = v_normalize(v_cross(t_to_i, *co->axis));
+		return (v_invert(*cone->axis));
+	orthogonal = v_normalize(v_cross(t_to_i, *cone->axis));
 	normal = v_cross(orthogonal, t_to_i);
 	return (v_normalize(normal));
 }
