@@ -42,7 +42,7 @@ Using triangles to draw a simpel model
 
 Handling recursive reflections
 <img src='https://github.com/Niimphu/miniRT/blob/main/pic/Reflections.png' width='800'>  
-
+<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Metal.png' width='800'>
 With and without MSAA enabled
 <img src='https://github.com/Niimphu/miniRT/blob/main/pic/MSAAon.png' width='800'><img src='https://github.com/Niimphu/miniRT/blob/main/pic/MSAAoff.png' width='800'>  
 
