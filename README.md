@@ -37,7 +37,7 @@ Handling multiple light sources with different colours
 Cylinders
 <img src='https://github.com/Niimphu/miniRT/blob/main/pic/Cylinders.png' width='800'>  
 
-Using triangles to draw a simpel model
+Using triangles to draw a simple model
 <img src='https://github.com/Niimphu/miniRT/blob/main/pic/Venus.png' width='800'>  
 
 Handling recursive reflections
