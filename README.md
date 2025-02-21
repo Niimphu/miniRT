@@ -9,6 +9,8 @@ miniRT is a graphical project, in which a raytracing program must be written fro
 
 - [Gallery](#gallery)
 
+- [Reading and editing map files](#reading-and-editing-map-files)
+
 
 # Concepts
 ## Introduction
@@ -56,7 +58,36 @@ make bonus
 ./miniRT maps/metal.rt
 ```
 
-## Reading and editing map files
+
+
+## Gallery
+
+Example scene    
+<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Sample.png' width='800'>
+
+Spheres
+<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Spheres.png' width='800'>  
+
+Handling multiple light sources with different colours 
+<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Multispot.png' width='800'>  
+
+Cylinders
+<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Cylinders.png' width='800'>  
+
+Using triangles to draw a simple model
+<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Venus.png' width='800'>  
+
+Handling recursive reflections
+<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Reflections.png' width='800'>  
+<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Metal.png' width='800'>
+With and without MSAA enabled
+<img src='https://github.com/Niimphu/miniRT/blob/main/pic/MSAAon.png' width='800'><img src='https://github.com/Niimphu/miniRT/blob/main/pic/MSAAoff.png' width='800'>  
+
+
+Specular lighting
+<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Specular.png' width='800'>  
+
+# Reading and editing map files
 The project requires our maps to be text files with the .rt ending.
 The formatting for each map element starts with a letter which identifies the element, and is followed by specific information for that element.
 
@@ -176,32 +207,4 @@ The three requires properties are appened to this sphere, and are:
 
 * Reflectivity in the range [0,1]
 
-
-
-## Gallery
-
-Example scene    
-<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Sample.png' width='800'>
-
-Spheres
-<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Spheres.png' width='800'>  
-
-Handling multiple light sources with different colours 
-<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Multispot.png' width='800'>  
-
-Cylinders
-<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Cylinders.png' width='800'>  
-
-Using triangles to draw a simple model
-<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Venus.png' width='800'>  
-
-Handling recursive reflections
-<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Reflections.png' width='800'>  
-<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Metal.png' width='800'>
-With and without MSAA enabled
-<img src='https://github.com/Niimphu/miniRT/blob/main/pic/MSAAon.png' width='800'><img src='https://github.com/Niimphu/miniRT/blob/main/pic/MSAAoff.png' width='800'>  
-
-
-Specular lighting
-<img src='https://github.com/Niimphu/miniRT/blob/main/pic/Specular.png' width='800'>  
 
