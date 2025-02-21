@@ -36,6 +36,15 @@ SRC =	main.c \
 		bonus/draw_multithreaded.c \
 		bonus/multithread_utils.c
 
+
+TOTAL_FILES := $(words $(SRC))
+CURR_FILE = 0
+GREEN = \033[32m
+RED = \033[31m
+YELLOW = \033[33m
+RESET = \033[0m
+
+
 OBJ =	$(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 MLX_DIR = lib/mlx_linux
@@ -59,20 +68,33 @@ NAME = miniRT
 all: $(NAME)
 
 $(NAME): $(DEP) $(OBJ)
+	@echo "\n$(GREEN)Building libraries...$(RESET)"
 	@make -sC $(MLX_DIR)
 	@make bonus -sC $(LIBFT_DIR)
+	@echo "$(GREEN)Linking $(NAME)...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -o $(NAME) $(LDFLAGS)
+	@echo "$(GREEN)Build complete!$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@$(eval CURR_FILE=$(shell echo $$(($(CURR_FILE)+1))))
+	@printf "$(GREEN)Compiling [%3d%%] %-50s$(RESET)\r" $(shell echo $$(($(CURR_FILE)*100/$(TOTAL_FILES)))) "$<"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@rm $(OBJ)
+	@echo "$(YELLOW)Cleaning object files...$(RESET)"
+	@rm -f $(OBJ)
+	@echo "$(YELLOW)Cleaning MLX library...$(RESET)"
 	@make clean -sC $(MLX_DIR)
+	@echo "$(YELLOW)Cleaning LibFT...$(RESET)"
 	@make fclean -sC $(LIBFT_DIR)
+	@echo "$(GREEN)Clean complete!$(RESET)"
 
-fclean: clean
+fclean: 
+	@echo "$(RED)Deep cleaning project...$(RESET)"
+	@$(MAKE) --no-print-directory clean
+	@echo "$(RED)Removing $(NAME)...$(RESET)"
 	@rm -f $(NAME)
+	@echo "$(GREEN)Project fully cleaned!$(RESET)"
 
 re: fclean all
 

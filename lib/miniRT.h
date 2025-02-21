@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: Kekuhne <kekuehne@student.42wolfsburg.d    +#+  +:+       +#+        */
+/*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:38:22 by yiwong            #+#    #+#             */
-/*   Updated: 2024/02/13 16:31:35 by Kekuhne          ###   ########.fr       */
+/*   Updated: 2025/02/21 11:28:19 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 
 # define MAX_BOUNCES 5
 # define TOLERANCE 0.0001
-# define SCREEN_HEIGHT 1080
-# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGHT 720
+# define SCREEN_WIDTH 1280
 
 //C1 and C3 are coefficients for light intensity drop-off based on distance
 # define C1 1.1

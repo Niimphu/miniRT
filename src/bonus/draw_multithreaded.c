@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_scene.c                                       :+:      :+:    :+:   */
+/*   draw_multithreaded.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yiwong <yiwong@student.42wolfsburg.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 19:21:56 by yiwong            #+#    #+#             */
-/*   Updated: 2024/01/30 18:36:42 by yiwong           ###   ########.fr       */
+/*   Updated: 2025/02/21 11:25:35 by yiwong           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,12 @@ int	draw_scene(t_rt *rt)
 	int				i;
 	pthread_t		thread[THREADS];
 	t_thread_info	*data[THREADS];
-	int				id[THREADS];
 
 	calculate_camera_right_up(rt->scene->camera);
 	i = 0;
 	pthread_mutex_init(&rt->print_lock, NULL);
 	while (i < THREADS)
 	{
-		id[i] = i;
 		data[i] = create_threaddata(rt, start(i, rt), end(i, rt));
 		if (!rt->msaa)
 			pthread_create(&thread[i], NULL, draw_closest_shape, data[i]);
